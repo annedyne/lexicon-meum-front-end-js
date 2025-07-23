@@ -1,10 +1,10 @@
-## 📘 LexiconMeum Frontend
+##  LexiconMeum Frontend
 
 A vanilla JavaScript frontend for querying Latin word prefixes.
 
 ---
 
-### 🚀 Getting Started
+###  Getting Started
 
 #### Prerequisites
 
@@ -19,9 +19,9 @@ A vanilla JavaScript frontend for querying Latin word prefixes.
 
 ---
 
-### ⚙️ Configuration
+### ️ Configuration
 
-The app uses a simple environment switch in [`config.js`](./config.js) to control which backend API URL it uses:
+The app uses a simple environment switch in [`config.js`](src/config.js) to control which backend API URL it uses:
 
 ```js
 const ENV = "development"; // or "production"
@@ -34,12 +34,12 @@ You can also auto-detect the environment using `location.hostname` if desired.
 
 ---
 
-### 🛠 File Structure
+###  File Structure
 
 ```
 .
 ├── index.html          # Main HTML file
-├── index.js            # Entry point JS
+├── main.js            # Entry point JS
 ├── config.js           # Config file for environment settings
 ├── styles.css          # Custom styles
 └── images/             # icons
@@ -47,7 +47,7 @@ You can also auto-detect the environment using `location.hostname` if desired.
 
 ---
 
-### 📆 Deployment
+###  Deployment
 
 When ready for production:
 
@@ -57,15 +57,15 @@ When ready for production:
 
 
 
-## 🔗 Backend Info (External)
+##  Backend Info (External)
 
 This frontend depends on a Spring Boot backend available in a **separate repository**.
 
-### 📍 Repository
+###  Repository
 
 * **URL**: `https://github.com/annedyne/lexiconmeum`
 
-### 🚀 Running the Backend
+###  Running the Backend
 
 * Make sure Java 8+ is installed
 * Clone and start the backend:
@@ -77,7 +77,7 @@ This frontend depends on a Spring Boot backend available in a **separate reposit
   ```
 * It should be available at `http://localhost:8080`
 
-### 🔄 API Contract
+###  API Contract
 
 * The frontend relies on these endpoints:
   - `GET /api/v1/search/prefix?prefix=<string>`
@@ -86,12 +86,12 @@ This frontend depends on a Spring Boot backend available in a **separate reposit
   - `GET /api/v1/search/suffix?suffix=<string>`
    Response: JSON array of matching words (e.g., `["amaturus", "amonibus, "]`)
 
-### 🌐 CORS
+###  CORS
 
 Ensure CORS is enabled in the backend to allow frontend requests from `http://localhost:PORT` during development.
 
 
-## 🧪 TODO
+##  TODO
 
 * Add front-end unit tests
 * Port to Vite and React
