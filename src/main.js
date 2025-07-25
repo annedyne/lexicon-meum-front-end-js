@@ -1,5 +1,10 @@
 import { QUERY_CHAR_MIN } from './constants.js';
-import {DECLENSION_DETAIL_URI, CONJUGATION_DETAIL_URI, SEARCH_URI, PREFIX_URI, SUFFIX_URI } from './api.js';
+import {
+    SEARCH_URI,
+    PREFIX_URI,
+    SUFFIX_URI,
+    getLexemeDetailUri
+} from './api.js';
 
 import {renderDeclensionTable} from "./renderDeclensionTable.js"
 import {renderConjugationTable} from "./renderConjugationTable.js"
@@ -122,7 +127,7 @@ async function buildWordDetailTable(lemma, lexemeId, grammaticalPosition ){
             }
         }
         else if(grammaticalPosition === "VERB"){
-            let wordDetailData = await fetchConjugationDetailData(lexemeId);
+            let wordDetailData = await fetchWordDetailData(lexemeId);
             if (wordDetailData) {
                 const {  principalParts, definitions } = wordDetailData;
                 renderPrincipalParts(principalParts);
@@ -141,7 +146,7 @@ async function buildWordDetailTable(lemma, lexemeId, grammaticalPosition ){
 
 
 /**
-* Fetches detailed declension data for a noun from the backend API.
+* Fetches detailed sense and inflection data for a word from the backend API.
 *
 * Constructs the appropriate URI using the provided word's lexeme ID,
 * sends a GET request, parses the JSON response, and returns it.
@@ -151,30 +156,13 @@ async function buildWordDetailTable(lemma, lexemeId, grammaticalPosition ){
 */
 async function fetchWordDetailData(word) {
 
-    const uri = DECLENSION_DETAIL_URI + encodeURIComponent(word);
+    const uri  = getLexemeDetailUri(word)
     const res = await fetch(uri);
     let jsn = await res.json();
     console.log(jsn);
     return jsn;
 }
 
-/**
- * Fetches detailed conjugation data for a verb from the backend API.
- *
- * Constructs the appropriate URI using the provided word's lexeme ID,
- * sends a GET request, parses the JSON response, and returns it.
- *
- * @param {string} word - The word or lexeme ID used to build the conjugation detail request URI.
- * @returns {Promise<Object>} - The parsed JSON data representing the word's conjugation details.
- */
-async function fetchConjugationDetailData(word) {
-
-    const uri = CONJUGATION_DETAIL_URI + encodeURIComponent(word);
-    const res = await fetch(uri);
-    let jsn = await res.json();
-    console.log(jsn);
-    return jsn;
-}
 
 /**
  * Updates the status bar in the UI with the provided message.
