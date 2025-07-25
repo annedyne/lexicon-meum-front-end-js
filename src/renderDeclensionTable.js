@@ -1,5 +1,5 @@
 export function renderDeclensionTable(data) {
-    const tableData = data.table;
+    const tableData = data.inflectionTable.declensions;
     const cases = Object.keys(tableData.SINGULAR); // Assume both singular and plural have same cases
 
     const table = document.createElement("table");

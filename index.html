@@ -14,20 +14,23 @@
 <body>
 
 <script type=module src="src/main.js"></script>
-<script type=module src="src/wordDetailData.js"></script>
 <script type=module src="src/renderConjugationTable.js"></script>
 
 <div id="status-bar"></div>
 
 <div class="input-container">
     <div class="input-with-checkbox">
-        <input type="text" id="word-lookup-input" placeholder="Type a word..." autocomplete="off">
+        <label for="word-lookup-input"></label><input type="text" id="word-lookup-input" placeholder="Type a word..." autocomplete="off">
         <label>
         <input type="checkbox" id="suffix-search"> Suffix Search
         </label>
     </div>
     <div id="word-suggestions"></div>
 </div>
+
+<div id="principal-parts-container"></div>
+
+<div id="definitions-container"></div>
 
 <div id="tables-container"></div>
 
