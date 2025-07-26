@@ -51,6 +51,46 @@ label {
     font-size: 14px;
 }
 
+/* header components */
+#principal-parts-container {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.principal-parts {
+    font-size: 1.25rem; /* slightly larger than normal text */
+    font-weight: 500; /* semi-bold to make it stand out */
+}
+
+#definitions-container {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+
+#definitions-container {
+    text-align: left;
+    margin-top: 1rem;
+    margin-left: 2rem; /* or whatever indent you prefer */
+}
+
+.definitions-list {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+.definitions-toggle {
+    background: none;
+    border: none;
+    color: #0066cc;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin-left: 1.5rem;
+    padding: 0;
+}
 /* shared table layout */
 .latin-table {
     width: 100%;

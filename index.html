@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>LexiconMeum</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="src/index.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="icon" type="image/x-icon" href="/images/android-chrome-192x192.png">
     <link rel="icon" type="image/x-icon" href="/images/android-chrome-512x512.png">
@@ -13,21 +13,26 @@
 </head>
 <body>
 
-<script type=module src="index.js"></script>
-<script type=module src="wordDetailData.js"></script>
-<script type=module src="renderConjugationTable.js"></script>
+<script type=module src="src/main.js"></script>
+<script type=module src="src/renderConjugationTable.js"></script>
 
 <div id="status-bar"></div>
 
 <div class="input-container">
     <div class="input-with-checkbox">
-        <input type="text" id="word-lookup-input" placeholder="Type a word..." autocomplete="off">
+        <label for="word-lookup-input">
+            <input type="text" id="word-lookup-input" placeholder="Type a word..." autocomplete="off">
+        </label>
         <label>
         <input type="checkbox" id="suffix-search"> Suffix Search
         </label>
     </div>
     <div id="word-suggestions"></div>
 </div>
+
+<div id="principal-parts-container"></div>
+
+<div id="definitions-container"></div>
 
 <div id="tables-container"></div>
 
