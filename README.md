@@ -80,12 +80,14 @@ This frontend depends on a Spring Boot backend available in a **separate reposit
 ###  API Contract
 
 * The frontend relies on these endpoints:
-  - `GET /api/v1/search/prefix?prefix=<string>`
+  - `GET /api/v1/autocomplete/prefix?prefix=<string>`
   Response: JSON array of matching words (e.g., `["amare", "amatus"]`)
 
-  - `GET /api/v1/search/suffix?suffix=<string>`
+  - `GET /api/v1/autocomplete/suffix?suffix=<string>`
    Response: JSON array of matching words (e.g., `["amaturus", "amonibus, "]`)
-
+  
+  - `GET /api/v1/lexemes/123/detail?type=<string>`  #type is optional
+    Response: JSON object of word definitions and inflections
 ###  CORS
 
 Ensure CORS is enabled in the backend to allow frontend requests from `http://localhost:PORT` during development.
@@ -94,6 +96,7 @@ Ensure CORS is enabled in the backend to allow frontend requests from `http://lo
 ##  TODO
 
 * Add front-end unit tests
-* Port to Vite and React
+* [X] Port to Vite
+* Port to React
 
 
