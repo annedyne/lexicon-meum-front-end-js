@@ -52,6 +52,19 @@ label {
 }
 
 /* header components */
+#lemma-container {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.lemma {
+    color: #00573F;
+    font-size: 1.5rem; /* slightly larger than normal text */
+    font-weight: 500; /* semi-bold to make it stand out */
+}
+
+/* header components */
 #principal-parts-container {
     text-align: center;
     margin-top: 1rem;
@@ -91,6 +104,18 @@ label {
     margin-left: 1.5rem;
     padding: 0;
 }
+
+/* header components */
+#inflection-type-container {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.inflection-type {
+    font-size: 1.25rem; /* slightly larger than normal text */
+    font-weight: 500; /* semi-bold to make it stand out */
+}
 /* shared table layout */
 .latin-table {
     width: 100%;
@@ -108,7 +133,8 @@ label {
     margin-bottom: 0.5rem;
 }
 
-.latin-table th {
+.latin-table thead th,
+.latin-table th.section-header {
     background-color: #4CAF50;
     color: white;
     text-align: left;
@@ -162,8 +188,24 @@ label {
     white-space: nowrap;
 }
 
+/* apply the same first-column style to agreement-table */
+.agreement-table tbody th[scope="row"] {
+    background-color: #eef5e9;
+    font-weight: normal;
+    text-align: left;
+    width: 10ch;
+    min-width: 10ch;
+    max-width: 10ch;
+    white-space: nowrap;
+
+    /* mirror td styling */
+    padding: 0.2rem;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
 /* Optional: responsive overflow */
-#tables-container {
+#inflections-container {
     overflow-x: auto;
 }
 

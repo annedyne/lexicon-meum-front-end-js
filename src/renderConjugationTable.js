@@ -4,7 +4,7 @@ export function renderConjugationTable(wordDetailData, voice) {
     const  activeMoods = wordDetailData.inflectionTable.conjugations.filter(
         d => d.voice === voice
     );
-    const container = document.getElementById("tables-container");
+    const container = document.getElementById("inflections-container");
     container.innerHTML = ""; // Clear once at the top
 
     const table = document.createElement("table");
