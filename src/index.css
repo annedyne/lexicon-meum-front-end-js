@@ -51,7 +51,24 @@ label {
     font-size: 14px;
 }
 
-/* header components */
+#lemma-container {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.lemma {
+    color: #00573F;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.grammatical-position {
+    color: #00573F;
+    font-size: 1rem;
+    margin-right: 0.5em;
+}
+
 #principal-parts-container {
     text-align: center;
     margin-top: 1rem;
@@ -59,20 +76,26 @@ label {
 }
 
 .principal-parts {
-    font-size: 1.25rem; /* slightly larger than normal text */
-    font-weight: 500; /* semi-bold to make it stand out */
+    font-size: 1rem;
+    font-weight: bold;
 }
 
-#definitions-container {
-    text-align: center;
-    margin-top: 0.5rem;
-    font-size: 1rem;
-}
 
 #definitions-container {
     text-align: left;
     margin-top: 1rem;
-    margin-left: 2rem; /* or whatever indent you prefer */
+    margin-left: 2rem;
+    font-size: 1rem;
+}
+
+.definitions-label {
+    color: #00573F;
+}
+
+.grammatical-position {
+    color: #00573F;
+    font-size: 1rem;
+    margin-right: 0.5em;
 }
 
 .definitions-list {
@@ -91,7 +114,19 @@ label {
     margin-left: 1.5rem;
     padding: 0;
 }
-/* shared table layout */
+
+#inflection-type-container {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.inflection-type {
+    color: #00573F;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
 .latin-table {
     width: 100%;
     border-collapse: collapse;
@@ -108,7 +143,8 @@ label {
     margin-bottom: 0.5rem;
 }
 
-.latin-table th {
+.latin-table thead th,
+.latin-table th.section-header {
     background-color: #4CAF50;
     color: white;
     text-align: left;
@@ -129,21 +165,21 @@ label {
 .latin-table tbody tr:hover {
     background-color: #f5f5f5;
 }
-/* Mood shading (add more as needed) */
+
 .latin-table.mood-indicative td {
-    background-color: #d7f5d7; /* light green */
+    background-color: #d7f5d7;
 }
 
 .latin-table.mood-subjunctive td {
-    background-color: #b2eaf1; /* light blue */
+    background-color: #b2eaf1;
 }
 
 .latin-table.mood-infinitive td {
-    background-color: #f7f1cc; /* light yellow */
+    background-color: #f7f1cc;
 }
 
 .latin-table.mood-imperative td {
-    background-color: #f3d1e2; /* light pink */
+    background-color: #f3d1e2;
 }
 
 .tense-header {
@@ -153,7 +189,6 @@ label {
     margin-bottom: 0.25rem;
 }
 
-/* only declension gets special first-col style */
 .declension-table td:first-child {
     background-color: #eef5e9;
     width: 10ch;
@@ -162,8 +197,20 @@ label {
     white-space: nowrap;
 }
 
-/* Optional: responsive overflow */
-#tables-container {
+.agreement-table tbody th[scope="row"] {
+    background-color: #eef5e9;
+    font-weight: normal;
+    text-align: left;
+    width: 10ch;
+    min-width: 10ch;
+    max-width: 10ch;
+    white-space: nowrap;
+    padding: 0.2rem;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
+#inflections-container {
     overflow-x: auto;
 }
 

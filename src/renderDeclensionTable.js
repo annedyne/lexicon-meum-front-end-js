@@ -39,7 +39,7 @@ export function renderDeclensionTable(data) {
     table.appendChild(tbody);
 
     // Replace existing content
-    const container = document.getElementById("tables-container");
+    const container = document.getElementById("inflections-container");
     container.innerHTML = "";
     container.appendChild(table);
 }

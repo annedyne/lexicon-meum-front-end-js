@@ -20,21 +20,36 @@
 
 <div class="input-container">
     <div class="input-with-checkbox">
-        <label for="word-lookup-input">
-            <input type="text" id="word-lookup-input" placeholder="Type a word..." autocomplete="off">
-        </label>
+        <label for="word-lookup-input">Search</label>
+        <input
+                id="word-lookup-input"
+                type="search"
+                autocomplete="off"
+                autocapitalize="off"
+                autocorrect="off"
+                spellcheck="false"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-controls="word-suggestions"
+                aria-expanded="false"
+                placeholder="Type any form..."
+        />
         <label>
-        <input type="checkbox" id="suffix-search"> Suffix Search
+            <input type="checkbox" id="suffix-search"> Search word endings
         </label>
     </div>
     <div id="word-suggestions"></div>
 </div>
 
+<div id="lemma-container"></div>
+
 <div id="principal-parts-container"></div>
 
 <div id="definitions-container"></div>
 
-<div id="tables-container"></div>
+<div id="inflection-type-container"></div>
+
+<div id="inflections-container"></div>
 
 </body>
 </html>

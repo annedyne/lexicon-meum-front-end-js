@@ -6,10 +6,15 @@ import {
     getLexemeDetailUri
 } from './api.js';
 
-import {renderDeclensionTable} from "./renderDeclensionTable.js"
-import {renderConjugationTable} from "./renderConjugationTable.js"
+
+import {renderDeclensionTable} from "./renderDeclensionTable.js";
+import {renderConjugationTable} from "./renderConjugationTable.js";
+import {renderAdjectiveAgreementTable} from "./renderAdjectiveAgreementTable.js";
+import {renderLemmaHeader} from "./renderLemmaHeader.js";
 import {renderPrincipalParts} from "./renderPrincipalParts.js";
 import {renderDefinitions} from "./renderDefinitions.js";
+import {renderInflectionType} from "./renderInflectionType.js";
+import {formatPOS} from "./utils.js";
 
 
 const isSuffixSearch = document.getElementById("suffix-search")
@@ -84,10 +89,11 @@ function buildWordSuggestionBox(words){
     words.forEach(wordObj => {
 
         const { word, lexemeId, grammaticalPosition } = wordObj;
+
         const item = document.createElement("div");
 
         console.log("lemma: " + word);
-        item.textContent = word;
+        item.textContent = `${word} (${ formatPOS(grammaticalPosition )})`;
         item.addEventListener("click", () => {
             wordSuggestionsBox.innerHTML = ""; // hide suggestions
             buildWordDetailTable(word, lexemeId, grammaticalPosition);
@@ -95,6 +101,8 @@ function buildWordSuggestionBox(words){
         wordSuggestionsBox.appendChild(item);
     });
 }
+
+
 
 
 /**
@@ -112,33 +120,30 @@ function buildWordSuggestionBox(words){
  * @param {string} grammaticalPosition - Part of speech (e.g., "NOUN", "VERB", etc.) used to determine routing logic.
  */
 async function buildWordDetailTable(lemma, lexemeId, grammaticalPosition ){
+
     try {
-        if(grammaticalPosition === "NOUN"){
-            console.log(lemma);
-            let wordDetailData = await fetchWordDetailData(lexemeId);
+        let wordDetailData = await fetchWordDetailData(lexemeId);
+        if (wordDetailData) {
+            const {lemma, inflectionClass, principalParts, definitions} = wordDetailData;
+            renderLemmaHeader(lemma, grammaticalPosition);
+            renderPrincipalParts(principalParts, definitions);
+            renderDefinitions(definitions);
+            renderInflectionType(inflectionClass, grammaticalPosition);
 
-            if (wordDetailData) {
-
-                const { principalParts, definitions } = wordDetailData;
-
-                renderPrincipalParts(principalParts, definitions);
-                renderDefinitions(definitions);
+            if (grammaticalPosition === "NOUN") {
                 renderDeclensionTable(wordDetailData);
-            }
-        }
-        else if(grammaticalPosition === "VERB"){
-            let wordDetailData = await fetchWordDetailData(lexemeId);
-            if (wordDetailData) {
-                const {  principalParts, definitions } = wordDetailData;
-                renderPrincipalParts(principalParts);
-                renderDefinitions(definitions);
-                renderConjugationTable(wordDetailData, "ACTIVE");
-            }
 
+            } else if (grammaticalPosition === "VERB") {
+                renderConjugationTable(wordDetailData, "ACTIVE");
+
+            } else if (grammaticalPosition === "ADJECTIVE") {
+                const { inflectionTable: { agreements } } = wordDetailData;
+                renderAdjectiveAgreementTable(agreements);
+            }
         }
 
     } catch (err) {
-        let message = "Error fetching suggestions: ";
+        let message = `Could not fetch ${lemma} detail`;
         console.error(message, err);
         setStatus(message + lemma);
     }
