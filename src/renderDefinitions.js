@@ -2,6 +2,11 @@ export function renderDefinitions(definitions) {
     const container = document.getElementById("definitions-container");
     container.innerHTML = "";
 
+    const definitionsLabelSpan = document.createElement("span");
+    definitionsLabelSpan.classList.add("definitions-label");
+    definitionsLabelSpan.textContent = "Definitions:";
+    container.appendChild(definitionsLabelSpan);
+
     if (!definitions || definitions.length === 0) return;
 
     const visibleCount = 2;

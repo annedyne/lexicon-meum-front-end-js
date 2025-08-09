@@ -1,12 +1,10 @@
-
-export function renderLemmaHeader(lemma){
+export function renderLemmaHeader(lemma) {
         const container = document.getElementById("lemma-container");
-        container.innerHTML = ""; // Clear once at the top
+        container.innerHTML = "";
 
-        const span = document.createElement("span");
-        span.classList.add("lemma");
-        span.textContent = `${lemma}`;
+        const lemmaSpan = document.createElement("span");
+        lemmaSpan.classList.add("lemma");
+        lemmaSpan.textContent = `${lemma}`;
 
-        container.appendChild(span);
-
+        container.appendChild(lemmaSpan);
 }
