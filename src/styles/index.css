@@ -1,17 +1,44 @@
+@import "./palette.css";
+
+input, select, textarea, button {
+    font: inherit;
+}
+
 body {
     margin: 0 auto;
     padding: 10px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 1rem;
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+.banner {
+    background: var(--color-banner-bg);
+    min-height: clamp(90px, 14vw, 180px);
+    display: grid;
+    align-items: center;
+    justify-items: start;
+    padding-inline: 16px;
+    border-bottom: 4px solid var(--color-brand-primary);
+}
+
+.banner img {
+    width: clamp(70px, 13vw, 160px);
+    height: auto;
+    max-width: 100%;
+    filter: drop-shadow(var(--shadow-soft));
 }
 
 label {
-    font-size: 14px;
+    font-size: 1rem;
 }
+
 .input-container {
     position: relative;
     display: inline-block;
 }
+
 .input-with-checkbox {
     display: inline-flex;
     align-items: center;
@@ -24,21 +51,21 @@ label {
 }
 
 #word-suggestions {
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border);
     max-height: 150px;
     overflow-y: hidden;
     position: absolute;
-    background: white;
+    background: var(--color-bg);
     width: 200px;
     z-index: 1000;
-    font-size: 14px;
+    font-size: 1rem;
 }
 #word-suggestions div {
     padding: 1px;
     cursor: pointer;
 }
 #word-suggestions div:hover {
-    background-color: #f0f0f0;
+    background-color: var(--color-muted-100);
 }
 
 #status-bar {
@@ -47,8 +74,8 @@ label {
     min-height: 24px;
     display: flex;
     align-items: center;
-    color: #333;
-    font-size: 14px;
+    color: var(--color-text);
+    font-size: .95rem;
 }
 
 #lemma-container {
@@ -58,13 +85,13 @@ label {
 }
 
 .lemma {
-    color: #00573F;
-    font-size: 1.5rem;
+    color: #2F8668;
+    font-size: 1.6rem;
     font-weight: bold;
 }
 
 .grammatical-position {
-    color: #00573F;
+    color: var(--color-brand-primary);
     font-size: 1rem;
     margin-right: 0.5em;
 }
@@ -76,10 +103,10 @@ label {
 }
 
 .principal-parts {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: bold;
+    color: var(--color-text-dark);
 }
-
 
 #definitions-container {
     text-align: left;
@@ -89,13 +116,8 @@ label {
 }
 
 .definitions-label {
-    color: #00573F;
-}
-
-.grammatical-position {
-    color: #00573F;
-    font-size: 1rem;
-    margin-right: 0.5em;
+    color: var(--color-text-header);
+    font-weight: bold;
 }
 
 .definitions-list {
@@ -107,7 +129,7 @@ label {
 .definitions-toggle {
     background: none;
     border: none;
-    color: #0066cc;
+    color: var(--color-text-header);
     text-decoration: underline;
     cursor: pointer;
     font-size: 0.95rem;
@@ -122,7 +144,7 @@ label {
 }
 
 .inflection-type {
-    color: #00573F;
+    color: var(--color-text-header);
     font-size: 1rem;
     font-weight: 500;
 }
@@ -145,8 +167,8 @@ label {
 
 .latin-table thead th,
 .latin-table th.section-header {
-    background-color: #4CAF50;
-    color: white;
+    background-color: var(--color-brand-primary);
+    color: var(--color-bg);
     text-align: left;
     margin: .1rem;
     padding: 0.7rem;
@@ -155,42 +177,26 @@ label {
 .latin-table td {
     padding: 0.2rem;
     vertical-align: top;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .latin-table tbody tr:nth-child(even) {
-    background-color: #fafafa;
+    background-color: var(--color-row-alt);
 }
 
 .latin-table tbody tr:hover {
-    background-color: #f5f5f5;
-}
-
-.latin-table.mood-indicative td {
-    background-color: #d7f5d7;
-}
-
-.latin-table.mood-subjunctive td {
-    background-color: #b2eaf1;
-}
-
-.latin-table.mood-infinitive td {
-    background-color: #f7f1cc;
-}
-
-.latin-table.mood-imperative td {
-    background-color: #f3d1e2;
+    background-color: var(--color-row-hover);
 }
 
 .tense-header {
-    background-color: #a0cfa0;
+    background-color: var(--color-tense-header);
     padding: 0.35rem;
     text-align: left;
     margin-bottom: 0.25rem;
 }
 
 .declension-table td:first-child {
-    background-color: #eef5e9;
+    background-color: var(--color-brand-light);
     width: 10ch;
     min-width: 10ch;
     max-width: 10ch;
@@ -198,7 +204,7 @@ label {
 }
 
 .agreement-table tbody th[scope="row"] {
-    background-color: #eef5e9;
+    background-color: var(--color-brand-light);
     font-weight: normal;
     text-align: left;
     width: 10ch;
@@ -207,10 +213,9 @@ label {
     white-space: nowrap;
     padding: 0.2rem;
     vertical-align: top;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-border);
 }
 
 #inflections-container {
     overflow-x: auto;
 }
-
