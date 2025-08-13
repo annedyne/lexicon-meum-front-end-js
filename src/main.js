@@ -6,7 +6,7 @@ import {
     getLexemeDetailUri
 } from './api.js';
 
-
+import "./styles/index.css";
 import {renderDeclensionTable} from "./renderDeclensionTable.js";
 import {renderConjugationTable} from "./renderConjugationTable.js";
 import {renderAdjectiveAgreementTable} from "./renderAdjectiveAgreementTable.js";
@@ -22,6 +22,7 @@ const statusBar = document.getElementById("status-bar")
 const wordLookupInput = document.getElementById("word-lookup-input");
 const wordSuggestionsBox = document.getElementById("word-suggestions");
 wordSuggestionsBox.style.display = "none";
+document.documentElement.setAttribute("data-theme", "bronze");
 
 /**
  * Handles user input in the word search field.
