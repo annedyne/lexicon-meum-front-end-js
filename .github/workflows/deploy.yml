@@ -3,73 +3,59 @@ name: Deploy LexiconMeum Frontend
 on:
   workflow_dispatch: {}
   push:
-    branches: [ master ]
+    branches:
+      - master
+
+permissions: read-all
 
 concurrency:
-  group: lexiconmeum-frontend-prod
+  group: deploy-frontend-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
+      REMOTE_HOST: ${{ secrets.VPS_IP_PROD }}
       REMOTE_USER: admin
-      REMOTE_SERVER: ${{ secrets.VPS_IP_PROD }}
       WEB_ROOT: /var/www/lexiconmeum-frontend
+      RELEASE: ${{ github.run_id }}-${{ github.run_number }}-${{ github.sha }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Use Node.js 20.x (with npm cache)
+      - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
           cache: 'npm'
 
-      - name: Install deps
-        run: npm ci
+      - name: Install & build (Vite)
+        run: |
+          npm ci
+          npm run build
 
-      - name: Build (Vite)
-        run: npm run build
-
-      - name: Tar build artifacts
-        run: tar -czf dist.tar.gz -C dist .
+      - name: Set RELEASE with package.json version
+        run: |
+          VERSION=$(jq -r .version package.json)
+          echo "PKG_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "RELEASE=v$VERSION-${GITHUB_RUN_ID}-${GITHUB_RUN_NUMBER}-${GITHUB_SHA}" >> $GITHUB_ENV
 
       - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
+        uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Add server to known hosts
-        run: ssh-keyscan -H ${{ env.REMOTE_SERVER }} >> ~/.ssh/known_hosts
+        run: ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts
 
-      - name: Upload bundle
-        run: rsync -avz -e "ssh" dist.tar.gz ${{ env.REMOTE_USER }}@${{ env.REMOTE_SERVER }}:~/frontend-dist.tar.gz
-
-      - name: Deploy to VPS (atomic with rollback)
+      - name: Upload build and switch symlink (no sudo)
         run: |
           set -euo pipefail
-          RELEASE="release-$(date -u +%Y%m%d%H%M%S)-${GITHUB_SHA::7}"
+          rsync -az ./dist/ "$REMOTE_USER@$REMOTE_HOST:$WEB_ROOT/releases/$RELEASE/"
+          ssh "$REMOTE_USER@$REMOTE_HOST" "ln -sfn $WEB_ROOT/releases/$RELEASE $WEB_ROOT/current"
 
-          ssh ${{ env.REMOTE_USER }}@${{ env.REMOTE_SERVER }} << EOF
-            set -euo pipefail
-            WEB_ROOT="${WEB_ROOT}"
-            RELEASE="${RELEASE}"
-
-            # Prepare dirs
-            sudo mkdir -p "$WEB_ROOT/releases"
-
-            # Unpack to new release dir
-            sudo mkdir -p "$WEB_ROOT/releases/$RELEASE"
-            sudo tar -xzf ~/frontend-dist.tar.gz -C "$WEB_ROOT/releases/$RELEASE"
-
-            # Atomically point current -> new release
-            sudo ln -sfn "$WEB_ROOT/releases/$RELEASE" "$WEB_ROOT/current"
-
-            # Optional: keep last 5 releases, delete older
-            sudo sh -c "ls -1dt $WEB_ROOT/releases/* | tail -n +6 | xargs -r rm -rf"
-
-            # Cleanup uploaded tar
-            rm -f ~/frontend-dist.tar.gz
-          EOF
+      - name: Prune old releases (keep last 5)
+        run: |
+          ssh "$REMOTE_USER@$REMOTE_HOST" "ls -1dt $WEB_ROOT/releases/* | tail -n +6 | xargs -r rm -rf"
