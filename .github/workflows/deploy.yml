@@ -1,0 +1,61 @@
+name: Deploy LexiconMeum Frontend
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - master
+
+permissions: read-all
+
+concurrency:
+  group: deploy-frontend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      REMOTE_HOST: ${{ secrets.VPS_IP_PROD }}
+      REMOTE_USER: admin
+      WEB_ROOT: /var/www/lexiconmeum-frontend
+      RELEASE: ${{ github.run_id }}-${{ github.run_number }}-${{ github.sha }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install & build (Vite)
+        run: |
+          npm ci
+          npm run build
+
+      - name: Set RELEASE with package.json version
+        run: |
+          VERSION=$(jq -r .version package.json)
+          echo "PKG_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "RELEASE=v$VERSION-${GITHUB_RUN_ID}-${GITHUB_RUN_NUMBER}-${GITHUB_SHA}" >> $GITHUB_ENV
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Add server to known hosts
+        run: ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts
+
+      - name: Upload build and switch symlink (no sudo)
+        run: |
+          set -euo pipefail
+          rsync -az ./dist/ "$REMOTE_USER@$REMOTE_HOST:$WEB_ROOT/releases/$RELEASE/"
+          ssh "$REMOTE_USER@$REMOTE_HOST" "ln -sfn $WEB_ROOT/releases/$RELEASE $WEB_ROOT/current"
+
+      - name: Prune old releases (keep last 5)
+        run: |
+          ssh "$REMOTE_USER@$REMOTE_HOST" "ls -1dt $WEB_ROOT/releases/* | tail -n +6 | xargs -r rm -rf"
