@@ -69,7 +69,8 @@ function addCaseRows(agreements, cases, numberLabel) {
 
         agreements.forEach(({ inflections }) => {
             const td = document.createElement("td");
-            td.textContent = inflections[numberLabel][gramCase] ?? "";
+
+            td.textContent = inflections[numberLabel]?.[gramCase] ?? "";
             row.appendChild(td);
         });
 

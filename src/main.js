@@ -126,10 +126,12 @@ async function buildWordDetailTable(lemma, lexemeId, grammaticalPosition ){
         let wordDetailData = await fetchWordDetailData(lexemeId);
         if (wordDetailData) {
             const {lemma, inflectionClass, principalParts, definitions} = wordDetailData;
-            renderLemmaHeader(lemma, grammaticalPosition);
-            renderPrincipalParts(principalParts, definitions);
+            renderLemmaHeader(lemma);
             renderDefinitions(definitions);
+
             renderInflectionType(inflectionClass, grammaticalPosition);
+
+            renderPrincipalParts(principalParts );
 
             if (grammaticalPosition === "NOUN") {
                 renderDeclensionTable(wordDetailData);
@@ -140,6 +142,12 @@ async function buildWordDetailTable(lemma, lexemeId, grammaticalPosition ){
             } else if (grammaticalPosition === "ADJECTIVE") {
                 const { inflectionTable: { agreements } } = wordDetailData;
                 renderAdjectiveAgreementTable(agreements);
+            }
+            // If not an inflected part of speech,
+            // make sure any inflection info from previous loads is removed
+            else {
+                const container = document.getElementById("inflections-container");
+                container.innerHTML = "";
             }
         }
 
