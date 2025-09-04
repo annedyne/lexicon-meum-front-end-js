@@ -8,10 +8,11 @@ export function renderInflectionType(inflectionClass, grammaticalPosition) {
 
     container.appendChild(positionSpan);
 
-    let span = document.createElement("span");
-    span.classList.add("inflection-type");
+    if (inflectionClass) {
+        let span = document.createElement("span");
+        span.classList.add("inflection-type");
 
-    span.textContent = `${inflectionClass}`;
-    container.appendChild(span);
-
+        span.textContent = `${inflectionClass}`;
+        container.appendChild(span);
+    }
 }
