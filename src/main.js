@@ -4,16 +4,16 @@ import {
     PREFIX_URI,
     SUFFIX_URI,
     getLexemeDetailUri
-} from './api.js';
+} from './api/api.js';
 
 import "./styles/index.css";
-import {renderDeclensionTable} from "./renderDeclensionTable.js";
-import {renderConjugationTable} from "./renderConjugationTable.js";
-import {renderAdjectiveAgreementTable} from "./renderAdjectiveAgreementTable.js";
-import {renderLemmaHeader} from "./renderLemmaHeader.js";
-import {renderPrincipalParts} from "./renderPrincipalParts.js";
-import {renderDefinitions} from "./renderDefinitions.js";
-import {renderInflectionType} from "./renderInflectionType.js";
+import {renderDeclensionTable} from "./detail/renderDeclensionTable.js";
+import {renderConjugationTable} from "./detail/renderConjugationTable.js";
+import {renderAdjectiveAgreementTable} from "./detail/renderAdjectiveAgreementTable.js";
+import {renderLemmaHeader} from "./detail/renderLemmaHeader.js";
+import {renderPrincipalParts} from "./detail/renderPrincipalParts.js";
+import {renderDefinitions} from "./detail/renderDefinitions.js";
+import {renderInflectionType} from "./detail/renderInflectionType.js";
 import {formatPOS} from "./utils.js";
 
 
