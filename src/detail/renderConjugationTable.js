@@ -1,11 +1,17 @@
-export function renderConjugationTable(wordDetailData, voice) {
+export function renderConjugationTable(conjugations, voice) {
 
-
-    const  activeMoods = wordDetailData.inflectionTable.conjugations.filter(
-        d => d.voice === voice
-    );
     const container = document.getElementById("inflections-container");
-    container.innerHTML = ""; // Clear once at the top
+    container.replaceChildren();
+
+    if (!Array.isArray(conjugations) || conjugations.length === 0) {
+        return;
+    }
+
+    const activeMoods = conjugations.filter((d) => d?.voice === voice);
+    if (!activeMoods.length) {
+        // Nothing to render for this voice
+        return;
+    }
 
     const table = document.createElement("table");
     table.classList.add("latin-table");
@@ -23,49 +29,55 @@ export function renderConjugationTable(wordDetailData, voice) {
     thead.appendChild(headerRow);
     table.appendChild(thead);
 
-    if (activeMoods) {
-        activeMoods.forEach(buildRows);
-    }
+    activeMoods.forEach(buildRows);
+
 }
 function buildRows(data) {
+    const mood = data?.mood ?? "";
+    const tenses = Array.isArray(data?.tenses) ? data.tenses : [];
 
-    const { mood, tenses } = data;
+    // No tenses to render for this mood; skip safely
+    if (tenses.length === 0) return;
 
     // Table body with tenses in pairs
     const tbody = document.createElement("tbody");
 
     for (let i = 0; i < tenses.length; i += 2) {
         const left = tenses[i];
-        const right = tenses[i + 1];
+        const right = tenses[i + 1]; // can be undefined if odd count
 
         // Build header row for tense names
         const headerRow = tbody.insertRow();
+
         const leftHeader = headerRow.insertCell();
         leftHeader.colSpan = 1;
         leftHeader.className = "tense-header";
-        leftHeader.textContent = `${mood} ${left.defaultName}`
+        leftHeader.textContent = left ? `${mood} ${left.defaultName ?? ""}` : "";
 
         const rightHeader = headerRow.insertCell();
         rightHeader.colSpan = 1;
         rightHeader.className = "tense-header";
-        rightHeader.textContent =  `${mood} ${right.defaultName}`
+        rightHeader.textContent = right ? `${mood} ${right.defaultName ?? ""}` : "";
 
         // Compute max form count
-        const maxRows = Math.max(left.forms.length, right?.forms.length || 0);
+        const leftLen = Array.isArray(left?.forms) ? left.forms.length : 0;
+        const rightLen = Array.isArray(right?.forms) ? right.forms.length : 0;
+        const maxRows = Math.max(leftLen, rightLen);
 
         // Build one row per form index
         for (let j = 0; j < maxRows; j++) {
             const formRow = tbody.insertRow();
-            const leftForm = left.forms[j] || "";   // pad if undefined
-            const rightForm = right?.forms[j] || ""; // pad if no right tense
+            const leftForm = left?.forms?.[j] ?? "";   // pad if undefined
+            const rightForm = right?.forms?.[j] ?? ""; // pad if no right tense
 
             formRow.insertCell().innerHTML = leftForm;
             formRow.insertCell().innerHTML = rightForm;
         }
+
     }
     const table = document.getElementById("conjugation-table");
-    table.appendChild(tbody)
-
-
+    if (table) {
+        table.appendChild(tbody);
+    }
 
 }
