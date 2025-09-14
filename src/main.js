@@ -1,11 +1,3 @@
-import { QUERY_CHAR_MIN } from './constants.js';
-import {
-    SEARCH_URI,
-    PREFIX_URI,
-    SUFFIX_URI,
-    getLexemeDetailUri
-} from './api/api.js';
-
 import "./styles/index.css";
 import {renderDeclensionTable} from "./detail/renderDeclensionTable.js";
 import {renderConjugationTable} from "./detail/renderConjugationTable.js";
@@ -14,11 +6,11 @@ import {renderLemmaHeader} from "./detail/renderLemmaHeader.js";
 import {renderPrincipalParts} from "./detail/renderPrincipalParts.js";
 import {renderDefinitions} from "./detail/renderDefinitions.js";
 import {renderInflectionType} from "./detail/renderInflectionType.js";
-import {formatPOS} from "./utils.js";
+import {QUERY_CHAR_MIN, StatusMessageType} from "@src/utils/constants.js";
+import {getLexemeDetailUri, PREFIX_URI, SEARCH_URI, SUFFIX_URI} from "@api";
+import {formatPOS} from "@src/utils/formatPartOfSpeech.js";
 
-
-const isSuffixSearch = document.getElementById("suffix-search")
-const statusBar = document.getElementById("status-bar")
+const isSuffixSearch = document.getElementById("suffix-search");
 const wordLookupInput = document.getElementById("word-lookup-input");
 const wordSuggestionsBox = document.getElementById("word-suggestions");
 wordSuggestionsBox.style.display = "none";
@@ -186,9 +178,21 @@ async function fetchWordDetailData(word) {
  *
  * @param {string} message - The text message to display in the status bar.
  */
-function setStatus(message){
-    statusBar.textContent = message;
+function setStatus(message) {
+  if (message) {
+    showToast(message);
+  }
 }
 
+function showToast(message, type = StatusMessageType.ERROR, duration = 3000) {
+  const toast = document.getElementById("toast");
+  // Set the text of the toast
+  toast.textContent = message;
+  // Apply the appropriate type class (info, success, or error)
+  toast.className = `toast show ${type}`;
 
-
+  // Automatically hide the toast after the specified duration
+  setTimeout(() => {
+    toast.className = "toast"; // Reset it to hidden state
+  }, duration);
+}

@@ -30,6 +30,44 @@ body {
     filter: drop-shadow(var(--shadow-soft));
 }
 
+.toast {
+  position: fixed; /* Float on top of the content */
+  bottom: 20px; /* Distance from the bottom of the viewport */
+  right: 20px; /* Distance from the left of the viewport */
+  z-index: 9999; /* Ensure it's above other UI elements */
+  background-color: #333; /* Dark background for contrast */
+  color: #fff; /* White text */
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none; /* Hidden by default */
+  opacity: 0; /* Fully transparent by default */
+  transition:
+    opacity 0.5s,
+    transform 0.5s ease-out; /* Smooth in/out */
+  transform: translateY(20px); /* Start off slightly lower */
+}
+
+.toast.show {
+  display: block; /* Show when active */
+  opacity: 1; /* Fully visible */
+  transform: translateY(0); /* Slide into place */
+}
+
+/* Add success, error, or info styles */
+.toast.success {
+  background-color: var(--color-success);
+}
+
+.toast.error {
+  background-color: var(--color-error);
+}
+
+.toast.info {
+  background-color: var(--color-info);
+}
+
 label {
     font-size: 1rem;
 }
