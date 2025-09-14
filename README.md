@@ -20,6 +20,17 @@ A vanilla JavaScript frontend for querying Latin word prefixes.
 
 ---
 
+### Testing
+
+- Run all tests: `npm test`
+- Watch mode (re-run on file changes): `npm run test -- --watch`
+- Run a specific file: `npx vitest run path/to/file.test.js`
+- If a test needs a DOM (browser-like) environment: `npx vitest --environment jsdom`
+
+Tests are located in the `test/` directory.
+
+---
+
 ### ️ Env Configuration
 This project uses Vite’s environment variables instead of a config.js switch. Environment-specific values live in root-level .env files:
 
@@ -87,6 +98,6 @@ Ensure CORS is enabled in the backend to allow frontend requests from `http://lo
 
 ## TODO
 
-- Add front-end unit tests
+- [x] Add front-end unit tests
 - [x] Port to Vite
 - Port to React
