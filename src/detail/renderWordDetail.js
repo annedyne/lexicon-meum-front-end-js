@@ -19,7 +19,7 @@ import {renderAdverbSpecificContent} from "@detail/renderAdverbSpecificElements.
 export function renderWordDetail(wordDetailData) {
     const {
         lemma,
-        position: partOfSpeech,
+        partOfSpeech,
         grammaticalGender: gender,
         inflectionClass,
         principalParts,

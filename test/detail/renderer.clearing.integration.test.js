@@ -33,7 +33,7 @@ describe("Integration: real renderers clear correctly", () => {
     it("switching POS replaces the table content (declension -> conjugation)", () => {
         const noun = {
             lemma: "puella",
-            position: "NOUN",
+            partOfSpeech: "NOUN",
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
@@ -50,7 +50,7 @@ describe("Integration: real renderers clear correctly", () => {
 
         const verb = {
             lemma: "amo",
-            position: "VERB",
+            partOfSpeech: "VERB",
             grammaticalGender: null,
             inflectionClass: "FIRST",
             principalParts: ["amo", "amare", "amavi", "amatum"],
@@ -66,7 +66,7 @@ describe("Integration: real renderers clear correctly", () => {
     it("principal parts clear when none provided on next render", () => {
         const withParts = {
             lemma: "puella",
-            position: "NOUN",
+            partOfSpeech: "NOUN",
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
@@ -79,7 +79,7 @@ describe("Integration: real renderers clear correctly", () => {
 
         const noParts = {
             lemma: "bene",
-            position: "ADVERB",
+            partOfSpeech: "ADVERB",
             grammaticalGender: null,
             inflectionClass: null,
             principalParts: [],
@@ -93,7 +93,7 @@ describe("Integration: real renderers clear correctly", () => {
     it("inflection-type container is cleared each time and shows POS only for configured types", () => {
         const noun = {
             lemma: "puella",
-            position: "NOUN",
+            partOfSpeech: "NOUN",
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: [],
@@ -106,7 +106,7 @@ describe("Integration: real renderers clear correctly", () => {
 
         const adverb = {
             lemma: "bene",
-            position: "ADVERB",
+            partOfSpeech: "ADVERB",
             grammaticalGender: null,
             inflectionClass: null,
             principalParts: [],
@@ -115,14 +115,14 @@ describe("Integration: real renderers clear correctly", () => {
         };
         renderWordDetail(adverb);
         const inflectionTypeAfterAdverb = document.getElementById("inflection-type-container").textContent;
-        // should not include grammatical-position for adverb (rendered elsewhere)
+        // should not include part-of-speech for adverb (rendered elsewhere)
         expect(inflectionTypeAfterAdverb.toLowerCase()).not.toMatch(/\(adverb\)/);
     });
 
     it("adds POS badge to lemma-container for ADVERB and removes it for a subsequent non-adverb", () => {
         const adverb = {
             lemma: "bene",
-            position: "ADVERB",
+            partOfSpeech: "ADVERB",
             grammaticalGender: null,
             inflectionClass: null,
             principalParts: [],
@@ -133,12 +133,12 @@ describe("Integration: real renderers clear correctly", () => {
         renderWordDetail(adverb);
 
         const lemmaContainerAfterAdverb = document.getElementById("lemma-container");
-        const adverbBadge = lemmaContainerAfterAdverb.querySelector(".grammatical-position");
+        const adverbBadge = lemmaContainerAfterAdverb.querySelector(".part-of-speech");
         expect(adverbBadge).toBeTruthy();
 
         const noun = {
             lemma: "puella",
-            position: "NOUN",
+            partOfSpeech: "NOUN",
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
@@ -153,7 +153,7 @@ describe("Integration: real renderers clear correctly", () => {
         renderWordDetail(noun);
 
         const lemmaContainerAfterNoun = document.getElementById("lemma-container");
-        const nounBadge = lemmaContainerAfterNoun.querySelector(".grammatical-position");
+        const nounBadge = lemmaContainerAfterNoun.querySelector(".part-of-speech");
         expect(nounBadge).toBeFalsy();
     });
 

@@ -4,10 +4,7 @@ export function transformWordSuggestionData(wordSuggestionData) {
   return wordSuggestionData
     .map((suggestionDatum) => {
       const {
-        word,
-        lexemeId,
-        grammaticalPosition: partOfSpeech,
-      } = suggestionDatum;
+        word, lexemeId, partOfSpeech, } = suggestionDatum;
       let suggestion;
 
       if (word && partOfSpeech && lexemeId) {

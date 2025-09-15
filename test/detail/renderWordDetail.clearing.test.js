@@ -69,7 +69,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
     it("clears inflections for an adverb, then renders declension only for a noun", () => {
         const adverb = {
             lemma: "bene",
-            position: "ADVERB",
+            partOfSpeech: "ADVERB",
             grammaticalGender: null,
             inflectionClass: null,
             principalParts: [],
@@ -82,7 +82,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
 
         const noun = {
             lemma: "puella",
-            position: "NOUN",
+            partOfSpeech: "NOUN",
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
@@ -103,7 +103,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
     it("switching from noun to verb replaces the previous inflection table content", () => {
         const noun = {
             lemma: "puella",
-            position: "NOUN",
+            partOfSpeech: "NOUN",
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
@@ -119,7 +119,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
 
         const verb = {
             lemma: "amo",
-            position: "VERB",
+            partOfSpeech: "VERB",
             grammaticalGender: null,
             inflectionClass: "FIRST",
             principalParts: ["amo", "amare", "amavi", "amatum"],
@@ -135,7 +135,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
     it("principal parts container reflects only latest data (cleared when empty)", () => {
         const first = {
             lemma: "puella",
-            position: "NOUN",
+            partOfSpeech: "NOUN",
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
@@ -148,7 +148,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
 
         const second = {
             lemma: "bene",
-            position: "ADVERB",
+            partOfSpeech: "ADVERB",
             grammaticalGender: null,
             inflectionClass: null,
             principalParts: [],
@@ -162,7 +162,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
     it("inflections area is empty for POS without inflection tables", () => {
         const data = {
             lemma: "bene",
-            position: "ADVERB",
+            partOfSpeech: "ADVERB",
             grammaticalGender: null,
             inflectionClass: null,
             principalParts: [],
