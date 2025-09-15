@@ -9,11 +9,11 @@ export function renderAdverbSpecificContent(partOfSpeech){
     if (!container) return;
 
     //  remove only prior adverb marker(s) not the whole lemma-header
-    container.querySelectorAll(".grammatical-position").forEach(n => n.remove());
+    container.querySelectorAll(".part-of-speech").forEach(n => n.remove());
 
-    const positionSpan = document.createElement("span");
-    positionSpan.classList.add("grammatical-position");
-    positionSpan.textContent = `  (${formatPOS(partOfSpeech)})`;
+    const partOfSpeechSpan = document.createElement("span");
+    partOfSpeechSpan.classList.add("part-of-speech");
+    partOfSpeechSpan.textContent = `  (${formatPOS(partOfSpeech)})`;
 
-    container.appendChild(positionSpan);
+    container.appendChild(partOfSpeechSpan);
 }

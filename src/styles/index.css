@@ -128,7 +128,7 @@ label {
     font-weight: bold;
 }
 
-.grammatical-position {
+.part-of-speech {
     color: var(--color-brand-primary);
     font-size: 1rem;
     margin-right: 0.5em;
