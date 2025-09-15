@@ -9,14 +9,19 @@
     --color-muted-75: #f5f5f5;
     --color-muted-100: #f0f0f0;
 
+  /* status colors */
+  --color-success: #4caf50;
+  --color-error: #f3685e;
+  --color-info: #2196f3;
+
     /* Brand & accents */
-    --color-brand-primary: #328E6E;
-    --color-brand-secondary: #0D5B40;
-    --color-text-header: #2F8668;
-    --color-text-dark: #44544E;
-    --color-link: #4C86EF;
-    --color-banner-bg: #EFE9D5;
-    --color-banner-border: #328E6E;
+  --color-brand-primary: #328e6e;
+  --color-brand-secondary: #0d5b40;
+  --color-text-header: #2f8668;
+  --color-text-dark: #44544e;
+  --color-link: #4c86ef;
+  --color-banner-bg: #efe9d5;
+  --color-banner-border: #328e6e;
     --color-brand-light: #eef5e9;
 
     /* Tense header */
