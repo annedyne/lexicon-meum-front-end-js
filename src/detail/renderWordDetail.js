@@ -5,7 +5,7 @@ import { renderLemmaHeader } from "./renderLemmaHeader.js";
 import { renderPrincipalParts } from "./renderPrincipalParts.js";
 import { renderDefinitions } from "./renderDefinitions.js";
 import { renderInflectionType } from "./renderInflectionType.js";
-import {renderAdverbSpecificContent} from "@detail/renderAdverbSpecificElements.js";
+import {renderPOSAfterLemma} from "@detail/renderPOSAfterLemma.js";
 /**
  *  Displays word details
  *
@@ -30,8 +30,7 @@ export function renderWordDetail(wordDetailData) {
         renderLemmaHeader(lemma);
         renderDefinitions(definitions);
 
-        renderAdverbSpecificContent(partOfSpeech);
-
+        renderPOSAfterLemma(partOfSpeech);
         renderPrincipalParts(principalParts);
         renderInflectionType(inflectionClass, partOfSpeech);
 
