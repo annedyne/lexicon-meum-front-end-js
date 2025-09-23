@@ -3,7 +3,7 @@ import { QUERY_CHAR_MIN } from "./utils/constants.js";
 import { StatusMessageType } from "./utils/constants.js";
 import { fetchWordSuggestions } from "./api/apiClient.js";
 import { handleWordLookup } from "./search/handleWordLookup.js";
-import { validateQuery } from "./search/validate.js";
+import { validateSearchQueryLength } from "./search/validate.js";
 import { transformWordSuggestionData } from "./search/transformWordSuggestionData.js";
 import { handleLoadWordDetail } from "./detail/handleLoadWordDetail.js";
 
@@ -23,7 +23,7 @@ document.documentElement.setAttribute("data-theme", "bronze");
  * If the fetch fails, logs the error and updates the status bar.
  */
 wordLookupInput.addEventListener("input", async () => {
-  const query = validateQuery(wordLookupInput.value, QUERY_CHAR_MIN);
+  const query = validateSearchQueryLength(wordLookupInput.value, QUERY_CHAR_MIN);
   if (!query) return;
 
   wordSuggestionsBox.innerHTML = "";

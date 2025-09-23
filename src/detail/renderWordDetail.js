@@ -21,6 +21,7 @@ export function renderWordDetail(wordDetailData) {
         lemma,
         partOfSpeech,
         grammaticalGender: gender,
+        governedCase,
         inflectionClass,
         principalParts,
         definitions,
@@ -28,7 +29,7 @@ export function renderWordDetail(wordDetailData) {
 
     try {
         renderLemmaHeader(lemma);
-        renderDefinitions(definitions);
+        renderDefinitions(definitions, governedCase, partOfSpeech);
 
         renderPOSAfterLemma(partOfSpeech);
         renderPrincipalParts(principalParts);

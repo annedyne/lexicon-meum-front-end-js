@@ -1,11 +1,19 @@
-export function renderDefinitions(definitions) {
+import { renderPrepositionSpecificElements } from "./renderPrepositionSpecificElements.js";
+
+export function renderDefinitions(definitions, governedCase, partOfSpeech) {
   const container = document.getElementById("definitions-container");
-  container.innerHTML = "";
+  container.replaceChildren();
 
   const definitionsLabelSpan = document.createElement("span");
   definitionsLabelSpan.classList.add("definitions-label");
   definitionsLabelSpan.textContent = "Definitions:";
   container.appendChild(definitionsLabelSpan);
+
+  // Insert preposition-specific content (e.g., governedCase) between the label and the lists
+  const prepositionContentNode = renderPrepositionSpecificElements?.(governedCase, partOfSpeech);
+  if (prepositionContentNode) {
+    container.appendChild(prepositionContentNode);
+  }
 
   if (!definitions || definitions.length === 0) return;
 

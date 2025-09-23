@@ -175,6 +175,14 @@ label {
     padding: 0;
 }
 
+.governed-case {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    color: var(--color-orange-600);
+}
+
+
 #inflection-type-container {
     text-align: center;
     margin-top: 1rem;
