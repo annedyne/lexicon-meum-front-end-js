@@ -1,7 +1,7 @@
 import {abbrevPartOfSpeech} from "@src/utils/formatPartOfSpeech.js";
 
-export function renderAdverbSpecificContent(partOfSpeech){
-    if (partOfSpeech !== "ADVERB") { 
+export function renderPOSAfterLemma(partOfSpeech){
+    if (partOfSpeech !== "ADVERB" && partOfSpeech !== "PREPOSITION" !== "POSTPOSITION") {
         return; 
     }
 
