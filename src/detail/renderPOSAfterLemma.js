@@ -1,7 +1,7 @@
-import {formatPOS} from "@src/utils/formatPartOfSpeech.js";
+import {abbrevPartOfSpeech} from "@src/utils/formatPartOfSpeech.js";
 
-export function renderAdverbSpecificContent(partOfSpeech){
-    if (partOfSpeech !== "ADVERB") { 
+export function renderPOSAfterLemma(partOfSpeech){
+    if (partOfSpeech !== "ADVERB" && partOfSpeech !== "PREPOSITION" !== "POSTPOSITION") {
         return; 
     }
 
@@ -13,7 +13,7 @@ export function renderAdverbSpecificContent(partOfSpeech){
 
     const partOfSpeechSpan = document.createElement("span");
     partOfSpeechSpan.classList.add("part-of-speech");
-    partOfSpeechSpan.textContent = `  (${formatPOS(partOfSpeech)})`;
+    partOfSpeechSpan.textContent = `  (${abbrevPartOfSpeech(partOfSpeech)})`;
 
     container.appendChild(partOfSpeechSpan);
 }

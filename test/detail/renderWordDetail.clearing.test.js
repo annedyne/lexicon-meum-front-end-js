@@ -46,7 +46,7 @@ vi.mock("../../src/detail/renderLemmaHeader.js", async (orig) => await orig());
 vi.mock("../../src/detail/renderDefinitions.js", async (orig) => await orig());
 vi.mock("../../src/detail/renderInflectionType.js", async (orig) => await orig());
 vi.mock("../../src/detail/renderPrincipalParts.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderAdverbSpecificElements.js", async (orig) => await orig());
+vi.mock("../../src/detail/renderPOSAfterLemma.js", async (orig) => await orig());
 
 import { renderWordDetail } from "../../src/detail/renderWordDetail.js";
 
