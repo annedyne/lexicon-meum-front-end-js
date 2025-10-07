@@ -4,8 +4,8 @@ import { transformWordSuggestionData } from "@search";
 describe("transformWordSuggestionData", () => {
   it("transforms valid word data into display-friendly format", () => {
     const words = [
-      { word: "run", lexemeId: 1, grammaticalPosition: "VERB" },
-      { word: "runner", lexemeId: 2, grammaticalPosition: "NOUN" },
+      { word: "run", lexemeId: 1, partOfSpeech: "VERB" },
+      { word: "runner", lexemeId: 2, partOfSpeech: "NOUN" },
     ];
 
     const result = transformWordSuggestionData(words);
@@ -17,8 +17,8 @@ describe("transformWordSuggestionData", () => {
   });
   it("transforms an unknown partOfSpeech to a lowercase string ", () => {
     const words = [
-      { word: "run", lexemeId: 1, grammaticalPosition: "VERB" },
-      { word: "runner", lexemeId: 2, grammaticalPosition: "random" },
+      { word: "run", lexemeId: 1, partOfSpeech: "VERB" },
+      { word: "runner", lexemeId: 2, partOfSpeech: "random" },
     ];
 
     const result = transformWordSuggestionData(words);
@@ -31,8 +31,8 @@ describe("transformWordSuggestionData", () => {
 
   it("filters out word data with empty word field", () => {
     const words = [
-      { word: "run", lexemeId: 1, grammaticalPosition: "VERB" },
-      { word: "", lexemeId: 2, grammaticalPosition: "NOUN" },
+      { word: "run", lexemeId: 1, partOfSpeech: "VERB" },
+      { word: "", lexemeId: 2, partOfSpeech: "NOUN" },
     ];
 
     const result = transformWordSuggestionData(words);
@@ -43,8 +43,8 @@ describe("transformWordSuggestionData", () => {
   });
   it("filters out word data with empty id field", () => {
     const words = [
-      { word: "run", lexemeId: 1, grammaticalPosition: "VERB" },
-      { word: "runner", lexemeId: "", grammaticalPosition: "NOUN" },
+      { word: "run", lexemeId: 1, partOfSpeech: "VERB" },
+      { word: "runner", lexemeId: "", partOfSpeech: "NOUN" },
     ];
 
     const result = transformWordSuggestionData(words);
@@ -55,8 +55,8 @@ describe("transformWordSuggestionData", () => {
   });
   it("filters out word data with empty suggestion field", () => {
     const words = [
-      { word: "run", lexemeId: 1, grammaticalPosition: "VERB" },
-      { word: "runner", lexemeId: "", grammaticalPosition: "" },
+      { word: "run", lexemeId: 1, partOfSpeech: "VERB" },
+      { word: "runner", lexemeId: "", partOfSpeech: "" },
     ];
 
     const result = transformWordSuggestionData(words);

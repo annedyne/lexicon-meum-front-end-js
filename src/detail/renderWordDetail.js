@@ -5,7 +5,7 @@ import { renderLemmaHeader } from "./renderLemmaHeader.js";
 import { renderPrincipalParts } from "./renderPrincipalParts.js";
 import { renderDefinitions } from "./renderDefinitions.js";
 import { renderInflectionType } from "./renderInflectionType.js";
-import {renderAdverbSpecificContent} from "@detail/renderAdverbSpecificElements.js";
+import {renderPOSAfterLemma} from "@detail/renderPOSAfterLemma.js";
 /**
  *  Displays word details
  *
@@ -19,8 +19,9 @@ import {renderAdverbSpecificContent} from "@detail/renderAdverbSpecificElements.
 export function renderWordDetail(wordDetailData) {
     const {
         lemma,
-        position: partOfSpeech,
+        partOfSpeech,
         grammaticalGender: gender,
+        governedCase,
         inflectionClass,
         principalParts,
         definitions,
@@ -28,10 +29,9 @@ export function renderWordDetail(wordDetailData) {
 
     try {
         renderLemmaHeader(lemma);
-        renderDefinitions(definitions);
+        renderDefinitions(definitions, governedCase, partOfSpeech);
 
-        renderAdverbSpecificContent(partOfSpeech);
-
+        renderPOSAfterLemma(partOfSpeech);
         renderPrincipalParts(principalParts);
         renderInflectionType(inflectionClass, partOfSpeech);
 

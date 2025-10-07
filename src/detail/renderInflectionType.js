@@ -19,9 +19,9 @@ export function renderInflectionType(inflectionClass, partOfSpeech) {
   const POS_POSITION_IN_INFLECTION = new Set(["noun", "verb", "adjective"]);
 
   if (posLower && POS_POSITION_IN_INFLECTION.has(posLower)) {
-    const positionSpan = document.createElement("span");
-    positionSpan.classList.add("grammatical-position");
-    positionSpan.textContent = ` (${posLower})`;
-    container.appendChild(positionSpan);
+    const partOfSpeechSpan = document.createElement("span");
+    partOfSpeechSpan.classList.add("part-of-speech");
+    partOfSpeechSpan.textContent = ` (${posLower})`;
+    container.appendChild(partOfSpeechSpan);
   }
 }
