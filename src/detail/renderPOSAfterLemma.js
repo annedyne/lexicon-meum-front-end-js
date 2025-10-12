@@ -1,8 +1,10 @@
 import {abbrevPartOfSpeech} from "@src/utils/formatPartOfSpeech.js";
+import {POS} from "@src/utils/constants.js";
 
 export function renderPOSAfterLemma(partOfSpeech){
-    const positionsToRender = ["ADVERB", "PREPOSITION", "POSTPOSITION", "CONJUNCTION"];
-    
+
+        const positionsToRender = [POS.ADVERB, POS.PREPOSITION, POS.POSTPOSITION, POS.CONJUNCTION];
+
     if (!positionsToRender.includes(partOfSpeech)) {
         return; 
     }

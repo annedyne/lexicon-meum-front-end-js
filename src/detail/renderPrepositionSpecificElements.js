@@ -8,7 +8,7 @@ export function renderPrepositionSpecificElements(governedCase, partOfSpeech){
     }
     const formattedCase = governedCase
     const governedCaseSpan = document.createElement("span");
-    governedCaseSpan.classList.add("governed-case");
+    governedCaseSpan.classList.add("definition-subheader");
     governedCaseSpan.textContent = `${formatPOSForDefinitions(partOfSpeech)} with ${governedCase.toLowerCase()}:`;
 
     return governedCaseSpan;
