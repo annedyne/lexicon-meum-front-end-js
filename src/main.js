@@ -13,6 +13,17 @@ const wordSuggestionsBox = document.getElementById("word-suggestions");
 wordSuggestionsBox.style.display = "none";
 document.documentElement.setAttribute("data-theme", "bronze");
 
+function hideSuggestions() {
+  wordSuggestionsBox.style.display = "none";
+  wordSuggestionsBox.innerHTML = "";
+  // Reset any inline size overrides so next open starts clean
+  wordSuggestionsBox.style.height = "";
+  wordSuggestionsBox.style.maxHeight = "";
+  wordSuggestionsBox.style.overflowY = "";
+  // Reflect collapsed state for a11y
+  wordLookupInput.setAttribute("aria-expanded", "false");
+}
+
 /**
  * Handles user input in the word search field.
  *
@@ -24,16 +35,33 @@ document.documentElement.setAttribute("data-theme", "bronze");
  */
 wordLookupInput.addEventListener("input", async () => {
   const query = validateSearchQueryLength(wordLookupInput.value, QUERY_CHAR_MIN);
-  if (!query) return;
+  if (!query) {
+    hideSuggestions();
+    return;
+  }
 
+  // Clear while loading
   wordSuggestionsBox.innerHTML = "";
 
   const result = await handleWordLookup(query, fetchWordSuggestions, isSuffixSearch.checked);
 
   if (result.status === "success") {
+    // Hide if success but empty suggestions
+    if (!result.data || result.data.length === 0) {
+      hideSuggestions();
+      return;
+    }
     buildWordSuggestionBox(result.data);
+    wordLookupInput.setAttribute("aria-expanded", "true");
   } else {
+    hideSuggestions();
     setStatus(result.message);
+  }
+});
+
+wordLookupInput.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    hideSuggestions();
   }
 });
 
@@ -69,34 +97,75 @@ export function renderWordSuggestionBox(
   wordSuggestionsBox,
   handleLoadWordDetail,
 ) {
+  if (!suggestionItems || suggestionItems.length === 0) {
+    hideSuggestions();
+    return;
+  }
+
   wordSuggestionsBox.style.display = "block";
   suggestionItems.forEach(({ word, lexemeId, suggestion }) => {
     const item = document.createElement("div");
     item.textContent = suggestion;
 
     item.addEventListener("click", async () => {
-    wordSuggestionsBox.innerHTML = "";
-    try {
+      hideSuggestions();
+      try {
         await handleLoadWordDetail(word, lexemeId);
       } catch (e) {
         const message = e && typeof e === "object" && "message" in e
             ? e.message : "There was a problem loading details.";
         setStatus(message);
-        }
+      }
     });
 
     wordSuggestionsBox.appendChild(item);
   });
+
+  // After rendering items, snap the dropdown height to full rows
+  // so the last item is never cut off mid-row.
+  requestAnimationFrame(() => {
+    const children = Array.from(wordSuggestionsBox.children);
+    if (children.length === 0) {
+      hideSuggestions();
+      return;
     }
+
+    // Measure a single row/item height
+    const sample = children[0];
+    const itemHeight = sample.offsetHeight || 0;
+
+    // If we cannot measure, let the browser handle it
+    if (!itemHeight) {
+      wordSuggestionsBox.style.height = "auto";
+      wordSuggestionsBox.style.maxHeight = "40vh";
+      wordSuggestionsBox.style.overflowY = "auto";
+      return;
+    }
+
+    const totalHeight = itemHeight * children.length;
+
+    // Cap by viewport to avoid a giant dropdown; use 40% of viewport height
+    const viewportCap = Math.floor(window.innerHeight * 0.4);
+
+    // Desired height is min(total, cap), but snapped down to a whole number of rows
+    const rowsFittable = Math.max(1, Math.floor(Math.min(totalHeight, viewportCap) / itemHeight));
+    const snappedHeight = rowsFittable * itemHeight;
+
+    // Apply snapped height and allow scrolling if more items exist
+    wordSuggestionsBox.style.height = `${snappedHeight}px`;
+    wordSuggestionsBox.style.maxHeight = `${snappedHeight}px`;
+    wordSuggestionsBox.style.overflowY = totalHeight > snappedHeight ? "auto" : "hidden";
+  });
+}
 
 /**
  * Hides the word suggestions dropdown when the user clicks outside the input field.
  * Ensures the suggestion box disappears when focus moves away from the search input.
  */
 document.addEventListener("click", (e) => {
-    if (!wordLookupInput.contains(e.target) && e.target !== wordLookupInput) {
-        wordSuggestionsBox.style.display = "none";
-    }
+  if (!wordLookupInput.contains(e.target) && e.target !== wordLookupInput) {
+    hideSuggestions();
+  }
 });
 
 /**
