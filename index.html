@@ -31,24 +31,26 @@
 <div class="input-container">
     <div class="input-with-checkbox">
         <label for="word-lookup-input">Search</label>
-        <input
-                id="word-lookup-input"
-                type="search"
-                autocomplete="off"
-                autocapitalize="off"
-                autocorrect="off"
-                spellcheck="false"
-                role="combobox"
-                aria-autocomplete="list"
-                aria-controls="word-suggestions"
-                aria-expanded="false"
-                placeholder="Type any form..."
-        />
+        <div class="input-field">
+          <input
+                  id="word-lookup-input"
+                  type="search"
+                  autocomplete="off"
+                  autocapitalize="off"
+                  autocorrect="off"
+                  spellcheck="false"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-controls="word-suggestions"
+                  aria-expanded="false"
+                  placeholder="Type any form..."
+          />
+          <div id="word-suggestions"></div>
+        </div>
         <label>
             <input type="checkbox" id="suffix-search"> Search word endings
         </label>
     </div>
-    <div id="word-suggestions"></div>
 </div>
 
 <div id="lemma-container"></div>
