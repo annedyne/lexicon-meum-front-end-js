@@ -20,6 +20,7 @@ export function renderWordDetail(wordDetailData) {
     const {
         lemma,
         partOfSpeech,
+        syntacticSubtype: subtype,
         grammaticalGender: gender,
         governedCase,
         inflectionClass,
@@ -29,7 +30,7 @@ export function renderWordDetail(wordDetailData) {
 
     try {
         renderLemmaHeader(lemma);
-        renderDefinitions(definitions, governedCase, partOfSpeech);
+        renderDefinitions(definitions, governedCase, partOfSpeech, subtype);
 
         renderPOSAfterLemma(partOfSpeech);
         renderPrincipalParts(principalParts);
@@ -55,7 +56,7 @@ export function renderWordDetail(wordDetailData) {
             renderDeclensionTable(declensions);
         } else if (pos === "VERB") {
             renderConjugationTable(conjugations, "ACTIVE");
-        } else if (pos === "ADJECTIVE") {
+        } else if (pos === "ADJECTIVE" || pos === "DETERMINER" || pos === "PRONOUN") {
             renderAdjectiveAgreementTable(agreements);
         } else {
             // No inflections for this POS; ensure area is cleared

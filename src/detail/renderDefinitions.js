@@ -1,6 +1,8 @@
-import { renderPrepositionSpecificElements } from "./renderPrepositionSpecificElements.js";
+import { renderPrepositionSpecificElements } from "@detail/renderPrepositionSpecificElements.js";
+import { renderSubtypeSpecificElements } from "@detail/renderSubtypeSpecificElements.js";
+import {POS} from "@src/utils/constants.js";
 
-export function renderDefinitions(definitions, governedCase, partOfSpeech) {
+export function renderDefinitions(definitions, governedCase, partOfSpeech, subtype) {
   const container = document.getElementById("definitions-container");
   container.replaceChildren();
 
@@ -9,10 +11,18 @@ export function renderDefinitions(definitions, governedCase, partOfSpeech) {
   definitionsLabelSpan.textContent = "Definitions:";
   container.appendChild(definitionsLabelSpan);
 
+   let senseSpecificContent;
   // Insert preposition-specific content (e.g., governedCase) between the label and the lists
-  const prepositionContentNode = renderPrepositionSpecificElements?.(governedCase, partOfSpeech);
-  if (prepositionContentNode) {
-    container.appendChild(prepositionContentNode);
+    if(partOfSpeech == POS.PREPOSITION ||partOfSpeech ==  POS.POSTPOSITION){
+        senseSpecificContent = renderPrepositionSpecificElements?.(governedCase, partOfSpeech);
+    }
+    // Insert subtype-specific content (e.g., subtype) between the label and the lists
+    else if (partOfSpeech == POS.DETERMINER || partOfSpeech == POS.PRONOUN) {
+        senseSpecificContent = renderSubtypeSpecificElements?.(subtype, partOfSpeech);
+    }
+
+  if (senseSpecificContent) {
+      container.appendChild(senseSpecificContent);
   }
 
   if (!definitions || definitions.length === 0) return;

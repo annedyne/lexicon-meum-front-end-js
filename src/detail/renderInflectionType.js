@@ -1,3 +1,5 @@
+import {POS} from "@src/utils/constants.js";
+
 export function renderInflectionType(inflectionClass, partOfSpeech) {
   let container = document.getElementById("inflection-type-container");
 
@@ -16,9 +18,10 @@ export function renderInflectionType(inflectionClass, partOfSpeech) {
 
   // Set of POS types that have inflection info (such as an inflection table)
   // above which it makes sense to add the POS info
-  const POS_POSITION_IN_INFLECTION = new Set(["noun", "verb", "adjective"]);
 
-  if (posLower && POS_POSITION_IN_INFLECTION.has(posLower)) {
+  const POS_POSITION_IN_INFLECTION = new Set([ POS.ADJECTIVE, POS.NOUN, POS.VERB]);
+
+  if (posRaw && POS_POSITION_IN_INFLECTION.has(posRaw)) {
     const partOfSpeechSpan = document.createElement("span");
     partOfSpeechSpan.classList.add("part-of-speech");
     partOfSpeechSpan.textContent = ` (${posLower})`;
