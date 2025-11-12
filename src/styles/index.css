@@ -131,6 +131,11 @@ label {
     background-color: var(--color-muted-100);
 }
 
+.suggestion-highlight {
+    font-weight: bold;
+    color: #222;
+}
+
 #status-bar {
     margin: 10px;
     height: 24px;
