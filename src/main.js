@@ -103,7 +103,12 @@ export function renderWordSuggestionBox(
   }
 
   wordSuggestionsBox.style.display = "block";
-  suggestionItems.forEach(({ word, lexemeId, suggestion }) => {
+    const deduped = Array.from(
+        new Map(suggestionItems.map(item => [item.lexemeId, item])).values()
+    );
+
+    deduped.sort((a, b) => a.suggestion.localeCompare(b.suggestion));
+    deduped.forEach(({ word, lexemeId, suggestion }) => {
     const item = document.createElement("div");
     item.textContent = suggestion;
 
