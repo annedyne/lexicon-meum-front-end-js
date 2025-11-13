@@ -19,7 +19,7 @@ export function prepareSuggestionItems(suggestionItems, searchInput) {
     deduped.sort((a, b) => a.suggestion.localeCompare(b.suggestion));
 
     // Enrich with highlighting metadata
-    return deduped.map(item => {
+    const enriched =  deduped.map(item => {
         const searchWordMatchesSuggestionParent =
             item.suggestionParent.localeCompare(searchInput, undefined, { sensitivity: "base" }) === 0;
         const searchWordMatchesInflection =
@@ -31,4 +31,14 @@ export function prepareSuggestionItems(suggestionItems, searchInput) {
             showInflection: !searchWordMatchesSuggestionParent && searchWordMatchesInflection
         };
     });
+
+    // Sort highlighted items to the top
+    enriched.sort((a, b) => {
+        if (a.highlight && !b.highlight) return -1;
+        if (!a.highlight && b.highlight) return 1;
+        return 0;
+    });
+
+    return enriched;
+
 }
