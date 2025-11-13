@@ -3,6 +3,7 @@ import {QUERY_CHAR_MIN} from "./utils/constants.js";
 import {StatusMessageType} from "./utils/constants.js";
 import {fetchWordSuggestions} from "./api/apiClient.js";
 import {handleWordLookup} from "./search/handleWordLookup.js";
+import {prepareSuggestionItems} from "@search";
 import {validateSearchQueryLength} from "./search/validate.js";
 import {transformWordSuggestionData} from "./search/transformWordSuggestionData.js";
 import {handleLoadWordDetail} from "./detail/handleLoadWordDetail.js";
@@ -74,8 +75,10 @@ wordLookupInput.addEventListener("keydown", (e) => {
  */
 function buildWordSuggestionBox(rawSuggestions, searchWord) {
     const suggestionItems = transformWordSuggestionData(rawSuggestions);
+    const preparedItems = prepareSuggestionItems(suggestionItems, searchWord);
+
     renderWordSuggestionBox(
-        suggestionItems,
+        preparedItems,
         wordSuggestionsBox,
         handleLoadWordDetail,
         searchWord
@@ -95,47 +98,28 @@ function buildWordSuggestionBox(rawSuggestions, searchWord) {
  *        Does not return a value; operates directly on the provided DOM elements.
  */
 export function renderWordSuggestionBox(
-    suggestionItems,
+    preparedItems,
     wordSuggestionsBox,
     handleLoadWordDetail,
-    searchWord
+    searchInput
 ) {
-    if (!suggestionItems || suggestionItems.length === 0) {
+    if (!preparedItems || preparedItems.length === 0) {
         hideSuggestions();
         return;
     }
 
     wordSuggestionsBox.style.display = "block";
-    const stripPOS = s => s?.replace(/\s*\([^)]*\)\s*$/, "") ?? "";
 
-    // Roll individual inflections up to a single canonical parent.
-    // Make sure not to exclude an exact match to searchWord.
-    const seen = new Set();
-    const deduped = suggestionItems.filter(item => {
-        if (seen.has(item.lexemeId) && item.word != searchWord) return false;
-        seen.add(item.lexemeId);
-        return true;
-    });
-
-    deduped.sort((a, b) => a.suggestion.localeCompare(b.suggestion));
-    // Build the drop-down list
-    deduped.forEach(({word, lexemeId, suggestion}) => {
+   // Build the drop-down list
+    preparedItems.forEach(({word, lexemeId, suggestion, highlight, showInflection}) => {
         const item = document.createElement("div");
-
-        // Highlight exact matches.
-        const base = stripPOS(suggestion);
-        const searchWordMatchesSuggestion = base.localeCompare(searchWord, undefined, { sensitivity: "base" }) === 0;
-
-        if(searchWordMatchesSuggestion){
-            item.classList.add("suggestion-highlight");
-
-        // Also show inflection if it exactly matches searchWord
-        } else if (word === searchWord) {
-            suggestion = `${searchWord}: ${suggestion}`
+        if (highlight) {
             item.classList.add("suggestion-highlight");
         }
 
-        item.textContent = suggestion;
+        // Show inflection prefix if needed
+        const displayText = showInflection ? `${searchInput}: ${suggestion}` : suggestion;
+        item.textContent = displayText;
 
         // Add 'load detail on click' to each suggestion item.
         item.addEventListener("click", async () => {

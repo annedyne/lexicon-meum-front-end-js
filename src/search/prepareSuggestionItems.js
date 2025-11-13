@@ -1,0 +1,34 @@
+
+/**
+ * Deduplicates suggestion items by lexemeId and enriches them with highlighting metadata.
+ *
+ * @param {Array<{word: string, lexemeId: string, suggestion: string, suggestionParent: string}>} suggestionItems
+ * @param {string} searchInput - The current search input value
+ * @returns {Array<{word: string, lexemeId: string, suggestion: string, suggestionParent: string, highlight: boolean, showInflection: boolean}>}
+ */
+export function prepareSuggestionItems(suggestionItems, searchInput) {
+    // Roll individual inflections up to a single canonical parent.
+    // Make sure not to exclude an exact match to searchWord.
+    const seen = new Set();
+    const deduped = suggestionItems.filter(item => {
+        if (seen.has(item.lexemeId) && item.word !== searchInput) return false;
+        seen.add(item.lexemeId);
+        return true;
+    });
+
+    deduped.sort((a, b) => a.suggestion.localeCompare(b.suggestion));
+
+    // Enrich with highlighting metadata
+    return deduped.map(item => {
+        const searchWordMatchesSuggestionParent =
+            item.suggestionParent.localeCompare(searchInput, undefined, { sensitivity: "base" }) === 0;
+        const searchWordMatchesInflection =
+            item.word.localeCompare(searchInput, undefined, { sensitivity: "base" }) === 0;
+
+        return {
+            ...item,
+            highlight: searchWordMatchesSuggestionParent || searchWordMatchesInflection,
+            showInflection: !searchWordMatchesSuggestionParent && searchWordMatchesInflection
+        };
+    });
+}
