@@ -1,5 +1,7 @@
 // Minimum number of characters before triggering autocomplete
 export const QUERY_CHAR_MIN = 1;
+export const AUTOCOMPLETE_DEBOUNCE_MS = 100;
+
 
 //Parts of Speech
 export const POS = Object.freeze({
@@ -29,11 +31,6 @@ export const POS_ABBREV_LABEL = Object.freeze({
 
 export const POS_KEYS = Object.freeze(Object.keys(POS_ABBREV_LABEL));
 export const POS_SET = new Set(POS_KEYS);
-
-
-
-
-
 
 export const StatusMessageType = Object.freeze({
   INFO: "info",

@@ -1,18 +1,21 @@
 import "./styles/index.css";
-import {QUERY_CHAR_MIN} from "./utils/constants.js";
-import {StatusMessageType} from "./utils/constants.js";
-import {fetchWordSuggestions} from "./api/apiClient.js";
-import {handleWordLookup} from "./search/handleWordLookup.js";
+import {QUERY_CHAR_MIN, AUTOCOMPLETE_DEBOUNCE_MS, StatusMessageType} from "@utils/constants"
+import {fetchWordSuggestions} from "@api";
+import {handleWordLookup} from  "@search";
 import {prepareSuggestionItems} from "@search";
-import {validateSearchQueryLength} from "./search/validate.js";
-import {transformWordSuggestionData} from "./search/transformWordSuggestionData.js";
-import {handleLoadWordDetail} from "./detail/handleLoadWordDetail.js";
+import {validateSearchQueryLength} from "@search";
+import {transformWordSuggestionData} from  "@search";
+import {handleLoadWordDetail} from "@detail";
 
 const isSuffixSearch = document.getElementById("suffix-search");
 const wordLookupInput = document.getElementById("word-lookup-input");
 const wordSuggestionsBox = document.getElementById("word-suggestions");
 wordSuggestionsBox.style.display = "none";
 document.documentElement.setAttribute("data-theme", "bronze");
+
+// Debouncing and race condition state
+let debounceTimer = null;
+let currentRequestId = 0;
 
 function hideSuggestions() {
     wordSuggestionsBox.style.display = "none";
@@ -37,28 +40,43 @@ function hideSuggestions() {
 wordLookupInput.addEventListener("input", async () => {
     const searchWord = wordLookupInput.value;
     const query = validateSearchQueryLength(searchWord, QUERY_CHAR_MIN);
+
+    // Clear any pending debounce
+    if (debounceTimer) {
+        clearTimeout(debounceTimer);
+    }
+
     if (!query) {
         hideSuggestions();
         return;
     }
+    debounceTimer = setTimeout(async () => {
+        // race condition tracking
+        const requestId = ++currentRequestId;
 
-    // Clear while loading
-    wordSuggestionsBox.innerHTML = "";
+        // Clear while loading
+        wordSuggestionsBox.innerHTML = "";
 
-    const result = await handleWordLookup(query, fetchWordSuggestions, isSuffixSearch.checked);
+        const result = await handleWordLookup(query, fetchWordSuggestions, isSuffixSearch.checked);
 
-    if (result.status === "success") {
-        // Hide if success but empty suggestions
-        if (!result.data || result.data.length === 0) {
-            hideSuggestions();
+        // Ignore stale responses
+        if (requestId !== currentRequestId) {
             return;
         }
-        buildWordSuggestionBox(result.data, searchWord);
-        wordLookupInput.setAttribute("aria-expanded", "true");
-    } else {
-        hideSuggestions();
-        setStatus(result.message);
-    }
+
+        if (result.status === "success") {
+            // Hide if success but empty suggestions
+            if (!result.data || result.data.length === 0) {
+                hideSuggestions();
+                return;
+            }
+            buildWordSuggestionBox(result.data, searchWord);
+            wordLookupInput.setAttribute("aria-expanded", "true");
+        } else {
+            hideSuggestions();
+            setStatus(result.message);
+        }
+    }, AUTOCOMPLETE_DEBOUNCE_MS);
 });
 
 wordLookupInput.addEventListener("keydown", (e) => {
