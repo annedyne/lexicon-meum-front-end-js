@@ -1,5 +1,5 @@
 import "./styles/index.css";
-import {QUERY_CHAR_MIN, AUTOCOMPLETE_DEBOUNCE_MS, StatusMessageType} from "@utils/constants"
+import {QUERY_CHAR_MIN, AUTOCOMPLETE_DEBOUNCE_MS, STATUS_TOAST_DURATION, StatusMessageType} from "@utils/constants"
 import {fetchWordSuggestions} from "@api";
 import {handleWordLookup} from  "@search";
 import {prepareSuggestionItems} from "@search";
@@ -19,7 +19,7 @@ let currentRequestId = 0;
 
 function hideSuggestions() {
     wordSuggestionsBox.style.display = "none";
-    wordSuggestionsBox.innerHTML = "";
+    wordSuggestionsBox.replaceChildren();
     // Reset any inline size overrides so next open starts clean
     wordSuggestionsBox.style.height = "";
     wordSuggestionsBox.style.maxHeight = "";
@@ -55,7 +55,7 @@ wordLookupInput.addEventListener("input", async () => {
         const requestId = ++currentRequestId;
 
         // Clear while loading
-        wordSuggestionsBox.innerHTML = "";
+        wordSuggestionsBox.replaceChildren();
 
         const result = await handleWordLookup(query, fetchWordSuggestions, isSuffixSearch.checked);
 
@@ -86,10 +86,9 @@ wordLookupInput.addEventListener("keydown", (e) => {
 });
 
 /**
- * Builds and displays a word suggestion box based on a list of words.
- *
- * @param {string[]} words - The list of words to generate suggestions from.
- * @return {void} This function does not return a value.
+ * Builds the word suggestions dropdown based on the provided data.
+ * @param rawSuggestions
+ * @param searchWord
  */
 function buildWordSuggestionBox(rawSuggestions, searchWord) {
     const suggestionItems = transformWordSuggestionData(rawSuggestions);
@@ -104,16 +103,11 @@ function buildWordSuggestionBox(rawSuggestions, searchWord) {
 }
 
 /**
- * Renders a suggestion box containing word suggestions and adds a selection handler to each.
- *
- * @param {Array<{word: string, lexemeId: string, suggestion: string}>} suggestionItems
- *        An array of suggestion objects, each containing the word, lexeme ID, and the suggestion text.
- * @param {HTMLElement} wordSuggestionsBox
- *        The DOM element representing the container where the suggestions will be rendered.
- * @param {Function} handleLoadWordDetail
- *        A callback function to execute when a suggestion is selected. Receives the word and lexeme ID as arguments.
- * @return {void}
- *        Does not return a value; operates directly on the provided DOM elements.
+ * Renders the word suggestions dropdown based on the provided data.
+ * @param preparedItems
+ * @param wordSuggestionsBox
+ * @param handleLoadWordDetail
+ * @param searchInput
  */
 export function renderWordSuggestionBox(
     preparedItems,
@@ -136,8 +130,7 @@ export function renderWordSuggestionBox(
         }
 
         // Show inflection prefix if needed
-        const displayText = showInflection ? `${searchInput}: ${suggestion}` : suggestion;
-        item.textContent = displayText;
+        item.textContent = showInflection ? `${searchInput}: ${suggestion}` : suggestion;
 
         // Add 'load detail on click' to each suggestion item.
         item.addEventListener("click", async () => {
@@ -215,7 +208,7 @@ function setStatus(message) {
     }
 }
 
-function showToast(message, type = StatusMessageType.ERROR, duration = 3000) {
+function showToast(message, type = StatusMessageType.ERROR, duration = STATUS_TOAST_DURATION) {
     const toast = document.getElementById("toast");
     // Set the text of the toast
     toast.textContent = message;

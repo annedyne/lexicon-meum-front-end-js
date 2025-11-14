@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { prepareSuggestionItems } from "../../src/search/prepareSuggestionItems.js";
+import { prepareSuggestionItems } from "@search";
 import testSuggestionItems from "./testSuggestionItems.json";
 
 describe("prepareSuggestionItems", () => {
