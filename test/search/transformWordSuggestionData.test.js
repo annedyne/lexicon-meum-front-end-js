@@ -11,7 +11,7 @@ describe("transformWordSuggestionData", () => {
     const result = transformWordSuggestionData(words);
 
     expect(result).toEqual([
-      { word: "curris", lexemeId: 1, suggestion: "currere (vrb)", suggestionParent: "currere" },
+      { word: "curris", lexemeId: 1, display: "currere (vrb)", suggestionParent: "currere" },
     ]);
   });
   it("transforms an unknown partOfSpeech to a lowercase string ", () => {
@@ -23,8 +23,8 @@ describe("transformWordSuggestionData", () => {
     const result = transformWordSuggestionData(words);
 
     expect(result).toEqual([
-      { word: "curris", lexemeId: 1, suggestion: "currere (vrb)", suggestionParent: "currere" },
-      { word: "cursui", lexemeId: 2, suggestion: "cursus (random)", suggestionParent: "cursus" },
+      { word: "curris", lexemeId: 1, display: "currere (vrb)", suggestionParent: "currere" },
+      { word: "cursui", lexemeId: 2, display: "cursus (random)", suggestionParent: "cursus" },
     ]);
   });
 
@@ -37,7 +37,7 @@ describe("transformWordSuggestionData", () => {
     const result = transformWordSuggestionData(words);
 
     expect(result).toEqual([
-      { word: "curris", lexemeId: 1, suggestion: "currere (vrb)", suggestionParent: "currere" },
+      { word: "curris", lexemeId: 1, display: "currere (vrb)", suggestionParent: "currere" },
     ]);
   });
   it("filters out word data with empty id field", () => {

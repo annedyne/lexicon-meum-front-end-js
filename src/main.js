@@ -88,17 +88,16 @@ wordLookupInput.addEventListener("keydown", (e) => {
 /**
  * Builds the word suggestions dropdown based on the provided data.
  * @param rawSuggestions
- * @param searchWord
+ * @param searchInput
  */
-function buildWordSuggestionBox(rawSuggestions, searchWord) {
+function buildWordSuggestionBox(rawSuggestions, searchInput) {
     const suggestionItems = transformWordSuggestionData(rawSuggestions);
-    const preparedItems = prepareSuggestionItems(suggestionItems, searchWord);
+    const preparedItems = prepareSuggestionItems(suggestionItems, searchInput);
 
     renderWordSuggestionBox(
         preparedItems,
         wordSuggestionsBox,
         handleLoadWordDetail,
-        searchWord
     );
 }
 
@@ -113,7 +112,6 @@ export function renderWordSuggestionBox(
     preparedItems,
     wordSuggestionsBox,
     handleLoadWordDetail,
-    searchInput
 ) {
     if (!preparedItems || preparedItems.length === 0) {
         hideSuggestions();
@@ -123,14 +121,14 @@ export function renderWordSuggestionBox(
     wordSuggestionsBox.style.display = "block";
 
    // Build the drop-down list
-    preparedItems.forEach(({word, lexemeId, suggestion, highlight, showInflection}) => {
+    preparedItems.forEach(({word, lexemeId, display, highlight, showInflection}) => {
         const item = document.createElement("div");
         if (highlight) {
             item.classList.add("suggestion-highlight");
         }
 
         // Show inflection prefix if needed
-        item.textContent = showInflection ? `${searchInput}: ${suggestion}` : suggestion;
+        item.textContent = showInflection ? `${word}: ${display}` : display;
 
         // Add 'load detail on click' to each suggestion item.
         item.addEventListener("click", async () => {

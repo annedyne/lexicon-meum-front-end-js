@@ -1,4 +1,9 @@
+import { getSearchInput } from "./searchContext.js";
+import { capitalize, matchesInflection } from "./renderUtils.js"
+
+
 export function renderDeclensionTable(declensions) {
+    const searchInput = getSearchInput();
 
     // Replace existing content
     const container = document.getElementById("inflections-container");
@@ -33,27 +38,33 @@ export function renderDeclensionTable(declensions) {
     cases.forEach((c) => {
     const row = document.createElement("tr");
 
-    const caseCell = document.createElement("td");
-    caseCell.textContent = capitalize(c.toLowerCase());
-    row.appendChild(caseCell);
+        const caseCell = document.createElement("td");
+        caseCell.textContent = capitalize(c.toLowerCase());
+        row.appendChild(caseCell);
 
-    const singularCell = document.createElement("td");
-    singularCell.textContent = tableData.SINGULAR[c] || "";
-    row.appendChild(singularCell);
+        const singularValue = tableData.SINGULAR[c] || "";
+        const singularCell = document.createElement("td");
+        
+        // Highlight if matches search input
+        if (matchesInflection(singularValue, searchInput)) {
+            singularCell.classList.add("inflection-match-highlight");
+        }
+        singularCell.textContent = singularValue;
+        row.appendChild(singularCell);
 
-    const pluralCell = document.createElement("td");
-    pluralCell.textContent = tableData.PLURAL[c] || "";
-    row.appendChild(pluralCell);
+        const pluralValue = tableData.PLURAL[c] || "";
+        const pluralCell = document.createElement("td");
+        
+        // Highlight if matches search input
+        if (matchesInflection(pluralValue, searchInput)) {
+            pluralCell.classList.add("inflection-match-highlight");
+        }
+        pluralCell.textContent = pluralValue;
+        row.appendChild(pluralCell);
 
-    tbody.appendChild(row);
-  });
-  table.appendChild(tbody);
+        tbody.appendChild(row);
+    });
+    table.appendChild(tbody);
 
-
-  container.appendChild(table);
-}
-
-// Helper to capitalize strings
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+    container.appendChild(table);
 }
