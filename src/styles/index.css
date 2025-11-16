@@ -131,6 +131,11 @@ label {
     background-color: var(--color-muted-100);
 }
 
+.suggestion-highlight {
+    font-weight: bold;
+    color: #222;
+}
+
 #status-bar {
     margin: 10px;
     height: 24px;
@@ -219,6 +224,12 @@ label {
     font-size: 1rem;
     font-weight: 500;
 }
+
+.inflection-match-highlight {
+    border-left: 3px solid var(--color-logo-orange-400);
+    font-weight: 500;
+}
+
 
 .latin-table {
     width: 100%;

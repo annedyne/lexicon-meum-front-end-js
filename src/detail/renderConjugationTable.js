@@ -1,3 +1,6 @@
+import {getSearchInput} from "./searchContext.js";
+import { matchesInflection} from "./renderUtils.js";
+
 export function renderConjugationTable(conjugations, voice) {
 
     const container = document.getElementById("inflections-container");
@@ -33,6 +36,7 @@ export function renderConjugationTable(conjugations, voice) {
 
 }
 function buildRows(data) {
+    const searchInput = getSearchInput();
     const mood = data?.mood ?? "";
     const tenses = Array.isArray(data?.tenses) ? data.tenses : [];
 
@@ -70,8 +74,19 @@ function buildRows(data) {
             const leftForm = left?.forms?.[j] ?? "";   // pad if undefined
             const rightForm = right?.forms?.[j] ?? ""; // pad if no right tense
 
-            formRow.insertCell().innerHTML = leftForm;
-            formRow.insertCell().innerHTML = rightForm;
+            const leftCell = formRow.insertCell();
+            leftCell.innerHTML = leftForm;
+            // Highlight if matches search input
+            if (matchesInflection(leftForm, searchInput)) {
+                leftCell.classList.add("inflection-match-highlight");
+            }
+
+            const rightCell = formRow.insertCell();
+            rightCell.innerHTML = rightForm;
+            // Highlight if matches search input
+            if ( matchesInflection(rightForm, searchInput)) {
+                rightCell.classList.add("inflection-match-highlight");
+            }
         }
 
     }

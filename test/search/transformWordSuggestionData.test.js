@@ -4,65 +4,62 @@ import { transformWordSuggestionData } from "@search";
 describe("transformWordSuggestionData", () => {
   it("transforms valid word data into display-friendly format", () => {
     const words = [
-      { word: "run", lexemeId: 1, partOfSpeech: "VERB" },
-      { word: "runner", lexemeId: 2, partOfSpeech: "NOUN" },
+      { word: "curris", lexemeId: 1, partOfSpeech: "VERB", suggestionParent: "currere" },
+      { word: "cursui", lexemeId: 2, partOfSpeech: "NOUN", suggestionParent: "" },
     ];
 
     const result = transformWordSuggestionData(words);
 
     expect(result).toEqual([
-      { word: "run", lexemeId: 1, suggestion: "run (vrb)" },
-      { word: "runner", lexemeId: 2, suggestion: "runner (nom)" },
+      { word: "curris", lexemeId: 1, display: "currere (vrb)", suggestionParent: "currere" },
     ]);
   });
   it("transforms an unknown partOfSpeech to a lowercase string ", () => {
     const words = [
-      { word: "run", lexemeId: 1, partOfSpeech: "VERB" },
-      { word: "runner", lexemeId: 2, partOfSpeech: "random" },
+      { word: "curris", lexemeId: 1, partOfSpeech: "VERB", suggestionParent: "currere" },
+      { word: "cursui", lexemeId: 2, partOfSpeech: "random", suggestionParent: "cursus" },
     ];
 
     const result = transformWordSuggestionData(words);
 
     expect(result).toEqual([
-      { word: "run", lexemeId: 1, suggestion: "run (vrb)" },
-      { word: "runner", lexemeId: 2, suggestion: "runner (random)" },
+      { word: "curris", lexemeId: 1, display: "currere (vrb)", suggestionParent: "currere" },
+      { word: "cursui", lexemeId: 2, display: "cursus (random)", suggestionParent: "cursus" },
     ]);
   });
 
   it("filters out word data with empty word field", () => {
     const words = [
-      { word: "run", lexemeId: 1, partOfSpeech: "VERB" },
-      { word: "", lexemeId: 2, partOfSpeech: "NOUN" },
+      { word: "curris", lexemeId: 1, partOfSpeech: "VERB", suggestionParent: "currere" },
+      { word: "", lexemeId: 2, partOfSpeech: "NOUN", suggestionParent: "cursus" },
     ];
 
     const result = transformWordSuggestionData(words);
 
     expect(result).toEqual([
-      { word: "run", lexemeId: 1, suggestion: "run (vrb)" },
+      { word: "curris", lexemeId: 1, display: "currere (vrb)", suggestionParent: "currere" },
     ]);
   });
   it("filters out word data with empty id field", () => {
     const words = [
-      { word: "run", lexemeId: 1, partOfSpeech: "VERB" },
-      { word: "runner", lexemeId: "", partOfSpeech: "NOUN" },
+      { word: "curris", lexemeId: 1, partOfSpeech: "VERB" },
+      { word: "cursus", lexemeId: "", partOfSpeech: "NOUN" },
     ];
 
     const result = transformWordSuggestionData(words);
 
     expect(result).toEqual([
-      { word: "run", lexemeId: 1, suggestion: "run (vrb)" },
     ]);
   });
   it("filters out word data with empty suggestion field", () => {
     const words = [
-      { word: "run", lexemeId: 1, partOfSpeech: "VERB" },
-      { word: "runner", lexemeId: "", partOfSpeech: "" },
+      { word: "curris", lexemeId: 1, partOfSpeech: "VERB" },
+      { word: "cursus", lexemeId: "", partOfSpeech: "" },
     ];
 
     const result = transformWordSuggestionData(words);
 
     expect(result).toEqual([
-      { word: "run", lexemeId: 1, suggestion: "run (vrb)" },
     ]);
   });
 });

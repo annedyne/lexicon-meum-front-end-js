@@ -1,0 +1,71 @@
+[
+  {
+    "genders": [
+      "MASCULINE"
+    ],
+    "inflections": {
+      "SINGULAR": {
+        "NOMINATIVE": "pulcher",
+        "GENITIVE": "pulchrī",
+        "DATIVE": "pulchrō",
+        "ACCUSATIVE": "pulchrum",
+        "ABLATIVE": "pulchrō",
+        "VOCATIVE": "pulcher"
+      },
+      "PLURAL": {
+        "NOMINATIVE": "pulchrī",
+        "GENITIVE": "pulchrōrum",
+        "DATIVE": "pulchrīs",
+        "ACCUSATIVE": "pulchrōs",
+        "ABLATIVE": "pulchrīs",
+        "VOCATIVE": "pulchrī"
+      }
+    }
+  },
+  {
+    "genders": [
+      "FEMININE"
+    ],
+    "inflections": {
+      "SINGULAR": {
+        "NOMINATIVE": "pulchra",
+        "GENITIVE": "pulchrae",
+        "DATIVE": "pulchrae",
+        "ACCUSATIVE": "pulchram",
+        "ABLATIVE": "pulchrā",
+        "VOCATIVE": "pulchra"
+      },
+      "PLURAL": {
+        "NOMINATIVE": "pulchrae",
+        "GENITIVE": "pulchrārum",
+        "DATIVE": "pulchrīs",
+        "ACCUSATIVE": "pulchrās",
+        "ABLATIVE": "pulchrīs",
+        "VOCATIVE": "pulchrae"
+      }
+    }
+  },
+  {
+    "genders": [
+      "NEUTER"
+    ],
+    "inflections": {
+      "SINGULAR": {
+        "NOMINATIVE": "pulchrum",
+        "GENITIVE": "pulchrī",
+        "DATIVE": "pulchrō",
+        "ACCUSATIVE": "pulchrum",
+        "ABLATIVE": "pulchrō",
+        "VOCATIVE": "pulchrum"
+      },
+      "PLURAL": {
+        "NOMINATIVE": "pulchra",
+        "GENITIVE": "pulchrōrum",
+        "DATIVE": "pulchrīs",
+        "ACCUSATIVE": "pulchra",
+        "ABLATIVE": "pulchrīs",
+        "VOCATIVE": "pulchra"
+      }
+    }
+  }
+]
