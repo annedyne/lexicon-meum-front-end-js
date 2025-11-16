@@ -225,6 +225,12 @@ label {
     font-weight: 500;
 }
 
+.inflection-match-highlight {
+    border-left: 3px solid var(--color-logo-orange-400);
+    font-weight: 500;
+}
+
+
 .latin-table {
     width: 100%;
     border-collapse: collapse;

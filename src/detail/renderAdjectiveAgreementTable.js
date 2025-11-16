@@ -1,3 +1,6 @@
+import {matchesInflection} from "./renderUtils.js";
+import {getSearchInput} from "./searchContext.js";
+
 const GENDER_ABBR = { MASCULINE: "m", FEMININE: "f", NEUTER: "n" };
 
 // define  canonical sort order:
@@ -62,6 +65,8 @@ function formatGenderLabel(genders) {
 }
 
 function addCaseRows(agreements, cases, numberLabel) {
+    const searchInput = getSearchInput();
+
   const frag = document.createDocumentFragment();
 
   cases.forEach((gramCase) => {
@@ -74,7 +79,11 @@ function addCaseRows(agreements, cases, numberLabel) {
     agreements.forEach(({ inflections }) => {
       const td = document.createElement("td");
 
-      td.textContent = inflections[numberLabel]?.[gramCase] ?? "";
+      const inflection = inflections[numberLabel]?.[gramCase] ?? "";
+      td.textContent = inflection;
+      if(matchesInflection(inflection, searchInput)){
+          td.classList.add("inflection-match-highlight");
+      }
       row.appendChild(td);
     });
 

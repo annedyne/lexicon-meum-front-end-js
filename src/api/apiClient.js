@@ -13,11 +13,11 @@ export const SUFFIX_URI = "suffix?suffix=";
  * Constructs the appropriate URI using the provided word's lexeme ID,
  * sends a GET request, parses the JSON response, and returns it.
  *
- * @param  {string} lemma - The word form selected for search
+ * @param  {string} selectedForm - The word form selected for search
  * @param  {string} lexemeId lexeme ID used to build the declension detail request URI.
  * @returns {Promise<any>} The parsed JSON data representing the word's declension details.
  */
-export async function fetchWordDetailData(lemma, lexemeId) {
+export async function fetchWordDetailData(selectedForm, lexemeId) {
   try {
     const uri = getLexemeDetailUri(lexemeId);
     const response = await fetch(uri);
@@ -26,9 +26,9 @@ export async function fetchWordDetailData(lemma, lexemeId) {
     }
     return await response.json();
   } catch (error) {
-    const loggingPrefix = `Failed to fetch data for ${lemma}`;
+    const loggingPrefix = `Failed to fetch data for ${selectedForm}`;
     logFetchError(loggingPrefix, error);
-    error.message = `Failed to fetch ${lemma} details: ${error.message}`;
+    error.message = `Failed to fetch ${selectedForm} details: ${error.message}`;
     throw error;
   }
 }

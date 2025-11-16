@@ -4,11 +4,11 @@ export function transformWordSuggestionData(wordSuggestionData) {
     return wordSuggestionData
         .map((suggestionDatum) => {
             const {word, lexemeId, partOfSpeech, suggestionParent} = suggestionDatum;
-            let suggestion;
+            let display;
 
             if (word && partOfSpeech && lexemeId && suggestionParent) {
-                suggestion = `${suggestionParent} (${abbrevPartOfSpeech(partOfSpeech)})`;
-                return {word, lexemeId, suggestion, suggestionParent};
+                display  = `${suggestionParent} (${abbrevPartOfSpeech(partOfSpeech)})`;
+                return {word, lexemeId, display, suggestionParent};
             } else {
                 return null;
             }

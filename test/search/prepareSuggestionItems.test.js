@@ -11,7 +11,7 @@ describe("prepareSuggestionItems", () => {
     expect(result).toHaveLength(2);
 
     // Both "feci" entries should be present (one for each lexeme)
-    const suggestions = result.map(item => item.suggestion);
+    const suggestions = result.map(item => item.display);
     expect(suggestions).toContain("facere (vrb)");
     expect(suggestions).toContain("fēx (nom)");
 
@@ -43,8 +43,8 @@ describe("prepareSuggestionItems", () => {
     const result = prepareSuggestionItems(testSuggestionItems, searchInput);
 
     // "facere (vrb)" should come before "fēx (nom)" alphabetically
-    expect(result[0].suggestion).toBe("facere (vrb)");
-    expect(result[1].suggestion).toBe("fēx (nom)");
+    expect(result[0].display).toBe("facere (vrb)");
+    expect(result[1].display).toBe("fēx (nom)");
   });
 
   it("deduplicates when search does not match, keeping only first occurrence", () => {
@@ -55,10 +55,10 @@ describe("prepareSuggestionItems", () => {
     expect(result).toHaveLength(2);
 
     // Should keep the first occurrence of each lexemeId
-    expect(result[0].word).toBe("feci");
-    expect(result[0].suggestion).toBe("facere (vrb)");
-    expect(result[1].word).toBe("feci");
-    expect(result[1].suggestion).toBe("fēx (nom)");
+    expect(result[0].word).toBe("facere");
+    expect(result[0].display).toBe("facere (vrb)");
+    expect(result[1].word).toBe("fēx");
+    expect(result[1].display).toBe("fēx (nom)");
   });
 
   it("does not highlight when search input does not match", () => {
