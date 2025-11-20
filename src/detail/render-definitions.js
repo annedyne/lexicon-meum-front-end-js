@@ -1,51 +1,47 @@
-import { renderPrepositionSpecificElements } from "@detail/renderPrepositionSpecificElements.js";
-import { renderSubtypeSpecificElements } from "@detail/renderSubtypeSpecificElements.js";
+import { renderPrepositionElements } from "@detail/render-preposition-elements.js";
+import { renderSubtypeSpecificElements } from "@detail/render-subtype-specific-elements.js";
 import {POS} from "@src/utils/constants.js";
 
 export function renderDefinitions(definitions, governedCase, partOfSpeech, subtype) {
-  const container = document.getElementById("definitions-container");
+  const container = document.querySelector("#definitions-container");
   container.replaceChildren();
 
   const definitionsLabelSpan = document.createElement("span");
   definitionsLabelSpan.classList.add("definitions-label");
   definitionsLabelSpan.textContent = "Definitions:";
-  container.appendChild(definitionsLabelSpan);
+  container.append(definitionsLabelSpan);
 
    let senseSpecificContent;
   // Insert preposition-specific content (e.g., governedCase) between the label and the lists
-    if(partOfSpeech == POS.PREPOSITION ||partOfSpeech ==  POS.POSTPOSITION){
-        senseSpecificContent = renderPrepositionSpecificElements?.(governedCase, partOfSpeech);
+    if(partOfSpeech === POS.PREPOSITION || partOfSpeech ===  POS.POSTPOSITION){
+        senseSpecificContent = renderPrepositionElements?.(governedCase, partOfSpeech);
     }
     // Insert subtype-specific content (e.g., subtype) between the label and the lists
-    else if (partOfSpeech == POS.DETERMINER || partOfSpeech == POS.PRONOUN) {
+    else if (partOfSpeech === POS.DETERMINER || partOfSpeech === POS.PRONOUN) {
         senseSpecificContent = renderSubtypeSpecificElements?.(subtype, partOfSpeech);
     }
 
   if (senseSpecificContent) {
-      container.appendChild(senseSpecificContent);
+      container.append(senseSpecificContent);
   }
 
-  if (!definitions || definitions.length === 0) return;
+  if (!definitions || definitions.length === 0) {
+      return;
+  }
 
   const visibleCount = 2;
 
-    const a = 1;
-    if (a == "1") {
-        // ...
-    }
-
-
-    const list = document.createElement("ul");
+  const list = document.createElement("ul");
   list.classList.add("definitions-list");
 
   // First N definitions
-  definitions.slice(0, visibleCount).forEach((def) => {
+  for (const definition of definitions.slice(0, visibleCount)) {
     const li = document.createElement("li");
-    li.textContent = def;
-    list.appendChild(li);
-  });
+    li.textContent = definition;
+    list.append(li);
+  }
 
-  container.appendChild(list);
+  container.append(list);
 
   // Remainder definitions
   if (definitions.length > visibleCount) {
@@ -53,13 +49,13 @@ export function renderDefinitions(definitions, governedCase, partOfSpeech, subty
     hiddenList.classList.add("definitions-list", "definitions-hidden");
     hiddenList.style.display = "none";
 
-    definitions.slice(visibleCount).forEach((def) => {
+    for (const definition of definitions.slice(visibleCount)) {
       const li = document.createElement("li");
-      li.textContent = def;
-      hiddenList.appendChild(li);
-    });
+      li.textContent = definition;
+      hiddenList.append(li);
+    }
 
-    container.appendChild(hiddenList);
+    container.append(hiddenList);
 
     // Toggle button
     const toggle = document.createElement("button");
@@ -71,6 +67,6 @@ export function renderDefinitions(definitions, governedCase, partOfSpeech, subty
       toggle.textContent = isHidden ? "Show less" : "Show more";
     });
 
-    container.appendChild(toggle);
+    container.append(toggle);
   }
 }

@@ -1,4 +1,4 @@
-import {abbrevPartOfSpeech} from "@src/utils/formatPartOfSpeech.js";
+import {abbrevPartOfSpeech} from "@utils/format-part-of-speech.js";
 import {POS} from "@src/utils/constants.js";
 
 export function renderPOSAfterLemma(partOfSpeech){
@@ -9,15 +9,19 @@ export function renderPOSAfterLemma(partOfSpeech){
         return; 
     }
 
-    const container = document.getElementById("lemma-container");
-    if (!container) return;
+    const container = document.querySelector("#lemma-container");
+    if (!container) {
+        return;
+    }
 
     //  remove only prior adverb marker(s) not the whole lemma-header
-    container.querySelectorAll(".part-of-speech").forEach(n => n.remove());
+    for (const n of container.querySelectorAll(".part-of-speech")) {
+        n.remove();
+    }
 
     const partOfSpeechSpan = document.createElement("span");
     partOfSpeechSpan.classList.add("part-of-speech");
     partOfSpeechSpan.textContent = `  (${abbrevPartOfSpeech(partOfSpeech)})`;
 
-    container.appendChild(partOfSpeechSpan);
+    container.append(partOfSpeechSpan);
 }

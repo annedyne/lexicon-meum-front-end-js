@@ -1,11 +1,13 @@
-import { renderDeclensionTable } from "./renderDeclensionTable.js";
-import { renderConjugationTable } from "./renderConjugationTable.js";
-import { renderAdjectiveAgreementTable } from "./renderAdjectiveAgreementTable.js";
-import { renderLemmaHeader } from "./renderLemmaHeader.js";
-import { renderPrincipalParts } from "./renderPrincipalParts.js";
-import { renderDefinitions } from "./renderDefinitions.js";
-import { renderInflectionType } from "./renderInflectionType.js";
-import {renderPOSAfterLemma} from "@detail/renderPOSAfterLemma.js";
+// noinspection SpellCheckingInspection
+
+import { renderDeclensionTable } from "./render-declension-table.js";
+import { renderConjugationTable } from "./render-conjugation-table.js";
+import { renderAdjectiveAgreementTable } from "./render-adjective-agreement-table.js";
+import { renderLemmaHeader } from "./render-lemma-header.js";
+import { renderPrincipalParts } from "./render-principal-parts.js";
+import { renderDefinitions } from "./render-definitions.js";
+import { renderInflectionType } from "./render-inflection-type.js";
+import {renderPOSAfterLemma} from "@detail/render-pos-after-lemma.js";
 /**
  *  Displays word details
  *
@@ -45,34 +47,46 @@ export function renderWordDetail(wordDetailData) {
         const {
             conjugations = [],
             agreements = [],
-            declensions = null,
+            declensions,
         } = inflectionTable ?? {};
 
 
         // Show exactly one inflection table depending on POS; clear otherwise
         const pos = typeof partOfSpeech === "string" ? partOfSpeech.trim().toUpperCase() : "";
 
-        if (pos === "NOUN") {
-            renderDeclensionTable(declensions);
-        } else if (pos === "VERB") {
-            renderConjugationTable(conjugations, "ACTIVE");
-        } else if (pos === "ADJECTIVE" || pos === "DETERMINER" || pos === "PRONOUN") {
-            renderAdjectiveAgreementTable(agreements);
-        } else {
-            // No inflections for this POS; ensure area is cleared
-            const container = document.getElementById("inflections-container");
-            container && container.replaceChildren();
+        // noinspection BlockStatementJS
+        switch (pos) {
+            case "NOUN":
+                renderDeclensionTable(declensions);
+                break;
+
+            case "VERB":
+                renderConjugationTable(conjugations, "ACTIVE");
+                break;
+
+            case "ADJECTIVE":
+            case "DETERMINER":
+            case "PRONOUN":
+                renderAdjectiveAgreementTable(agreements);
+                break;
+
+            default: {
+                // No inflections for this POS; ensure area is cleared
+                const container = document.querySelector("#inflections-container");
+                container && container.replaceChildren();
+            }
+
         }
 
-    } catch (err) {
-        console.error(`Rendering error for ${lemma} details:`, err);
-        throw err;
+    } catch (error) {
+        console.error(`Rendering error for ${lemma} details:`, error);
+        throw error;
     }
 }
 
 
 function addNounGender(gender) {
-    const container = document.getElementById("principal-parts-container");
+    const container = document.querySelector("#principal-parts-container");
     const ppSpan = container?.querySelector(".principal-parts");
     if (ppSpan) {
         const abbr = (typeof gender === "string" && gender.trim().length > 0)
@@ -81,12 +95,12 @@ function addNounGender(gender) {
 
         if (abbr) {
             // Add a leading space so it reads like: "puella, puellae f."
-            ppSpan.appendChild(document.createTextNode(" "));
+            ppSpan.append(document.createTextNode(" "));
 
             const em = document.createElement("em");
             em.classList.add("gender");
             em.textContent = `${abbr}.`;
-            ppSpan.appendChild(em);
+            ppSpan.append(em);
         }
     }
 }

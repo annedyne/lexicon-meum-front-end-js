@@ -21,7 +21,7 @@
 
   </head>
   <body>
-    <script type="module" src="src/main.js"></script>
+    <script type="module" src="src/main.js" defer></script>
     <header class="banner">
       <img src="/images/lm-logo.svg" alt="Lexicon Meum logo" />
     </header>
@@ -32,7 +32,8 @@
     <div class="input-with-checkbox">
         <label for="word-lookup-input">Search</label>
         <div class="input-field">
-          <input
+          <!--suppress HtmlUnknownAttribute -->
+            <input
                   id="word-lookup-input"
                   type="search"
                   autocomplete="off"

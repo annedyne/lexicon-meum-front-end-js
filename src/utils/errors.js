@@ -1,8 +1,12 @@
-export function toErrorMessage(err, fallback = "Something went wrong") {
-    if (err && typeof err === "object" && "message" in err) return String(err.message);
-    if (typeof err === "string") return err;
+export function toErrorMessage(error, fallback = "Something went wrong") {
+    if (error && typeof error === "object" && "message" in error) {
+        return String(error.message);
+    }
+    if (typeof error === "string") {
+        return error;
+    }
     try {
-        return JSON.stringify(err);
+        return JSON.stringify(error);
     } catch {
         return fallback;
     }

@@ -1,10 +1,12 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { setSearchInput, clearSearchInput } from "@detail/searchContext.js";
-import { renderDeclensionTable } from "@detail/renderDeclensionTable.js";
+import { setSearchInput, clearSearchInput } from "@detail/search-context.js";
+import { renderDeclensionTable } from "@detail/render-declension-table.js";
 
 describe("renderDeclensionTable highlighting", () => {
     beforeEach(() => {
-        document.body.innerHTML = '<div id="inflections-container"></div>';
+        const container = document.createElement('div');
+        container.id = 'inflections-container';
+        document.body.replaceChildren(container);
         clearSearchInput(); // Reset state between tests
     });
 
@@ -19,22 +21,22 @@ describe("renderDeclensionTable highlighting", () => {
         renderDeclensionTable(declensions);
 
         const cells = document.querySelectorAll("td");
-        const accusativeSingular = Array.from(cells).find(
+        const accusativeSingular = [...cells].find(
             cell => cell.textContent === "puellam"
         );
 
         expect(accusativeSingular.classList.contains("inflection-match-highlight")).toBe(true);
 
         // Test that all other inflection cells are NOT highlighted
-        const otherInflectionCells = Array.from(cells).filter(
+        const otherInflectionCells = [...cells].filter(
             cell => cell.textContent !== "puellam" &&
                 cell.textContent !== "Nominative" &&
                 cell.textContent !== "Accusative"
         );
 
-        otherInflectionCells.forEach(cell => {
+        for (const cell of otherInflectionCells) {
             expect(cell.classList.contains("inflection-match-highlight")).toBe(false);
-        });
+        }
 
     });
 
@@ -49,7 +51,7 @@ describe("renderDeclensionTable highlighting", () => {
         renderDeclensionTable(declensions);
 
         // Should still match due to normalization
-        const cell = Array.from(document.querySelectorAll("td")).find(
+        const cell = [...document.querySelectorAll("td")].find(
             cell => cell.textContent === "puēlla"
         );
 

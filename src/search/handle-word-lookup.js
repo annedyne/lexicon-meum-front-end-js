@@ -4,11 +4,7 @@ export async function handleWordLookup(query, fetchSuggestions, isSuffixSearch) 
   try {
     const suggestions = await fetchSuggestions(trimmedQuery, isSuffixSearch);
 
-    if (Array.isArray(suggestions) && suggestions.length > 0) {
-      return { status: "success", data: suggestions };
-    } else {
-      return { status: "error", message: "No suggestions found" };
-    }
+    return Array.isArray(suggestions) && suggestions.length > 0 ? { status: "success", data: suggestions } : { status: "error", message: "No suggestions found" };
   } catch {
     return {
       status: "error",

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { matchesInflection, capitalize } from '@detail/renderUtils.js';
+import { matchesInflection, capitalize } from '@detail/render-utilities.js';
 
 describe('matchesInflection', () => {
     it('should return true when inflection matches search input exactly', () => {
@@ -38,7 +38,7 @@ describe('matchesInflection', () => {
     });
 
     it('should return false when inflection is null', () => {
-        expect(matchesInflection(null, 'puella')).toBe(false);
+        expect(matchesInflection(undefined, 'puella')).toBe(false);
     });
 
     it('should return false when inflection is empty string', () => {
@@ -46,11 +46,11 @@ describe('matchesInflection', () => {
     });
 
     it('should return false when search input is undefined', () => {
-        expect(matchesInflection('puella', undefined)).toBe(false);
+        expect(matchesInflection('puella')).toBe(false);
     });
 
     it('should return false when search input is null', () => {
-        expect(matchesInflection('puella', null)).toBe(false);
+        expect(matchesInflection('puella')).toBe(false);
     });
 
     it('should return false when search input is empty string', () => {
@@ -62,7 +62,7 @@ describe('matchesInflection', () => {
     });
 
     it('should return false when both inflection and search input are null', () => {
-        expect(matchesInflection(null, null)).toBe(false);
+        expect(matchesInflection()).toBe(false);
     });
 
     it('should handle multiple diacritics', () => {

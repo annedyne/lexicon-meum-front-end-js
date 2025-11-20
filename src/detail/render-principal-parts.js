@@ -1,9 +1,9 @@
 export function renderPrincipalParts(principalParts) {
 
-  const principalPartsContainer = document.getElementById(
-    "principal-parts-container",
+  const principalPartsContainer = document.querySelector(
+    "#principal-parts-container",
   );
-  principalPartsContainer.innerHTML = ""; // Clear once at the top
+  principalPartsContainer.textContent = ""; // Clear once at the top
 
   if (principalParts && principalParts.length > 0) {
     const span = document.createElement("span");
@@ -11,6 +11,6 @@ export function renderPrincipalParts(principalParts) {
 
     // Join parts with commas (no trailing comma)
     span.textContent = principalParts.join(", ");
-    principalPartsContainer.appendChild(span);
+    principalPartsContainer.append(span);
   }
 }

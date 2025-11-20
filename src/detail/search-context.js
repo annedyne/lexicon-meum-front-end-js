@@ -2,7 +2,7 @@
  * Stores the current search input to enable highlighting
  * matching inflections in detail views.
  */
-let currentSearchInput = null;
+let currentSearchInput;
 
 /**
  * Sets the search input that triggered the current detail view.
@@ -24,5 +24,5 @@ export function getSearchInput() {
  * Clears the search input context.
  */
 export function clearSearchInput() {
-    currentSearchInput = null;
+    currentSearchInput = undefined;
 }
