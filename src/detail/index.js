@@ -1,12 +1,1 @@
-export { handleLoadWordDetail } from "./handleLoadWordDetail.js";
-export { renderAdjectiveAgreementTable } from "./renderAdjectiveAgreementTable.js";
-export { renderConjugationTable } from "./renderConjugationTable.js";
-export { renderDeclensionTable } from "./renderDeclensionTable.js";
-export { renderDefinitions } from "./renderDefinitions.js";
-export { renderInflectionType } from "./renderInflectionType.js";
-export { renderLemmaHeader } from "./renderLemmaHeader.js";
-export { renderPOSAfterLemma } from "./renderPOSAfterLemma.js";
-export { renderPrepositionSpecificElements } from "./renderPrepositionSpecificElements.js";
-export { renderPrincipalParts } from "./renderPrincipalParts.js";
-export { renderSubtypeSpecificElements } from "./renderSubtypeSpecificElements.js";
-export { renderWordDetail } from "./renderWordDetail.js";
+export { handleLoadWordDetail } from "./handle-load-word-detail.js";

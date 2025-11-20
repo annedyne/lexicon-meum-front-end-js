@@ -1,4 +1,6 @@
 // Minimum number of characters before triggering autocomplete
+// noinspection SpellCheckingInspection
+
 export const QUERY_CHAR_MIN = 1;
 export const AUTOCOMPLETE_DEBOUNCE_MS = 100;
 

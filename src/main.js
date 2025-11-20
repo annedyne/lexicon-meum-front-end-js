@@ -7,14 +7,14 @@ import {validateSearchQueryLength} from "@search";
 import {transformWordSuggestionData} from  "@search";
 import {handleLoadWordDetail} from "@detail";
 
-const isSuffixSearch = document.getElementById("suffix-search");
-const wordLookupInput = document.getElementById("word-lookup-input");
-const wordSuggestionsBox = document.getElementById("word-suggestions");
+const isSuffixSearch = document.querySelector("#suffix-search");
+const wordLookupInput = document.querySelector("#word-lookup-input");
+const wordSuggestionsBox = document.querySelector("#word-suggestions");
 wordSuggestionsBox.style.display = "none";
-document.documentElement.setAttribute("data-theme", "bronze");
+document.documentElement.dataset.theme = "bronze";
 
 // Debouncing and race condition state
-let debounceTimer = null;
+let debounceTimer;
 let currentRequestId = 0;
 
 function hideSuggestions() {
@@ -79,8 +79,8 @@ wordLookupInput.addEventListener("input", async () => {
     }, AUTOCOMPLETE_DEBOUNCE_MS);
 });
 
-wordLookupInput.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
+wordLookupInput.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
         hideSuggestions();
     }
 });
@@ -106,7 +106,6 @@ function buildWordSuggestionBox(rawSuggestions, searchInput) {
  * @param preparedItems
  * @param wordSuggestionsBox
  * @param handleLoadWordDetail
- * @param searchInput
  */
 export function renderWordSuggestionBox(
     preparedItems,
@@ -121,7 +120,7 @@ export function renderWordSuggestionBox(
     wordSuggestionsBox.style.display = "block";
 
    // Build the drop-down list
-    preparedItems.forEach(({word, lexemeId, display, highlight, showInflection}) => {
+    for (const {word, lexemeId, display, highlight, showInflection} of preparedItems) {
         const item = document.createElement("div");
         if (highlight) {
             item.classList.add("suggestion-highlight");
@@ -135,20 +134,20 @@ export function renderWordSuggestionBox(
             hideSuggestions();
             try {
                 await handleLoadWordDetail(word, lexemeId);
-            } catch (e) {
-                const message = e && typeof e === "object" && "message" in e
-                    ? e.message : "There was a problem loading details.";
+            } catch (error) {
+                const message = error && typeof error === "object" && "message" in error
+                    ? error.message : "There was a problem loading details.";
                 setStatus(message);
             }
         });
 
-        wordSuggestionsBox.appendChild(item);
-    });
+        wordSuggestionsBox.append(item);
+    }
 
     // After rendering items, snap the dropdown height to full rows
     // so the last item is never cut off mid-row.
     requestAnimationFrame(() => {
-        const children = Array.from(wordSuggestionsBox.children);
+        const children = [...wordSuggestionsBox.children];
         if (children.length === 0) {
             hideSuggestions();
             return;
@@ -186,8 +185,8 @@ export function renderWordSuggestionBox(
  * Hides the word suggestions dropdown when the user clicks outside the input field.
  * Ensures the suggestion box disappears when focus moves away from the search input.
  */
-document.addEventListener("click", (e) => {
-    if (!wordLookupInput.contains(e.target) && e.target !== wordLookupInput) {
+document.addEventListener("click", (event) => {
+    if (!wordLookupInput.contains(event.target) && event.target !== wordLookupInput) {
         hideSuggestions();
     }
 });
@@ -207,7 +206,7 @@ function setStatus(message) {
 }
 
 function showToast(message, type = StatusMessageType.ERROR, duration = STATUS_TOAST_DURATION) {
-    const toast = document.getElementById("toast");
+    const toast = document.querySelector("#toast");
     // Set the text of the toast
     toast.textContent = message;
     // Apply the appropriate type class (info, success, or error)

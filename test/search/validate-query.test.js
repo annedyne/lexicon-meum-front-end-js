@@ -9,11 +9,11 @@ describe("validateQuery", () => {
 
   it("returns null for a query shorter than the minimum length", () => {
     const result = validateSearchQueryLength("ap", 3);
-    expect(result).toBeNull();
+    expect(result).toBeUndefined();
   });
 
   it("returns null for a query with only whitespace", () => {
     const result = validateSearchQueryLength("   ", 3);
-    expect(result).toBeNull();
+    expect(result).toBeUndefined();
   });
 });

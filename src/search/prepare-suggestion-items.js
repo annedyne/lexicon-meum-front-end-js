@@ -58,7 +58,7 @@ export function prepareSuggestionItems(suggestionItems, searchInput) {
 function rollUpMatchesToLexemes(suggestionItems, searchInput) {
 
     const seen = new Set();
-    const rolledUp = suggestionItems.filter(item => {
+    return suggestionItems.filter(item => {
         // Make sure not to exclude an exact match to searchInput.
         if (seen.has(item.lexemeId) && item.word !== searchInput) {
             return false;
@@ -67,5 +67,4 @@ function rollUpMatchesToLexemes(suggestionItems, searchInput) {
             return true;
         }
     });
-    return rolledUp;
 }

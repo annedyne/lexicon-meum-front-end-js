@@ -5,7 +5,7 @@ import {
     abbrevPartOfSpeech,
     parsePartOfSpeech,
     formatPOSForDefinitions,
-} from "@src/utils/formatPartOfSpeech.js";
+} from "@utils/format-part-of-speech.js";
 
 import { POS, POS_ABBREV_LABEL } from "@src/utils/constants.js";
 
@@ -25,8 +25,8 @@ describe("formatPartOfSpeech utilities", () => {
         it("returns false for unknown values", () => {
             expect(isPartOfSpeech("UNKNOWN")).toBe(false);
             expect(isPartOfSpeech("")).toBe(false);
-            expect(isPartOfSpeech(null)).toBe(false);
-            expect(isPartOfSpeech(undefined)).toBe(false);
+            expect(isPartOfSpeech()).toBe(false);
+            expect(isPartOfSpeech()).toBe(false);
         });
     });
 
@@ -61,16 +61,16 @@ describe("formatPartOfSpeech utilities", () => {
         });
 
         it("returns null for null/undefined", () => {
-            expect(parsePartOfSpeech(null)).toBeNull();
-            expect(parsePartOfSpeech(undefined)).toBeNull();
+            expect(parsePartOfSpeech()).toBeUndefined();
+            expect(parsePartOfSpeech()).toBeUndefined();
         });
 
         it("returns null for unknown inputs or non-string values that don't match", () => {
-            expect(parsePartOfSpeech("unknown")).toBeNull();
-            expect(parsePartOfSpeech(42)).toBeNull();
-            expect(parsePartOfSpeech({})).toBeNull();
-            expect(parsePartOfSpeech("")).toBeNull();
-            expect(parsePartOfSpeech("   ")).toBeNull();
+            expect(parsePartOfSpeech("unknown")).toBeUndefined();
+            expect(parsePartOfSpeech(42)).toBeUndefined();
+            expect(parsePartOfSpeech({})).toBeUndefined();
+            expect(parsePartOfSpeech("")).toBeUndefined();
+            expect(parsePartOfSpeech("   ")).toBeUndefined();
         });
     });
 
@@ -83,8 +83,8 @@ describe("formatPartOfSpeech utilities", () => {
 
         it("returns an empty string for falsy inputs", () => {
             expect(formatPOSForDefinitions("")).toBe("");
-            expect(formatPOSForDefinitions(null)).toBe("");
-            expect(formatPOSForDefinitions(undefined)).toBe("");
+            expect(formatPOSForDefinitions()).toBe("");
+            expect(formatPOSForDefinitions()).toBe("");
         });
     });
 });

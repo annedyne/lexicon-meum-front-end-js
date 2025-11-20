@@ -1,3 +1,4 @@
+// noinspection JSUnresolvedReference
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const getLexemeDetailUri = (lexemeId) =>
@@ -36,17 +37,18 @@ export async function fetchWordDetailData(selectedForm, lexemeId) {
 /**
  * Fetches auto-complete suggestions for word search input
  * @param query
+ * @param isSuffixSearch
  * @returns {Promise<any>}
  */
 export async function fetchWordSuggestions(query, isSuffixSearch) {
   const subAPI = isSuffixSearch ? SUFFIX_URI : PREFIX_URI;
   const uri = SEARCH_URI + subAPI + encodeURIComponent(query);
   try {
-    const res = await fetch(uri);
-    if (!res.ok) {
-      throw new Error(`HTTP Status: ${res.status}`);
+    const response = await fetch(uri);
+    if (!response.ok) {
+      throw new Error(`HTTP Status: ${response.status}`);
     }
-    return await res.json();
+    return await response.json();
   } catch (error) {
     logFetchError(`suggestion: ${query}`, error);
     throw error;

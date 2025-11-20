@@ -1,6 +1,8 @@
+// noinspection JSUnresolvedReference
+
 import {defineConfig} from "vite";
-import path from "path";
-import {fileURLToPath} from "url";
+import path from "node:path";
+import {fileURLToPath} from "node:url";
 
 // Get `__dirname` in ESM (since it's not available natively)
 const __filename = fileURLToPath(import.meta.url);

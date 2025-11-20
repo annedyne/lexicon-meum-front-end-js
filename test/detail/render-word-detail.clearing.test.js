@@ -2,53 +2,53 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
 // Lightweight mocks for the 3 inflection renderers to isolate orchestrator behavior
-vi.mock("../../src/detail/renderDeclensionTable.js", () => ({
+vi.mock("../../src/detail/render-declension-table.js", () => ({
     renderDeclensionTable: () => {
-        const c = document.getElementById("inflections-container");
+        const c = document.querySelector("#inflections-container");
         if (c) {
             c.replaceChildren();
             const marker = document.createElement("div");
             marker.id = "declension-marker";
             marker.textContent = "DECL";
-            c.appendChild(marker);
+            c.append(marker);
         }
     },
 }));
 
-vi.mock("../../src/detail/renderConjugationTable.js", () => ({
+vi.mock("../../src/detail/render-conjugation-table.js", () => ({
     renderConjugationTable: () => {
-        const c = document.getElementById("inflections-container");
+        const c = document.querySelector("#inflections-container");
         if (c) {
             c.replaceChildren();
             const marker = document.createElement("div");
             marker.id = "conjugation-marker";
             marker.textContent = "CONJ";
-            c.appendChild(marker);
+            c.append(marker);
         }
     },
 }));
 
-vi.mock("../../src/detail/renderAdjectiveAgreementTable.js", () => ({
+vi.mock("../../src/detail/render-adjective-agreement-table.js", () => ({
     renderAdjectiveAgreementTable: () => {
-        const c = document.getElementById("inflections-container");
+        const c = document.querySelector("#inflections-container");
         if (c) {
             c.replaceChildren();
             const marker = document.createElement("div");
             marker.id = "agreement-marker";
             marker.textContent = "AGRM";
-            c.appendChild(marker);
+            c.append(marker);
         }
     },
 }));
 
 // Keep these real to verify their own clearing logic as part of flows
-vi.mock("../../src/detail/renderLemmaHeader.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderDefinitions.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderInflectionType.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderPrincipalParts.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderPOSAfterLemma.js", async (orig) => await orig());
+vi.mock("../../src/detail/render-lemma-header.js", async (orig) => await orig());
+vi.mock("../../src/detail/render-definitions.js", async (orig) => await orig());
+vi.mock("../../src/detail/render-inflection-type.js", async (orig) => await orig());
+vi.mock("../../src/detail/render-principal-parts.js", async (orig) => await orig());
+vi.mock("../../src/detail/render-pos-after-lemma.js", async (orig) => await orig());
 
-import { renderWordDetail } from "../../src/detail/renderWordDetail.js";
+import { renderWordDetail } from "@detail/render-word-detail.js";
 
 function setupDom() {
     document.body.innerHTML = `
@@ -70,14 +70,14 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
         const adverb = {
             lemma: "bene",
             partOfSpeech: "ADVERB",
-            grammaticalGender: null,
-            inflectionClass: null,
+            grammaticalGender: undefined,
+            inflectionClass: undefined,
             principalParts: [],
             definitions: ["well"],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(adverb);
-        const inflectionsAfterAdverb = document.getElementById("inflections-container");
+        const inflectionsAfterAdverb = document.querySelector("#inflections-container");
         expect(inflectionsAfterAdverb.childElementCount).toBe(0);
 
         const noun = {
@@ -94,7 +94,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             },
         };
         renderWordDetail(noun);
-        const inflectionsAfterNoun = document.getElementById("inflections-container");
+        const inflectionsAfterNoun = document.querySelector("#inflections-container");
         expect(inflectionsAfterNoun.querySelector("#declension-marker")).toBeTruthy();
         expect(inflectionsAfterNoun.querySelector("#conjugation-marker")).toBeFalsy();
         expect(inflectionsAfterNoun.querySelector("#agreement-marker")).toBeFalsy();
@@ -120,7 +120,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
         const verb = {
             lemma: "amo",
             partOfSpeech: "VERB",
-            grammaticalGender: null,
+            grammaticalGender: undefined,
             inflectionClass: "FIRST",
             principalParts: ["amo", "amare", "amavi", "amatum"],
             definitions: ["love"],
@@ -143,33 +143,33 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             inflectionTable: { conjugations: [], agreements: [], declensions: { SINGULAR: {}, PLURAL: {} } },
         };
         renderWordDetail(first);
-        expect(document.getElementById("principal-parts-container").textContent)
+        expect(document.querySelector("#principal-parts-container").textContent)
             .toMatch(/puella, puellae/);
 
         const second = {
             lemma: "bene",
             partOfSpeech: "ADVERB",
-            grammaticalGender: null,
-            inflectionClass: null,
+            grammaticalGender: undefined,
+            inflectionClass: undefined,
             principalParts: [],
             definitions: ["well"],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(second);
-        expect(document.getElementById("principal-parts-container").textContent.trim()).toBe("");
+        expect(document.querySelector("#principal-parts-container").textContent.trim()).toBe("");
     });
 
     it("inflections area is empty for POS without inflection tables", () => {
         const data = {
             lemma: "bene",
             partOfSpeech: "ADVERB",
-            grammaticalGender: null,
-            inflectionClass: null,
+            grammaticalGender: undefined,
+            inflectionClass: undefined,
             principalParts: [],
             definitions: ["well"],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(data);
-        expect(document.getElementById("inflections-container").childElementCount).toBe(0);
+        expect(document.querySelector("#inflections-container").childElementCount).toBe(0);
     });
 });

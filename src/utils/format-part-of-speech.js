@@ -1,4 +1,4 @@
-import {POS, POS_ABBREV_LABEL, POS_SET} from "@src/utils/constants.js";
+import {POS, POS_ABBREV_LABEL, POS_SET} from "./constants.js";
 
 export function isPartOfSpeech(value) {
     return POS_SET.has(value);
@@ -9,17 +9,21 @@ export function abbrevPartOfSpeech(posKey) {
 }
 
 export function parsePartOfSpeech(input) {
-    if (input == null) return null;
+    if (input === undefined) {
+        return;
+    }
     const key = String(input).trim().toUpperCase();
-    return POS[key] ?? null;
+    return POS[key] ?? undefined;
 }
 
 export function formatPOSForDefinitions(input) {
    return capitalize(input);
 }
 
-function capitalize(str = "") {
-    if (!str) return "";
-    str = str.toLowerCase();
-    return str[0].toUpperCase() + str.slice(1);
+function capitalize(toBeCapitalized = "") {
+    if (!toBeCapitalized) {
+        return "";
+    }
+    const lowerCase = toBeCapitalized.toLowerCase();
+    return lowerCase[0].toUpperCase() + lowerCase.slice(1);
 }
