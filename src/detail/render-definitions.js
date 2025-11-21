@@ -1,6 +1,6 @@
 import { renderPrepositionElements } from "./render-preposition-elements.js";
 import { renderSubtypeSpecificElements } from "./render-subtype-specific-elements.js";
-import {POS} from "@utils/constants.js";
+import {POS} from "@utilities/constants.js";
 
 export function renderDefinitions(definitions, governedCase, partOfSpeech, subtype) {
   const container = document.querySelector("#definitions-container");

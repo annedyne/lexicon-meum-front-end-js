@@ -4,7 +4,8 @@ const RESTRICTED_DIRS = {
     "api": "@api",
     "detail": "@detail",
     "search": "@users",
-    "utils": "@utils",
+    "utilities": "@utilities",
+    "services": "@services"
 };
 
 /**

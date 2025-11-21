@@ -1,4 +1,4 @@
-import {formatPOSForDefinitions} from "@utils/format-part-of-speech.js";
+import {formatPOSForDefinitions} from "@utilities/format-part-of-speech.js";
 
 export function renderSubtypeSpecificElements(subtype, partOfSpeech){
 

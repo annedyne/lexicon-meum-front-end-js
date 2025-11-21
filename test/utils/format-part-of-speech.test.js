@@ -5,9 +5,9 @@ import {
     abbrevPartOfSpeech,
     parsePartOfSpeech,
     formatPOSForDefinitions,
-} from "@utils/format-part-of-speech.js";
+} from "@utilities/format-part-of-speech.js";
 
-import { POS, POS_ABBREV_LABEL } from "@utils/constants.js";
+import { POS, POS_ABBREV_LABEL } from "@utilities/constants.js";
 
 describe("formatPartOfSpeech utilities", () => {
     describe("isPartOfSpeech", () => {

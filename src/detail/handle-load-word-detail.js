@@ -1,5 +1,5 @@
 import { fetchWordDetailData } from "@api";
-import { toErrorMessage } from "@utils";
+import { toErrorMessage } from "@utilities/errors.js";
 import { renderWordDetail } from "./render-word-detail.js";
 import { setSearchInput } from "./search-context.js";
 

@@ -1,5 +1,5 @@
 import "./styles/index.css";
-import {QUERY_CHAR_MIN, AUTOCOMPLETE_DEBOUNCE_MS, STATUS_TOAST_DURATION, StatusMessageType} from "@utils/constants"
+import {QUERY_CHAR_MIN, AUTOCOMPLETE_DEBOUNCE_MS, STATUS_TOAST_DURATION, StatusMessageType} from "@utilities/constants"
 import {fetchWordSuggestions} from "@api";
 import {handleWordLookup} from  "@search";
 import {prepareSuggestionItems} from "@search";
