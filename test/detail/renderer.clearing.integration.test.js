@@ -44,12 +44,8 @@ describe("Integration: real renderers clear correctly", () => {
                 declensions: { SINGULAR: { NOMINATIVE: "puella" }, PLURAL: { NOMINATIVE: "puellae" } },
             },
         };
-        const container = document.createElement('div');
-        container.id = 'inflections-container';
-        document.body.replaceChildren(container);
-
         renderWordDetail(noun);
-        const afterNounHTML = container.innerHTML;
+        const afterNounHTML = document.querySelector("#inflections-container").innerHTML;
         expect(afterNounHTML).toContain("declension-table");
 
         const verb = {
@@ -61,11 +57,8 @@ describe("Integration: real renderers clear correctly", () => {
             definitions: ["love"],
             inflectionTable: { conjugations: [{ voice: "ACTIVE" }], agreements: [], declensions: {} },
         };
-        container.id = 'inflections-container';
-        document.body.replaceChildren(container);
-
         renderWordDetail(verb);
-        const afterVerbHTML = container.innerHTML;
+        const afterVerbHTML = document.querySelector("#inflections-container").innerHTML;
         expect(afterVerbHTML).toContain("conjugation-table");
         expect(afterVerbHTML).not.toContain("declension-table");
     });

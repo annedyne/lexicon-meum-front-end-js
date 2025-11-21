@@ -7,7 +7,7 @@ import { renderLemmaHeader } from "./render-lemma-header.js";
 import { renderPrincipalParts } from "./render-principal-parts.js";
 import { renderDefinitions } from "./render-definitions.js";
 import { renderInflectionType } from "./render-inflection-type.js";
-import {renderPOSAfterLemma} from "@detail/render-pos-after-lemma.js";
+import {renderPOSAfterLemma} from "./render-pos-after-lemma.js";
 /**
  *  Displays word details
  *

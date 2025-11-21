@@ -1,7 +1,7 @@
 /* @vitest-environment jsdom */
 import { describe, it, expect, beforeAll } from "vitest";
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import path from "node:path";
 
 const requiredIds = [
     "word-lookup-input",
@@ -17,7 +17,7 @@ const requiredIds = [
 
 describe("index.html provides required elements for main.js", () => {
     beforeAll(() => {
-        //
+        const { resolve } = path;
         const file = resolve(process.cwd(), "index.html");
         const html = readFileSync(file, "utf8");
         const match = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
@@ -27,8 +27,9 @@ describe("index.html provides required elements for main.js", () => {
 
     it("contains all required DOM nodes", () => {
         for (const id of requiredIds) {
-            const el = document.getElementById(id);
-            expect(el, `Missing #${id} in index.html`).toBeTruthy();
+            // eslint-disable-next-line unicorn/prefer-query-selector
+            const element = document.getElementById(id);
+            expect(element, `Missing #${id} in index.html`).toBeTruthy();
         }
     });
 
@@ -37,7 +38,7 @@ describe("index.html provides required elements for main.js", () => {
         await import("../../src/main.js");
 
         // A couple of smoke checks that main.js ran and touched the DOM as expected
-        expect(document.getElementById("word-suggestions").style.display).toBe("none");
-        expect(document.documentElement.getAttribute("data-theme")).toBe("bronze");
+        expect(document.querySelector("#word-suggestions").style.display).toBe("none");
+        expect(document.documentElement.dataset.theme).toBe("bronze");
     });
 });

@@ -7,7 +7,7 @@ import {
     formatPOSForDefinitions,
 } from "@utils/format-part-of-speech.js";
 
-import { POS, POS_ABBREV_LABEL } from "@src/utils/constants.js";
+import { POS, POS_ABBREV_LABEL } from "@utils/constants.js";
 
 describe("formatPartOfSpeech utilities", () => {
     describe("isPartOfSpeech", () => {
