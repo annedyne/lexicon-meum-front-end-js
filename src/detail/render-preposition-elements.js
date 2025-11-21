@@ -1,5 +1,5 @@
 import {formatPOSForDefinitions, parsePartOfSpeech} from "@utils/format-part-of-speech.js";
-import {POS} from "@src/utils/constants.js";
+import {POS} from "@utils/constants.js";
 
 export function renderPrepositionElements(governedCase, partOfSpeech){
     const pos = parsePartOfSpeech(partOfSpeech);

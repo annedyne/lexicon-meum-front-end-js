@@ -15,7 +15,7 @@ function mockFetchOnce(response, isError = false) {
 }
 
 describe("fetchWordDetailData", () => {
-  it("should throw an error if resonse is not ok", async () => {
+  it("should throw an error if response is not ok", async () => {
     mockFetchOnce({ ok: false, status: 404, statusText: "Not Found" });
 
     await expect(fetchWordDetailData("lemma", "lexemeId")).rejects.toThrowError(

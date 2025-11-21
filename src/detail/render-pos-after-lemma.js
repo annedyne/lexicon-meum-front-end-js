@@ -1,5 +1,5 @@
 import {abbrevPartOfSpeech} from "@utils/format-part-of-speech.js";
-import {POS} from "@src/utils/constants.js";
+import {POS} from "@utils/constants.js";
 
 export function renderPOSAfterLemma(partOfSpeech){
 

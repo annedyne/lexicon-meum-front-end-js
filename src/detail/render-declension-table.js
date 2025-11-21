@@ -1,7 +1,6 @@
 import { getSearchInput } from "./search-context.js";
 import { capitalize, matchesInflection } from "./render-utilities.js"
 
-
 export function renderDeclensionTable(declensions) {
     const searchInput = getSearchInput();
 
