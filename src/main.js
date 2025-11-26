@@ -6,17 +6,24 @@ import {prepareSuggestionItems} from "@search";
 import {validateSearchQueryLength} from "@search";
 import {transformWordSuggestionData} from  "@search";
 import {handleLoadWordDetail} from "@detail";
+import {Router} from "@services/router.js"
+
+// INITIALIZE ROUTER
+Router.init();
 
 const isSuffixSearch = document.querySelector("#suffix-search");
 const wordLookupInput = document.querySelector("#word-lookup-input");
 const wordSuggestionsBox = document.querySelector("#word-suggestions");
 wordSuggestionsBox.style.display = "none";
+
+// LOAD THEME FROM HTML
 document.documentElement.dataset.theme = "bronze";
 
 // Debouncing and race condition state
 let debounceTimer;
 let currentRequestId = 0;
 
+// CLEAR AUTOCOMPLETE ON PAGE LOAD
 function hideSuggestions() {
     wordSuggestionsBox.style.display = "none";
     wordSuggestionsBox.replaceChildren();
@@ -29,7 +36,7 @@ function hideSuggestions() {
 }
 
 /**
- * Handles user input in the word search field.
+ * SEARCH INPUT EVENT HANDLER
  *
  * Clears any previous suggestions and, if the input has at least the minimum
  * number of characters (`queryCharMin`), fetches autocomplete suggestions
@@ -79,8 +86,23 @@ wordLookupInput.addEventListener("input", async () => {
     }, AUTOCOMPLETE_DEBOUNCE_MS);
 });
 
+/**
+ * ESCAPE KEY HANDLER
+ *
+ * Hides the word suggestions dropdown when the escape key is pressed.
+ */
 wordLookupInput.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+        hideSuggestions();
+    }
+});
+
+/**
+ * Hides the word suggestions dropdown when the user clicks outside the input field.
+ * Ensures the suggestion box disappears when focus moves away from the search input.
+ */
+document.addEventListener("click", (event) => {
+    if (!wordLookupInput.contains(event.target) && event.target !== wordLookupInput) {
         hideSuggestions();
     }
 });
@@ -102,7 +124,7 @@ function buildWordSuggestionBox(rawSuggestions, searchInput) {
 }
 
 /**
- * Renders the word suggestions dropdown based on the provided data.
+ * Renders the autocomplete suggestions as a drop-down.
  * @param preparedItems
  * @param wordSuggestionsBox
  * @param handleLoadWordDetail
@@ -181,15 +203,7 @@ export function renderWordSuggestionBox(
     });
 }
 
-/**
- * Hides the word suggestions dropdown when the user clicks outside the input field.
- * Ensures the suggestion box disappears when focus moves away from the search input.
- */
-document.addEventListener("click", (event) => {
-    if (!wordLookupInput.contains(event.target) && event.target !== wordLookupInput) {
-        hideSuggestions();
-    }
-});
+
 
 /**
  * Updates the status display in the UI with the provided message.

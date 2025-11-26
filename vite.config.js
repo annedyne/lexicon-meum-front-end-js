@@ -17,6 +17,7 @@ export default defineConfig({
             "@search": path.resolve(__dirname, "./src/search"),
             "@api": path.resolve(__dirname, "./src/api"),
             "@utilities": path.resolve(__dirname, "./src/utilities"),
+            "@services": path.resolve(__dirname, "./src/services"),
         },
     },
     test: {
