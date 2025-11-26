@@ -16,7 +16,7 @@ const RESTRICTED_DIRS = {
 function createInternalAliasRestriction(directoryName, alias) {
     return {
         // 1. Target files only inside the specific directory
-        files: [`src/${directoryName}/**/*.{js,mjs,cjs}`],
+        files: [`src/${directoryName}/*.{js,mjs,cjs}`],
         rules: {
             "no-restricted-imports": [
                 "warn",

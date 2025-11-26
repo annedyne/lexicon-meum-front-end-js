@@ -1,10 +1,10 @@
 // noinspection SpellCheckingInspection
 
 import { renderDeclensionTable } from "./render-declension-table.js";
-import { renderConjugationTable } from "./render-conjugation-table.js";
+import { renderConjugationTable } from "./verb/render-conjugation-table.js";
 import { renderAdjectiveAgreementTable } from "./render-adjective-agreement-table.js";
 import { renderLemmaHeader } from "./render-lemma-header.js";
-import { renderPrincipalParts } from "./render-principal-parts.js";
+import { renderPrincipalParts } from "./verb/render-principal-parts.js";
 import { renderDefinitions } from "./render-definitions.js";
 import { renderInflectionType } from "./render-inflection-type.js";
 import {renderPOSAfterLemma} from "./render-pos-after-lemma.js";

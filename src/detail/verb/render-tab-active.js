@@ -1,5 +1,6 @@
-import {getSearchInput} from "./search-context.js";
-import { matchesInflection} from "./render-utilities.js";
+import {getSearchInput} from "@detail/detail-context.js";
+import { matchesInflection} from "@detail/detail-utilities.js";
+import { TAB_KEY } from "./tabs/tab-keys.js";
 
 /**
  * @typedef {Object} Tense
@@ -13,16 +14,21 @@ import { matchesInflection} from "./render-utilities.js";
  * @property {string} mood - The mood (e.g., INDICATIVE, SUBJUNCTIVE)
  * @property {Tense[]} tenses - Array of tenses for this mood
  */
-export function renderConjugationTable(conjugations, voice) {
-
+export function renderActiveConjugation(conjugations, gender) {
+    console.log(`gender is ${gender}`);
     const container = document.querySelector("#inflections-container");
-    container.replaceChildren();
+    
+    // Only clear if table doesn't exist (when called from tabs, table is already cleared)
+    const existingTable = container.querySelector("#conjugation-table");
+    if (existingTable) {
+        existingTable.remove();
+    }
 
     if (!Array.isArray(conjugations) || conjugations.length === 0) {
         return;
     }
 
-    const activeMoods = conjugations.filter((d) => d?.voice === voice);
+    const activeMoods = conjugations.filter((d) => d?.voice === TAB_KEY.ACTIVE);
     if (activeMoods.length === 0) {
         // Nothing to render for this voice
         return;
@@ -39,7 +45,7 @@ export function renderConjugationTable(conjugations, voice) {
     const headerCell = document.createElement("th");
     headerCell.colSpan = 2;
     headerCell.className = "header";
-    headerCell.textContent = `${voice}`;
+    headerCell.textContent = `${TAB_KEY.ACTIVE.toLowerCase()}`;
     headerRow.append(headerCell);
     thead.append(headerRow);
     table.append(thead);

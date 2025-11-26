@@ -1,5 +1,5 @@
-import {matchesInflection} from "./render-utilities.js";
-import {getSearchInput} from "./search-context.js";
+import {matchesInflection} from "./detail-utilities.js";
+import {getSearchInput} from "./detail-context";
 
 const GENDER_ABBR = { MASCULINE: "m", FEMININE: "f", NEUTER: "n" };
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { matchesInflection, capitalize } from '@detail/render-utilities.js';
+import { matchesInflection, capitalize } from '@detail/detail-utilities.js';
 
 describe('matchesInflection', () => {
     it('should return true when inflection matches search input exactly', () => {

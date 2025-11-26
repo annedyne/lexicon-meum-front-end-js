@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { setSearchInput, clearSearchInput } from "@detail/search-context.js";
+import { setSearchInputContext, clearSearchInput } from "@detail/detail-context.js";
 import { renderAdjectiveAgreementTable } from "@detail/render-adjective-agreement-table.js";
 import testAgreements from "./testAgreements.json";
 
@@ -13,7 +13,7 @@ describe("renderAdjectiveAgreementTable highlighting", () => {
 
 
     it("highlights singular cell matching search input", () => {
-        setSearchInput("pulchrum");
+        setSearchInputContext("pulchrum");
 
 
         renderAdjectiveAgreementTable(testAgreements);
@@ -39,7 +39,7 @@ describe("renderAdjectiveAgreementTable highlighting", () => {
     });
 
     it("highlights singular cell matching search input", () => {
-        setSearchInput("pulchrum");
+        setSearchInputContext("pulchrum");
 
 
         renderAdjectiveAgreementTable(testAgreements);

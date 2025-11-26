@@ -4,7 +4,6 @@
 export const QUERY_CHAR_MIN = 1;
 export const AUTOCOMPLETE_DEBOUNCE_MS = 100;
 
-
 //Parts of Speech
 export const POS = Object.freeze({
     ADJECTIVE: "ADJECTIVE",

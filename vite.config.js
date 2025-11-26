@@ -13,6 +13,7 @@ export default defineConfig({
         alias: {
             "@src": path.resolve(__dirname, "./src"),
             "@detail": path.resolve(__dirname, "./src/detail"),
+            "@detail-core": path.resolve(__dirname, "./src/detail/_internal"),
             "@search": path.resolve(__dirname, "./src/search"),
             "@api": path.resolve(__dirname, "./src/api"),
             "@utilities": path.resolve(__dirname, "./src/utilities"),

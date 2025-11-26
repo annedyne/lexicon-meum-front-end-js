@@ -2,7 +2,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
 // Lightweight mocks for the 3 inflection renderers to isolate orchestrator behavior
-vi.mock("../../src/detail/render-declension-table.js", () => ({
+vi.mock("@detail/render-declension-table.js", () => ({
     renderDeclensionTable: () => {
         const c = document.querySelector("#inflections-container");
         if (c) {
@@ -15,7 +15,7 @@ vi.mock("../../src/detail/render-declension-table.js", () => ({
     },
 }));
 
-vi.mock("../../src/detail/render-conjugation-table.js", () => ({
+vi.mock("@detail/verb/render-conjugation-table.js", () => ({
     renderConjugationTable: () => {
         const c = document.querySelector("#inflections-container");
         if (c) {
@@ -26,9 +26,12 @@ vi.mock("../../src/detail/render-conjugation-table.js", () => ({
             c.append(marker);
         }
     },
+    renderConjugationForTab: () => {
+        // No-op or you could add logic if needed
+    },
 }));
 
-vi.mock("../../src/detail/render-adjective-agreement-table.js", () => ({
+vi.mock("@detail/render-adjective-agreement-table.js", () => ({
     renderAdjectiveAgreementTable: () => {
         const c = document.querySelector("#inflections-container");
         if (c) {
@@ -42,11 +45,11 @@ vi.mock("../../src/detail/render-adjective-agreement-table.js", () => ({
 }));
 
 // Keep these real to verify their own clearing logic as part of flows
-vi.mock("../../src/detail/render-lemma-header.js", async (orig) => await orig());
-vi.mock("../../src/detail/render-definitions.js", async (orig) => await orig());
-vi.mock("../../src/detail/render-inflection-type.js", async (orig) => await orig());
-vi.mock("../../src/detail/render-principal-parts.js", async (orig) => await orig());
-vi.mock("../../src/detail/render-pos-after-lemma.js", async (orig) => await orig());
+vi.mock("@detail/render-lemma-header.js", async (orig) => await orig());
+vi.mock("@detail/render-definitions.js", async (orig) => await orig());
+vi.mock("@detail/render-inflection-type.js", async (orig) => await orig());
+vi.mock("@detail/render-principal-parts.js", async (orig) => await orig());
+vi.mock("@detail/render-pos-after-lemma.js", async (orig) => await orig());
 
 import { renderWordDetail } from "@detail/render-word-detail.js";
 
@@ -62,7 +65,7 @@ function setupDom() {
 
 describe("renderWordDetail clearing/orchestration behavior (with markers)", () => {
     beforeEach(() => {
-        vi.resetModules();
+       // vi.resetModules();
         setupDom();
     });
 
