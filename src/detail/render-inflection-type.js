@@ -1,4 +1,4 @@
-import {POS} from "@utils/constants.js";
+import {POS} from "@utilities/constants.js";
 
 export function renderInflectionType(inflectionClass, partOfSpeech) {
   let container = document.querySelector("#inflection-type-container");

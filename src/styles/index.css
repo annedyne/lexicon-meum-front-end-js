@@ -301,3 +301,77 @@ label {
 #inflections-container {
     overflow-x: auto;
 }
+
+
+/* Conjugation Tabs Styling */
+.conjugation-tabs-wrapper {
+    margin: 1.5rem 0 0 0;
+}
+
+.tab-row {
+    display: flex;
+    gap: 0;
+}
+
+.tab-item {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+    user-select: none;
+}
+
+/* Remove double borders between adjacent tabs */
+.tab-item + .tab-item {
+    border-left: none;
+}
+
+.tab-item:hover {
+    background-color: var(--color-row-hover);
+}
+
+.tab-item.is-active {
+    background-color: var(--color-brand-primary);
+    color: var(--color-bg);
+    font-weight: 600;
+}
+
+/* Top row specific styling */
+.voice-tabs .tab-item {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: none;
+}
+
+/* Bottom row specific styling */
+.gender-tabs .tab-item {
+    border-top: none;
+}
+
+/* Make the table appear connected to the tabs */
+.latin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 1.5rem 0;
+    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    table-layout: fixed;
+    border: 1px solid var(--color-border);
+    border-top: none;
+}
+
+.tab-placeholder {
+    padding: 2rem;
+    text-align: center;
+    color: var(--color-text-header);
+    font-style: italic;
+    border: 1px solid var(--color-border);
+    border-top: none;
+    background-color: var(--color-row-alt);
+}
+

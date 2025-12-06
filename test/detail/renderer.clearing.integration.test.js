@@ -3,14 +3,17 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
 // Use real implementations
-vi.mock("../../src/detail/render-declension-table.js", async (orig) => await orig());
-vi.mock("../../src/detail/render-conjugation-table.js", async (orig) => await orig());
-vi.mock("../../src/detail/render-adjective-agreement-table.js", async (orig) => await orig());
-vi.mock("../../src/detail/render-lemma-header.js", async (orig) => await orig());
-vi.mock("../../src/detail/render-definitions.js", async (orig) => await orig());
-vi.mock("../../src/detail/render-inflection-type.js", async (orig) => await orig());
-vi.mock("../../src/detail/render-principal-parts.js", async (orig) => await orig());
-vi.mock("../../src/detail/render-pos-after-lemma.js", async (orig) => await orig());
+vi.mock("@detail/render-declension-table.js", async (orig) => await orig());
+vi.mock("@detail/render-conjugation-table.js", async (orig) => await orig());
+vi.mock("@detail/render-adjective-agreement-table.js", async (orig) => await orig());
+vi.mock("@detail/render-lemma-header.js", async (orig) => await orig());
+vi.mock("@detail/render-definitions.js", async (orig) => await orig());
+vi.mock("@detail/render-inflection-type.js", async (orig) => await orig());
+vi.mock("@detail/render-principal-parts.js", async (orig) => await orig());
+vi.mock("@detail/render-pos-after-lemma.js", async (orig) => await orig());
+vi.mock("@detail/render-conjugation-table.js", async (orig) => await orig());
+vi.mock("@detail/render-tabs.js", async (orig) => await orig());
+
 
 import { renderWordDetail } from "@detail/render-word-detail.js";
 
@@ -26,7 +29,6 @@ function setupDom() {
 
 describe("Integration: real renderers clear correctly", () => {
     beforeEach(() => {
-        vi.resetModules();
         setupDom();
     });
 
@@ -44,10 +46,14 @@ describe("Integration: real renderers clear correctly", () => {
                 declensions: { SINGULAR: { NOMINATIVE: "puella" }, PLURAL: { NOMINATIVE: "puellae" } },
             },
         };
+        // RENDER NOUN DETAIL
         renderWordDetail(noun);
+
+        // verify that declension table is rendered
         const afterNounHTML = document.querySelector("#inflections-container").innerHTML;
         expect(afterNounHTML).toContain("declension-table");
 
+        // RENDER VERB DETAIL AFTER NOUN DETAIL
         const verb = {
             lemma: "amo",
             partOfSpeech: "VERB",
@@ -57,7 +63,10 @@ describe("Integration: real renderers clear correctly", () => {
             definitions: ["love"],
             inflectionTable: { conjugations: [{ voice: "ACTIVE" }], agreements: [], declensions: {} },
         };
+
         renderWordDetail(verb);
+
+        // check that
         const afterVerbHTML = document.querySelector("#inflections-container").innerHTML;
         expect(afterVerbHTML).toContain("conjugation-table");
         expect(afterVerbHTML).not.toContain("declension-table");

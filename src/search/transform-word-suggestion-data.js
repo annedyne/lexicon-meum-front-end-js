@@ -1,4 +1,4 @@
-import {abbrevPartOfSpeech} from "@utils/format-part-of-speech.js";
+import {abbrevPartOfSpeech} from "@utilities/format-part-of-speech.js";
 
 export function transformWordSuggestionData(wordSuggestionData) {
     return wordSuggestionData

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { setSearchInput, clearSearchInput } from "@detail/search-context.js";
+import { setSearchInputContext, clearSearchInput } from "@detail/detail-context.js";
 import { renderDeclensionTable } from "@detail/render-declension-table.js";
 
 describe("renderDeclensionTable highlighting", () => {
@@ -11,7 +11,7 @@ describe("renderDeclensionTable highlighting", () => {
     });
 
     it("highlights singular cell matching search input", () => {
-        setSearchInput("puellam");
+        setSearchInputContext("puellam");
 
         const declensions = {
             SINGULAR: { NOMINATIVE: "puella", ACCUSATIVE: "puellam" },
@@ -41,7 +41,7 @@ describe("renderDeclensionTable highlighting", () => {
     });
 
     it("handles macron normalization in highlighting", () => {
-        setSearchInput("puella"); // without macron
+        setSearchInputContext("puella"); // without macron
 
         const declensions = {
             SINGULAR: { NOMINATIVE: "puēlla" }, // with macron
