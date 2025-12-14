@@ -23,9 +23,11 @@
   --color-banner-bg: #efe9d5;
   --color-banner-border: #328e6e;
     --color-brand-light: #eef5e9;
+    --color-brand-light-hover: #e0edd6;
 
     /* Tense header */
     --color-tense-header: #a0cfa0;
+    --color-latin-table-border: #ffffff;
 
     /* Table hover & alt rows */
     --color-row-alt: #fafafa;

@@ -1,0 +1,156 @@
+/* ==========================================================================
+   PARTICIPLE TABLES LAYOUT
+   ========================================================================== */
+
+.inflection-match-highlight {
+    font-weight: 500;
+    border-left: 3px solid var(--color-logo-orange-400);
+}
+
+.latin-table {
+    width: 100%;
+    margin: 0 0 1.5rem 0;
+    border: 1px solid var(--color-latin-table-border);
+    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    border-collapse: collapse;
+    border-top: none;
+    table-layout: fixed;
+}
+
+.latin-table caption {
+    font-weight: bold;
+    text-align: left;
+    caption-side: top;
+    margin-bottom: 0.5rem;
+}
+
+.latin-table thead th,
+.latin-table th.section-header {
+    margin: .1rem;
+    padding: 0.7rem;
+    text-align: left;
+    color: var(--color-bg);
+    background-color: var(--color-brand-primary);
+}
+
+.latin-table td {
+    padding: 0.2rem;
+    border-bottom: 1px solid var(--color-latin-table-border);
+    vertical-align: top;
+}
+
+.latin-table tbody tr:hover {
+    background-color: var(--color-row-hover);
+}
+
+.tense-header {
+    padding: 0.35rem;
+    text-align: left;
+    background-color: var(--color-tense-header);
+    margin-bottom: 0.25rem;
+}
+
+.declension-table td:first-child {
+    width: 10ch;
+    min-width: 10ch;
+    max-width: 10ch;
+    white-space: nowrap;
+    background-color: var(--color-brand-light);
+}
+
+.agreement-table tbody th[scope="row"] {
+    width: 10ch;
+    min-width: 10ch;
+    max-width: 10ch;
+    padding: 0.2rem;
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+    background-color: var(--color-brand-light);
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: top;
+}
+
+#inflections-container {
+    overflow-x: auto;
+}
+
+
+/* Conjugation Tabs Styling */
+.conjugation-tabs-wrapper {
+    margin: 1.5rem 0 0 0;
+}
+
+.tab-row {
+    display: flex;
+    gap: 0;
+}
+
+.tab-item {
+    flex: 1;
+    border: 1px solid var(--color-border);
+    padding: 0.6rem 1rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    transition: background-color 0.2s, color 0.2s;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Remove double borders between adjacent tabs */
+.tab-item + .tab-item {
+    border-left: none;
+}
+
+.tab-item:hover {
+    background-color: var(--color-row-hover);
+}
+
+.tab-item.is-active {
+    font-weight: 600;
+    color: var(--color-bg);
+    background-color: var(--color-brand-primary);
+}
+
+/* Top row specific styling */
+.voice-tabs .tab-item {
+    border-bottom: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+/* Bottom row specific styling */
+.gender-tabs .tab-item {
+    border-top: none;
+}
+
+.tab-placeholder {
+    border: 1px solid var(--color-border);
+    padding: 2rem;
+    text-align: center;
+    color: var(--color-text-header);
+    background-color: var(--color-row-alt);
+    border-top: none;
+    font-style: italic;
+}
+/* Container for multiple participle tables */
+.participle-grid-container {
+    display: grid;
+    margin: 0;
+    gap: 0;
+}
+
+.participle-grid-container > .participle-table {
+    margin: 0;
+}
+
+.participle-table thead .tense-header {
+    padding: 0.35rem;
+    text-align: left;
+    background-color: var(--color-tense-header);
+    margin-bottom: 0.25rem;
+}
+

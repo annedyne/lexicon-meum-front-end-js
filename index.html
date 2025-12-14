@@ -17,55 +17,76 @@
     <link rel="icon" type="image/x-icon" href="/images/apple-touch-icon.png"/>
     <link rel="icon" type="image/x-icon" href="/images/favicon-32x32.png"/>
     <link rel="icon" type="image/x-icon" href="/images/favicon-16x16.png"/>
-    <link rel="stylesheet" href="/src/styles/index.css"/>
+
+    <! -- -------------- LOAD BANNER STYLES IMMEDIATELY --------------->
+    <style>
+        .banner {
+            min-height: clamp(90px, 14vw, 180px);
+            background: #efe9d5;
+            border-bottom: 4px solid var(--color-brand-primary);
+            display: grid;
+            align-items: center;
+            justify-items: start;
+            padding-inline: 16px;
+        }
+
+        .banner img {
+            width: clamp(70px, 13vw, 160px);
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(var(--shadow-soft));
+        }
+    </style>
 
     <!-------------- MAIN SCRIPT  --------------->
     <script type="module" src="src/main.js" ></script>
 </head>
 <body>
+        <div class="grid-container">
+            <div class="header-container">
+                <header class="banner">
+                    <img src="/images/lm-logo.svg" alt="Lexicon Meum logo"/>
+                </header>
 
-<header class="banner">
-    <img src="/images/lm-logo.svg" alt="Lexicon Meum logo"/>
-</header>
+                <div class="input-container">
+                    <div class="input-with-checkbox">
+                        <label for="word-lookup-input">Search</label>
+                        <div class="input-field">
+                            <!--suppress HtmlUnknownAttribute -->
+                            <input
+                                    id="word-lookup-input"
+                                    type="search"
+                                    autocomplete="off"
+                                    autocapitalize="off"
+                                    autocorrect="off"
+                                    spellcheck="false"
+                                    role="combobox"
+                                    aria-autocomplete="list"
+                                    aria-controls="word-suggestions"
+                                    aria-expanded="false"
+                                    placeholder="Type any form..."
+                            />
+                            <div id="word-suggestions"></div>
+                        </div>
+                        <label>
+                            <input type="checkbox" id="suffix-search"> Search word endings
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class = "main-container">
+                <div id="lemma-container"></div>
 
-<div id="status-bar"></div>
+                <div id="principal-parts-container"></div>
 
-<div class="input-container">
-    <div class="input-with-checkbox">
-        <label for="word-lookup-input">Search</label>
-        <div class="input-field">
-            <!--suppress HtmlUnknownAttribute -->
-            <input
-                    id="word-lookup-input"
-                    type="search"
-                    autocomplete="off"
-                    autocapitalize="off"
-                    autocorrect="off"
-                    spellcheck="false"
-                    role="combobox"
-                    aria-autocomplete="list"
-                    aria-controls="word-suggestions"
-                    aria-expanded="false"
-                    placeholder="Type any form..."
-            />
-            <div id="word-suggestions"></div>
+                <div id="definitions-container"></div>
+
+                <div id="inflection-type-container"></div>
+
+                <div id="inflections-container"></div>
+
+                <div id="toast" class="toast"></div>
+            </div>
         </div>
-        <label>
-            <input type="checkbox" id="suffix-search"> Search word endings
-        </label>
-    </div>
-</div>
-
-<div id="lemma-container"></div>
-
-<div id="principal-parts-container"></div>
-
-<div id="definitions-container"></div>
-
-<div id="inflection-type-container"></div>
-
-<div id="inflections-container"></div>
-
-<div id="toast" class="toast"></div>
 </body>
 </html>

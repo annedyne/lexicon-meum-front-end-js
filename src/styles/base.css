@@ -1,0 +1,236 @@
+body {
+    margin: 0 auto;
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    color: var(--color-text);
+    background: var(--color-bg);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    border: 1px solid red;
+}
+
+.header-container {
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    grid-template-columns: 1fr;
+    border: 1px solid red;
+    gap: 2rem
+}
+
+.main-container {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+    border: 1px solid red;
+}
+
+/* Reset default styles */
+input, select, textarea, button {
+    font: inherit;
+}
+
+.banner {
+    display: grid;
+    align-items: center;
+    min-height: clamp(90px, 14vw, 180px);
+    border-bottom: 4px solid var(--color-brand-primary);
+    justify-items: start;
+    padding-inline: 16px;
+}
+
+.banner img {
+    width: clamp(70px, 13vw, 160px);
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(var(--shadow-soft));
+}
+
+.toast {
+    position: fixed; /* Float on top of the content */
+    right: 20px; /* Distance from the left of the viewport */
+    bottom: 20px; /* Distance from the bottom of the viewport */
+    z-index: 9999; /* Ensure it's above other UI elements */
+    display: none; /* Hidden by default */
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff; /* White text */
+    background-color: #333; /* Dark background for contrast */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0; /* Fully transparent by default */
+    transform: translateY(20px); /* Start off slightly lower */
+    transition:
+            opacity 0.5s,
+            transform 0.5s ease-out; /* Smooth in/out */
+}
+
+.toast.show {
+    display: block; /* Show when active */
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* Slide into place */
+}
+
+/* Add success, error, or info styles */
+.toast.success {
+    background-color: var(--color-success);
+}
+
+.toast.error {
+    background-color: var(--color-error);
+}
+
+.toast.info {
+    background-color: var(--color-info);
+}
+
+label {
+    font-size: 1rem;
+}
+
+.input-container {
+    position: relative;
+    display: inline-block;
+}
+
+.input-with-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Anchor dropdown to the input; make widths predictable */
+.input-field {
+    position: relative;
+    display: inline-block;
+}
+
+/* Ensure input and dropdown widths include padding/border */
+.input-field,
+.input-field input,
+#word-suggestions {
+    box-sizing: border-box;
+}
+
+/* Target the search input (width set by parent for exact matching) */
+.input-with-checkbox input[type="search"] {
+    width: 100%;
+    padding: 3px;
+}
+
+/* If you want a fixed width, set it on the wrapper so both match */
+.input-field {
+    width: 200px; /* adjust as preferred; input and dropdown will match this */
+}
+
+/* Position and size dropdown to match input width */
+#word-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    max-height: 40vh;
+    border: 1px solid var(--color-border);
+    font-size: 1rem;
+    background: var(--color-bg);
+
+    /* Scrolling when needed; JS will snap height to full rows */
+    overflow-y: auto;
+}
+
+#word-suggestions div {
+    padding: 1px;
+    cursor: pointer;
+}
+#word-suggestions div:hover {
+    background-color: var(--color-muted-100);
+}
+
+.suggestion-highlight {
+    font-weight: bold;
+    color: #222;
+}
+
+#lemma-container {
+    text-align: center;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.lemma {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #2F8668;
+}
+
+.part-of-speech {
+    font-size: 1rem;
+    color: var(--color-brand-primary);
+    margin-right: 0.5em;
+}
+
+#principal-parts-container {
+    text-align: center;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.principal-parts {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--color-text-dark);
+}
+
+#definitions-container {
+    font-size: 1rem;
+    text-align: left;
+    margin-left: 2rem;
+    margin-top: 1rem;
+}
+
+.definitions-label {
+    font-weight: bold;
+    color: var(--color-text-header);
+}
+
+.definitions-list {
+    margin: 0.5rem 0;
+    list-style-type: disc;
+    padding-left: 1.5rem;
+}
+
+.definitions-toggle {
+    border: none;
+    padding: 0;
+    font-size: 0.95rem;
+    text-decoration: underline;
+    color: var(--color-text-header);
+    background: none;
+    cursor: pointer;
+    margin-left: 1.5rem;
+}
+
+.definition-subheader {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--color-orange-600);
+    margin-top: 1rem;
+}
+
+
+#inflection-type-container {
+    text-align: center;
+    margin-bottom: 0;
+    margin-top: 1rem;
+}
+
+.inflection-type {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-header);
+}
+
