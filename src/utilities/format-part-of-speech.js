@@ -1,4 +1,5 @@
 import {POS, POS_ABBREV_LABEL, POS_SET} from "./constants.js";
+import {capitalize} from "@src/utilities/string.js";
 
 export function isPartOfSpeech(value) {
     return POS_SET.has(value);
@@ -20,10 +21,4 @@ export function formatPOSForDefinitions(input) {
    return capitalize(input);
 }
 
-function capitalize(toBeCapitalized = "") {
-    if (!toBeCapitalized) {
-        return "";
-    }
-    const lowerCase = toBeCapitalized.toLowerCase();
-    return lowerCase[0].toUpperCase() + lowerCase.slice(1);
-}
+
