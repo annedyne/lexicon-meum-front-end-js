@@ -1,7 +1,7 @@
 // noinspection SpellCheckingInspection
 
 import { renderDeclensionTable } from "./render-declension-table.js";
-import { renderConjugationTable } from "./verb/render-conjugation-table.js";
+import { initializeInflectionTabs } from "./verb/inflection-tab-controller.js";
 import { renderAdjectiveAgreementTable } from "./render-adjective-agreement-table.js";
 import { renderLemmaHeader } from "./render-lemma-header.js";
 import { renderPrincipalParts } from "./verb/render-principal-parts.js";
@@ -60,7 +60,7 @@ export function renderWordDetail(wordDetailData) {
                 break;
 
             case "VERB":
-                renderConjugationTable(inflectionTable, "ACTIVE");
+                initializeInflectionTabs(inflectionTable, "ACTIVE");
                 break;
 
             case "ADJECTIVE":

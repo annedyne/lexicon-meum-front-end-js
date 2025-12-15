@@ -2,20 +2,26 @@
 import {renderTabs} from "./tabs/render-tabs.js";
 import { TABS } from "./tabs/tab-registry.js";
 
-export function renderConjugationTable(inflectionTable) {
+/**
+ * Initializes the inflection tabs by setting up the necessary render and route mechanisms.
+ *
+ * @param {Object} inflectionTable - The data or configuration object used to set up the tabs and their content routing.
+ * @return {void} This method does not return a value.
+ */
+export function initializeInflectionTabs(inflectionTable) {
     // render tabs first (pass a callback to render the tab contents )
     renderTabs(inflectionTable, (voiceTabId, genderTabId) => {
-        renderTabContent(voiceTabId, genderTabId, inflectionTable);
+        routeTabContent(voiceTabId, genderTabId, inflectionTable);
     });
 }
 
 /**
- * Renders the conjugations for the specified voice and gender tab.
+ * Routes appropriate inflection data to appropriate renderer for the active voice and gender tab.
  * @param voiceTabId
  * @param genderTabId
  * @param inflectionTable
  */
-function renderTabContent(voiceTabId, genderTabId, inflectionTable) {
+function routeTabContent(voiceTabId, genderTabId, inflectionTable) {
     // get voice tab from registry
     const voiceTab = TABS[voiceTabId];
 

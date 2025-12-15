@@ -26,7 +26,7 @@ import {createDeclensionTable} from "@detail/render-declension-table.js";
  * @param {string} gender - The gender filter (MASCULINE, FEMININE, NEUTER)
  */
 
-export function renderTabParticiple(participleData, gender) {
+export function renderTabParticiple(participles, gender) {
     console.log(`Rendering participles for gender: ${gender}`);
 
     // Replace existing content
@@ -37,12 +37,12 @@ export function renderTabParticiple(participleData, gender) {
         existingTable.remove();
     }
 
-    if (!participleData || !Array.isArray(participleData)) {
+    if (!participles || !Array.isArray(participles)) {
         console.log("No participle data found");
     }
 
     // Extract participles from the data structure
-    const participleTenses = participleData.find(
+    const participleTenses = participles.find(
         d => d.gender && d.gender.toLowerCase() === gender.toLowerCase())?.tenses ?? [];
 
     if (!participleTenses || !Array.isArray(participleTenses) || participleTenses.length === 0) {
@@ -62,7 +62,7 @@ export function renderTabParticiple(participleData, gender) {
         }
         const declensions = participleTense.declensions;
         const declensionTableContainer = document.createElement("table");
-        declensionTableContainer.classList.add("participle-table")
+        declensionTableContainer.classList.add("participle-table");
         createDeclensionTable(declensions, declensionTableContainer);
 
         const thead = declensionTableContainer.querySelector("thead");
