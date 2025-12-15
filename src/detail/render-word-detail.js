@@ -45,7 +45,6 @@ export function renderWordDetail(wordDetailData) {
 
         const { inflectionTable } = wordDetailData ?? {};
         const {
-            conjugations = [],
             agreements = [],
             declensions,
         } = inflectionTable ?? {};
@@ -61,7 +60,7 @@ export function renderWordDetail(wordDetailData) {
                 break;
 
             case "VERB":
-                renderConjugationTable(conjugations, "ACTIVE");
+                renderConjugationTable(inflectionTable, "ACTIVE");
                 break;
 
             case "ADJECTIVE":

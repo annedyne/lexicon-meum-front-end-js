@@ -1,12 +1,17 @@
 import { getSearchInput } from "./detail-context";
-import { capitalize, matchesInflection } from "./detail-utilities.js"
+import { formatCaseNameForTableRowHeader, matchesInflection} from "./utilities.js"
 
 export function renderDeclensionTable(declensions) {
-    const searchInput = getSearchInput();
 
     // Replace existing content
     const container = document.querySelector("#inflections-container");
     container.replaceChildren();
+    const tableElement = document.createElement("table");
+    createDeclensionTable(declensions, tableElement);
+    container.append(tableElement);
+}
+
+export function createDeclensionTable(declensions, tableElement) {
 
     //only render this table if this is declension data
     if (!declensions?.SINGULAR || !declensions?.PLURAL) {
@@ -16,9 +21,7 @@ export function renderDeclensionTable(declensions) {
     const tableData = declensions;
     const cases = Object.keys(tableData.SINGULAR); // Assume both singular and plural have same cases
 
-    const table = document.createElement("table");
-    table.classList.add("latin-table", "declension-table");
-
+    tableElement.classList.add("inflection-table", "declension-table");
     // Create the table header
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");
@@ -28,41 +31,48 @@ export function renderDeclensionTable(declensions) {
         headerRow.append(th);
     }
     thead.append(headerRow);
-    table.append(thead);
+    tableElement.append(thead);
 
     // Create table body
     const tbody = document.createElement("tbody");
 
-    for (const c of cases) {
-    const row = document.createElement("tr");
-
-        const caseCell = document.createElement("td");
-        caseCell.textContent = capitalize(c.toLowerCase());
-        row.append(caseCell);
-
-        const singularValue = tableData.SINGULAR[c] || "";
-        const singularCell = document.createElement("td");
-        
-        // Highlight if matches search input
-        if (matchesInflection(singularValue, searchInput)) {
-            singularCell.classList.add("inflection-match-highlight");
-        }
-        singularCell.textContent = singularValue;
-        row.append(singularCell);
-
-        const pluralValue = tableData.PLURAL[c] || "";
-        const pluralCell = document.createElement("td");
-        
-        // Highlight if matches search input
-        if (matchesInflection(pluralValue, searchInput)) {
-            pluralCell.classList.add("inflection-match-highlight");
-        }
-        pluralCell.textContent = pluralValue;
-        row.append(pluralCell);
+    for (const caseName of cases) {
+        const row = renderDeclensionRow(caseName, tableData);
 
         tbody.append(row);
     }
-    table.append(tbody);
-
-    container.append(table);
+    tableElement.append(tbody);
 }
+
+
+function renderDeclensionRow(caseName, tableData ) {
+    const row = document.createElement("tr");
+
+    const caseCell = document.createElement("td");
+    caseCell.textContent = formatCaseNameForTableRowHeader(caseName);
+    row.append(caseCell);
+
+    const singularValue = tableData.SINGULAR[caseName] || "";
+    const singularCell = document.createElement("td");
+
+    const searchInput = getSearchInput();
+
+    // Highlight if matches search input
+    if (matchesInflection(singularValue, searchInput)) {
+        singularCell.classList.add("inflection-match-highlight");
+    }
+    singularCell.textContent = singularValue;
+    row.append(singularCell);
+
+    const pluralValue = tableData.PLURAL[caseName] || "";
+    const pluralCell = document.createElement("td");
+
+    // Highlight if matches search input
+    if (matchesInflection(pluralValue, searchInput)) {
+        pluralCell.classList.add("inflection-match-highlight");
+    }
+    pluralCell.textContent = pluralValue;
+    row.append(pluralCell);
+    return row;
+}
+

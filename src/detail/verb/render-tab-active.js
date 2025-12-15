@@ -1,5 +1,5 @@
 import {getSearchInput} from "@detail/detail-context.js";
-import { matchesInflection} from "@detail/detail-utilities.js";
+import { matchesInflection} from "@detail/utilities.js";
 import { TAB_KEY } from "./tabs/tab-keys.js";
 
 /**
@@ -35,20 +35,10 @@ export function renderActiveConjugation(conjugations, gender) {
     }
 
     const table = document.createElement("table");
-    table.classList.add("latin-table");
+    table.classList.add("inflection-table");
     table.id = "conjugation-table";
     container.append(table);
 
-    // Create header row that spans both columns
-    const thead = document.createElement("thead");
-    const headerRow = document.createElement("tr");
-    const headerCell = document.createElement("th");
-    headerCell.colSpan = 2;
-    headerCell.className = "header";
-    headerCell.textContent = `${TAB_KEY.ACTIVE.toLowerCase()}`;
-    headerRow.append(headerCell);
-    thead.append(headerRow);
-    table.append(thead);
 
     for (const data of activeMoods) {
         buildRows(data);

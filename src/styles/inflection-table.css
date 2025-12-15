@@ -7,10 +7,10 @@
     border-left: 3px solid var(--color-logo-orange-400);
 }
 
-.latin-table {
+.inflection-table {
     width: 100%;
     margin: 0 0 1.5rem 0;
-    border: 1px solid var(--color-latin-table-border);
+    border: 1px solid var(--color-inflection-table-border);
     font-family: system-ui, sans-serif;
     font-size: 1rem;
     border-collapse: collapse;
@@ -18,15 +18,15 @@
     table-layout: fixed;
 }
 
-.latin-table caption {
+.inflection-table caption {
     font-weight: bold;
     text-align: left;
     caption-side: top;
     margin-bottom: 0.5rem;
 }
 
-.latin-table thead th,
-.latin-table th.section-header {
+.inflection-table thead th,
+.inflection-table th.section-header {
     margin: .1rem;
     padding: 0.7rem;
     text-align: left;
@@ -34,13 +34,13 @@
     background-color: var(--color-brand-primary);
 }
 
-.latin-table td {
+.inflection-table td {
     padding: 0.2rem;
-    border-bottom: 1px solid var(--color-latin-table-border);
+    border-bottom: 1px solid var(--color-inflection-table-border);
     vertical-align: top;
 }
 
-.latin-table tbody tr:hover {
+.inflection-table tbody tr:hover {
     background-color: var(--color-row-hover);
 }
 

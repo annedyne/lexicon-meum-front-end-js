@@ -1,7 +1,7 @@
 import { getActiveTabVoice, setActiveTabVoice, getActiveTabGender, setActiveTabGender } from "@detail-core";
 import { TAB_KEY, TAB_LABEL } from "./tab-keys.js";
 
-export function renderTabs(conjugations, onChange) {
+export function renderTabs(inflectionTable, onChange) {
 
     const container = document.querySelector("#inflections-container");
     container.replaceChildren();
@@ -44,12 +44,12 @@ export function renderTabs(conjugations, onChange) {
 
     tabsWrapper.append(voiceRow);
     tabsWrapper.append(genderRow);
-    wireTabs(tabsWrapper, conjugations, onChange);
+    wireTabs(tabsWrapper, inflectionTable, onChange);
     container.append(tabsWrapper);
     onChange(getActiveTabVoice(), getActiveTabGender())
 }
 
-function wireTabs( tabsContainerElement, conjugations, onChange) {
+function wireTabs( tabsContainerElement, inflectionTable, onChange) {
 
     tabsContainerElement.addEventListener("click", (event) => {
         const tabElement = event.target.closest(".tab-item");

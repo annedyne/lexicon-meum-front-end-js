@@ -1,4 +1,4 @@
-import {matchesInflection} from "./detail-utilities.js";
+import {matchesInflection} from "./utilities.js";
 import {getSearchInput} from "./detail-context";
 
 const GENDER_ABBR = { MASCULINE: "m", FEMININE: "f", NEUTER: "n" };
@@ -31,7 +31,7 @@ export function renderAdjectiveAgreementTable(agreements) {
     const cases = Object.keys(sortedAgreements[0].inflections[numbers[0]]);
 
     const table = document.createElement("table");
-    table.classList.add("latin-table", "agreement-table");
+    table.classList.add("inflection-table", "agreement-table");
     container.append(table);
 
     const thead = document.createElement("thead");

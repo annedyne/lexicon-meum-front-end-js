@@ -1,16 +1,17 @@
-import { renderActiveConjugation, renderTabPassive } from "@detail/verb";
+import { renderActiveConjugation, renderTabPassive, renderTabParticiple } from "@detail/verb";
 import {TAB_KEY} from "./tab-keys.js";
 
 export const TABS = {
     [TAB_KEY.ACTIVE]: {
         render: renderActiveConjugation,
+        dataSource: 'conjugations' // specify which part of inflectionTable to use
     },
     [TAB_KEY.PASSIVE]: {
         render: renderTabPassive,
+        dataSource: 'conjugations'
     },
     [TAB_KEY.PARTICIPLE]: {
-        render: () => {
-            console.log("Participle tab not yet implemented");
-        },
+        render: renderTabParticiple,
+        dataSource: 'participles' // participle tab needs participle data
     },
 };

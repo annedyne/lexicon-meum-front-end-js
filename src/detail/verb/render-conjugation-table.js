@@ -2,10 +2,10 @@
 import {renderTabs} from "./tabs/render-tabs.js";
 import { TABS } from "./tabs/tab-registry.js";
 
-export function renderConjugationTable(conjugations) {
+export function renderConjugationTable(inflectionTable) {
     // render tabs first (pass a callback to render the tab contents )
-    renderTabs(conjugations, (voiceTabId, genderTabId) => {
-        renderConjugationForTab(voiceTabId, genderTabId, conjugations);
+    renderTabs(inflectionTable, (voiceTabId, genderTabId) => {
+        renderTabContent(voiceTabId, genderTabId, inflectionTable);
     });
 }
 
@@ -13,18 +13,22 @@ export function renderConjugationTable(conjugations) {
  * Renders the conjugations for the specified voice and gender tab.
  * @param voiceTabId
  * @param genderTabId
- * @param conjugations
+ * @param inflectionTable
  */
-function renderConjugationForTab(voiceTabId, genderTabId, conjugations) {
+function renderTabContent(voiceTabId, genderTabId, inflectionTable) {
     // get voice tab from registry
-    const tab = TABS[voiceTabId];
+    const voiceTab = TABS[voiceTabId];
 
-    if (!tab) {
+    if (!voiceTab) {
         console.warn(`No tab found for id: ${voiceTabId}`);
         return;
     }
 
-    tab.render(conjugations, genderTabId);
+    // Get the appropriate data based on the tab's dataSource
+    const dataSource = voiceTab.dataSource || 'conjugations'; // default to conjugations for backward compatibility
+    const tabData = inflectionTable[dataSource] || [];
+
+    voiceTab.render(tabData, genderTabId);
 }
 
 
