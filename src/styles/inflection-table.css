@@ -4,13 +4,14 @@
 
 .inflection-match-highlight {
     font-weight: 500;
-    border-left: 3px solid var(--color-logo-orange-400);
+    background-color: var(--color-inflection-match-light);
 }
 
 .inflection-table {
     width: 100%;
     margin: 0 0 1.5rem 0;
     border: 1px solid var(--color-inflection-table-border);
+    padding: 0 0.3rem 0 ;
     font-family: system-ui, sans-serif;
     font-size: 1rem;
     border-collapse: collapse;
@@ -28,15 +29,16 @@
 .inflection-table thead th,
 .inflection-table th.section-header {
     margin: .1rem;
-    padding: 0.7rem;
     text-align: left;
     color: var(--color-bg);
     background-color: var(--color-brand-primary);
+    padding-bottom: 0.2em;
+    padding-left: 0.5rem;
+    padding-top: 0.2rem;
 }
 
 .inflection-table td {
-    padding: 0.2rem;
-    border-bottom: 1px solid var(--color-inflection-table-border);
+    padding-left: .5rem;
     vertical-align: top;
 }
 
@@ -45,10 +47,11 @@
 }
 
 .tense-header {
-    padding: 0.35rem;
     text-align: left;
     background-color: var(--color-tense-header);
     margin-bottom: 0.25rem;
+    padding-bottom: 0.1rem;
+    padding-top: 0.1rem;
 }
 
 .declension-table td:first-child {
@@ -89,15 +92,17 @@
 
 .tab-item {
     flex: 1;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-green-400);
     padding: 0.6rem 1rem;
     font-weight: 500;
     text-align: center;
     color: var(--color-text);
-    background-color: var(--color-bg);
+    background-color: var(--color-green-50);
     transition: background-color 0.2s, color 0.2s;
     cursor: pointer;
     user-select: none;
+    border-left: none;
+    border-right: none;
 }
 
 /* Remove double borders between adjacent tabs */
@@ -106,36 +111,32 @@
 }
 
 .tab-item:hover {
-    background-color: var(--color-row-hover);
+    background-color: var(--color-green-100);
 }
 
 .tab-item.is-active {
     font-weight: 600;
     color: var(--color-bg);
-    background-color: var(--color-brand-primary);
+    background-color: var(--color-tense-header);
+    border-color: var(--color-green-400);
 }
+
 
 /* Top row specific styling */
 .voice-tabs .tab-item {
     border-bottom: none;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    border-top-left-radius:30rem;
+    border-top-right-radius:30rem;
 }
 
 /* Bottom row specific styling */
 .gender-tabs .tab-item {
-    border-top: none;
+    border-top: var(--color-border) solid 1px;
+    border-top-left-radius:30rem;
+    border-top-right-radius:30rem;
 }
 
-.tab-placeholder {
-    border: 1px solid var(--color-border);
-    padding: 2rem;
-    text-align: center;
-    color: var(--color-text-header);
-    background-color: var(--color-row-alt);
-    border-top: none;
-    font-style: italic;
-}
+
 /* Container for multiple participle tables */
 .participle-grid-container {
     display: grid;
@@ -148,9 +149,10 @@
 }
 
 .participle-table thead .tense-header {
-    padding: 0.35rem;
     text-align: left;
     background-color: var(--color-tense-header);
     margin-bottom: 0.25rem;
+    padding-bottom: 0.1rem;
+    padding-top: 0.1rem;
 }
 

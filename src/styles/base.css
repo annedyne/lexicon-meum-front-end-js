@@ -10,14 +10,12 @@ body {
 .grid-container {
     display: grid;
     grid-template-columns: 1fr;
-    border: 1px solid red;
 }
 
 .header-container {
     display: grid;
     grid-template-rows: 2fr 1fr;
     grid-template-columns: 1fr;
-    border: 1px solid red;
     gap: 2rem
 }
 
@@ -25,7 +23,6 @@ body {
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: 1fr;
-    border: 1px solid red;
 }
 
 /* Reset default styles */
