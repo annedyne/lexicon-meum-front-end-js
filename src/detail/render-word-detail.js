@@ -60,7 +60,7 @@ export function renderWordDetail(wordDetailData) {
                 break;
 
             case "VERB":
-                initializeInflectionTabs(inflectionTable, "ACTIVE");
+                initializeInflectionTabs(inflectionTable);
                 break;
 
             case "ADJECTIVE":

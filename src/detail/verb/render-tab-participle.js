@@ -8,13 +8,15 @@
 
 /**
  * @typedef {Object} ParticipleTense
- * @property {string} tenseName - The tense name (e.g., "present", "perfect")
+ * @property {string} defaultName - The default tense name (e.g., "present participle", "perfect participle")
+ * @property {string} altName - The alternative tense name (e.g., "past participle", "future participle")
  * @property {ParticipleCase[]} cases - Array of cases with their inflections
  */
 
 /**
  * @typedef {Object} ParticipleData
  * @property {string} voice - Should be "participle"
+ * @property {string} gender - The gender filter (MASCULINE, FEMININE, NEUTER)
  * @property {ParticipleTense[]} tenses - Array of participle tenses
  */
 
@@ -37,15 +39,12 @@ export function renderTabParticiple(participles, gender) {
         existingTable.remove();
     }
 
-    if (!participles || !Array.isArray(participles)) {
-        console.log("No participle data found");
-    }
-
-    // Extract participles from the data structure
-    const participleTenses = participles.find(
-        d => d.gender && d.gender.toLowerCase() === gender.toLowerCase())?.tenses ?? [];
-
-    if (!participleTenses || !Array.isArray(participleTenses) || participleTenses.length === 0) {
+    // Single guard clause for early exit - combines all validation logic
+    const participleTenses = participles
+        ?.find(d => d.gender?.toLowerCase() === gender.toLowerCase())
+        ?.tenses;
+    
+    if (!Array.isArray(participleTenses) || participleTenses.length === 0) {
         console.log(`No participle data found for gender: ${gender}`);
         return;
     }
@@ -57,18 +56,18 @@ export function renderTabParticiple(participles, gender) {
 
     // Create a table for each participle tense (e.g., Perfect Passive, Future Active, etc.)
     for (const participleTense of participleTenses) {
-        if (!participleTense || !participleTense.declensions) {
-            continue;
+        if (participleTense?.declensions) {
+
+            const declensions = participleTense.declensions;
+            const declensionTableContainer = document.createElement("table");
+            declensionTableContainer.classList.add("participle-table");
+            createDeclensionTable(declensions, declensionTableContainer);
+
+            const thead = declensionTableContainer.querySelector("thead");
+            adjustDeclensionTableHeader(thead, participleTense);
+
+            tableContainer.append(declensionTableContainer);
         }
-        const declensions = participleTense.declensions;
-        const declensionTableContainer = document.createElement("table");
-        declensionTableContainer.classList.add("participle-table");
-        createDeclensionTable(declensions, declensionTableContainer);
-
-        const thead = declensionTableContainer.querySelector("thead");
-        adjustDeclensionTableHeader(thead, participleTense);
-
-        tableContainer.append(declensionTableContainer);
     }
     container.append(tableContainer);
 }

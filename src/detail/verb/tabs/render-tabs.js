@@ -86,7 +86,7 @@ function wireTabs( tabsContainerElement, inflectionTable, onChange) {
 }
 // Update tabs within the same row (voice row, gender row, etc.)
 function updateTabUI(container, tabGroup, activeId) {
-    for (const element of container.querySelectorAll(`.tab-item[data-tab-type="${tabGroup}"]`)) {
+    for (const element of container.querySelectorAll(`.tab-item[data-tab-group="${tabGroup}"]`)) {
         element.classList.toggle("is-active", element.dataset.tabId === activeId);
     }
 }

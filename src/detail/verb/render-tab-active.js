@@ -30,7 +30,6 @@ export function renderActiveConjugation(conjugations, gender) {
 
     const activeMoods = conjugations.filter((d) => d?.voice === TAB_KEY.ACTIVE);
     if (activeMoods.length === 0) {
-        // Nothing to render for this voice
         return;
     }
 
@@ -43,7 +42,6 @@ export function renderActiveConjugation(conjugations, gender) {
     for (const data of activeMoods) {
         buildRows(data);
     }
-
 }
 
 /**
@@ -84,31 +82,34 @@ function buildRows(data) {
         const rightLength = Array.isArray(right?.forms) ? right.forms.length : 0;
         const maxRows = Math.max(leftLength, rightLength);
 
-        // Build one row per form index
-        for (let index = 0; index < maxRows; index++) {
-            const formRow = tbody.insertRow();
-            const leftForm = left?.forms?.[index] ?? "";   // pad if undefined
-            const rightForm = right?.forms?.[index] ?? ""; // pad if no right tense
-
-            const leftCell = formRow.insertCell();
-            leftCell.textContent = leftForm;
-            // Highlight if matches search input
-            if (matchesInflection(leftForm, searchInput)) {
-                leftCell.classList.add("inflection-match-highlight");
-            }
-
-            const rightCell = formRow.insertCell();
-            rightCell.textContent = rightForm;
-            // Highlight if matches search input
-            if ( matchesInflection(rightForm, searchInput)) {
-                rightCell.classList.add("inflection-match-highlight");
-            }
-        }
-
+        createInflectionFormRows(maxRows, tbody, left, right, searchInput);
     }
     const table = document.querySelector("#conjugation-table");
     if (table) {
         table.append(tbody);
     }
+}
 
+function createInflectionFormRows(maxRows, tbody, left, right, searchInput) {
+    // Build one row per form index
+    for (let index = 0; index < maxRows; index++) {
+        const formRow = tbody.insertRow();
+        const leftForm = left?.forms?.[index] ?? "";   // pad if undefined
+        const rightForm = right?.forms?.[index] ?? ""; // pad if no right tense
+
+        const leftCell = formRow.insertCell();
+        leftCell.textContent = leftForm;
+
+        // Highlight if matches search input
+        if (matchesInflection(leftForm, searchInput)) {
+            leftCell.classList.add("inflection-match-highlight");
+        }
+
+        const rightCell = formRow.insertCell();
+        rightCell.textContent = rightForm;
+        // Highlight if matches search input
+        if (matchesInflection(rightForm, searchInput)) {
+            rightCell.classList.add("inflection-match-highlight");
+        }
+    }
 }
