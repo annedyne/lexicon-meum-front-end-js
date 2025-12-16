@@ -23,9 +23,13 @@
   --color-banner-bg: #efe9d5;
   --color-banner-border: #328e6e;
     --color-brand-light: #eef5e9;
+    --color-brand-light-hover: #e0edd6;
 
     /* Tense header */
     --color-tense-header: #a0cfa0;
+    --color-inflection-table-border: #c8e4c8;
+    --color-inflection-match: #2BD0ED;
+    --color-inflection-match-light: #B4EEF9;
 
     /* Table hover & alt rows */
     --color-row-alt: #fafafa;
@@ -33,6 +37,22 @@
 
     /* Shadows */
     --shadow-soft: 0 6px 12px rgba(0, 0, 0, 0.08);
+
+    /* Tense green scale (based on tense-header #a0cfa0 as mid-range) */
+    --color-green: #a0cfa0;           /* matches tense-header */
+    --color-green-50: #f0f8f0;        /* very light tint for backgrounds */
+    --color-green-100: #e1f1e1;       /* light tint */
+    --color-green-200: #c8e4c8;       /* lighter */
+    --color-green-300: #b4dab4;       /* light-medium */
+    --color-green-400: #a0cfa0;       /* mid-range (tense-header) */
+    --color-green-500: #8bc58b;       /* slightly darker */
+    --color-green-600: #75b575;       /* darker for hover states */
+    --color-green-700: #5fa05f;       /* pressed/focus states */
+    --color-green-800: #4a8b4a;       /* strong contrast accents */
+    --color-green-900: #357535;       /* darkest */
+    --color-green-contrast: #ffffff;  /* text on tense green */
+
+
 
     /* terracotta accent (harmonizes with banner + logo, not green) */
 

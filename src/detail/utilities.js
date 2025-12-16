@@ -1,3 +1,5 @@
+import {capitalize} from "@utilities";
+
 export function matchesInflection(inflection, searchInput) {
     // Return false if either value is falsy (undefined, null, empty string)
     if (!inflection || !searchInput) {
@@ -12,7 +14,7 @@ export function normalizeDiacritics(toBeNormalized){
     return toBeNormalized.toLowerCase().normalize("NFD").replaceAll(/[\u0300-\u036F]/g, "");
 }
 
-// Helper to capitalize strings
-export function capitalize(toBeCapitalized) {
-    return toBeCapitalized.charAt(0).toUpperCase() + toBeCapitalized.slice(1);
+export function formatCaseNameForTableRowHeader(caseName) {
+    const capitalized = capitalize(caseName.toLowerCase());
+    return capitalized.slice(0, 3) + '.';
 }

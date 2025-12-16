@@ -1,2 +1,2 @@
 export * from "../detail-context.js";
-export * from "../detail-utilities.js";
+export * from "../utilities.js";

@@ -15,8 +15,8 @@ vi.mock("@detail/render-declension-table.js", () => ({
     },
 }));
 
-vi.mock("@detail/verb/render-conjugation-table.js", () => ({
-    renderConjugationTable: () => {
+vi.mock("@detail/verb/inflection-tab-controller.js", () => ({
+    initializeInflectionTabs: () => {
         const c = document.querySelector("#inflections-container");
         if (c) {
             c.replaceChildren();
@@ -26,7 +26,7 @@ vi.mock("@detail/verb/render-conjugation-table.js", () => ({
             c.append(marker);
         }
     },
-    renderConjugationForTab: () => {
+    routeTabContent: () => {
         // No-op or you could add logic if needed
     },
 }));

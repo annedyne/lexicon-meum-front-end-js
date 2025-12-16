@@ -30,6 +30,8 @@ export const POS_ABBREV_LABEL = Object.freeze({
     [POS.VERB]: "vrb",
 });
 
+
+
 export const POS_KEYS = Object.freeze(Object.keys(POS_ABBREV_LABEL));
 export const POS_SET = new Set(POS_KEYS);
 

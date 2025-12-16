@@ -4,14 +4,14 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 
 // Use real implementations
 vi.mock("@detail/render-declension-table.js", async (orig) => await orig());
-vi.mock("@detail/render-conjugation-table.js", async (orig) => await orig());
+vi.mock("@detail/inflection-tab-controller.js", async (orig) => await orig());
 vi.mock("@detail/render-adjective-agreement-table.js", async (orig) => await orig());
 vi.mock("@detail/render-lemma-header.js", async (orig) => await orig());
 vi.mock("@detail/render-definitions.js", async (orig) => await orig());
 vi.mock("@detail/render-inflection-type.js", async (orig) => await orig());
 vi.mock("@detail/render-principal-parts.js", async (orig) => await orig());
 vi.mock("@detail/render-pos-after-lemma.js", async (orig) => await orig());
-vi.mock("@detail/render-conjugation-table.js", async (orig) => await orig());
+vi.mock("@detail/inflection-tab-controller.js", async (orig) => await orig());
 vi.mock("@detail/render-tabs.js", async (orig) => await orig());
 
 
