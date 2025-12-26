@@ -25,9 +25,12 @@ describe("renderDeclensionTable highlighting", () => {
             cell => cell.textContent === "puellam"
         );
 
-        expect(accusativeSingular.classList.contains("inflection-match-highlight")).toBe(true);
+        // Check that the cell contains a mark element with the search-match class
+        const markElement = accusativeSingular.querySelector("mark.search-match");
+        expect(markElement).not.toBeNull();
+        expect(markElement.textContent).toBe("puellam");
 
-        // Test that all other inflection cells are NOT highlighted
+        // Test that all other inflection cells do NOT contain mark elements with search-match class
         const otherInflectionCells = [...cells].filter(
             cell => cell.textContent !== "puellam" &&
                 cell.textContent !== "Nominative" &&
@@ -35,7 +38,8 @@ describe("renderDeclensionTable highlighting", () => {
         );
 
         for (const cell of otherInflectionCells) {
-            expect(cell.classList.contains("inflection-match-highlight")).toBe(false);
+            const markElement = cell.querySelector("mark.search-match");
+            expect(markElement).toBeNull();
         }
 
     });
@@ -55,7 +59,9 @@ describe("renderDeclensionTable highlighting", () => {
             cell => cell.textContent === "puēlla"
         );
 
-        expect(cell.classList.contains("inflection-match-highlight")).toBe(true);
+        const markElement = cell.querySelector("mark.search-match");
+        expect(markElement).not.toBeNull();
+        expect(markElement.textContent).toBe("puēlla");
     });
 
 });

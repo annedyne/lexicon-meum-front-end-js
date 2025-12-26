@@ -10,40 +10,46 @@ export function renderTabs(inflectionTable, onChange) {
     tabsWrapper.className = "conjugation-tabs-wrapper";
 
     // Top row - Voice tabs
-    const voiceRow = document.createElement("div");
-    voiceRow.className = "tab-row voice-tabs";
+    const voiceTabRow = document.createElement("div");
+    voiceTabRow.className = "tab-row voice-tabs";
 
-    const voiceTabs = [TAB_KEY.ACTIVE, TAB_KEY.PASSIVE, TAB_KEY.PARTICIPLE];
+    const voiceTabIds = [TAB_KEY.ACTIVE, TAB_KEY.PASSIVE, TAB_KEY.PARTICIPLE];
 
-    for (const tab of voiceTabs) {
+    for (const tabId of voiceTabIds) {
 
         const tabElement = document.createElement("div");
         // set tab to active style if it matches the active tab state
-        tabElement.className = `tab-item ${getActiveTabVoice() === tab ? 'is-active' : ''}`;
-        tabElement.textContent = TAB_LABEL[tab];
+        tabElement.className = `tab-item ${getActiveTabVoice() === tabId ? 'is-active' : ''}`;
+        tabElement.textContent = TAB_LABEL[tabId];
         tabElement.dataset.tabGroup = 'voice';
-        tabElement.dataset.tabId = tab;
-        voiceRow.append(tabElement);
+        tabElement.dataset.tabId = tabId;
+        voiceTabRow.append(tabElement);
     }
 
     // Bottom row - Gender tabs
-    const genderRow = document.createElement("div");
-    genderRow.className = "tab-row gender-tabs";
+    const genderTabRow = document.createElement("div");
+    genderTabRow.className = "tab-row gender-tabs";
 
-    const genderTabs = [TAB_KEY.MASCULINE, TAB_KEY.FEMININE, TAB_KEY.NEUTER];
+    const genderTabIds = [TAB_KEY.MASCULINE, TAB_KEY.FEMININE, TAB_KEY.NEUTER];
 
-    for (const tab of genderTabs) {
+    for (const tabId of genderTabIds) {
         const tabElement = document.createElement("div");
         // set tab to active style if it matches the active tab state
-        tabElement.className = `tab-item ${ getActiveTabGender() === tab ? 'is-active' : ''}`;
-        tabElement.textContent = TAB_LABEL[tab];
+        tabElement.className = `tab-item ${ getActiveTabGender() === tabId ? 'is-active' : ''}`;
+        tabElement.textContent = TAB_LABEL[tabId];
         tabElement.dataset.tabGroup = 'gender';
-        tabElement.dataset.tabId = tab;
-        genderRow.append(tabElement);
+        tabElement.dataset.tabId = tabId;
+        genderTabRow.append(tabElement);
     }
 
-    tabsWrapper.append(voiceRow);
-    tabsWrapper.append(genderRow);
+    // Spacer between tabs and content
+    const tabSpacer = document.createElement("div");
+    tabSpacer.className = "tab-spacer";
+
+    tabsWrapper.append(voiceTabRow);
+    tabsWrapper.append(genderTabRow);
+    tabsWrapper.append(tabSpacer);
+
     wireTabs(tabsWrapper, inflectionTable, onChange);
     container.append(tabsWrapper);
     onChange(getActiveTabVoice(), getActiveTabGender())

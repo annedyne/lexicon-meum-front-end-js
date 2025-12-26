@@ -18,3 +18,11 @@ export function formatCaseNameForTableRowHeader(caseName) {
     const capitalized = capitalize(caseName.toLowerCase());
     return capitalized.slice(0, 3) + '.';
 }
+
+export function highlightMatch(singularValue) {
+    const mark = document.createElement("mark");
+    mark.textContent = "Case";
+    mark.classList.add("case-span", "search-match");
+    mark.textContent = singularValue;
+    return mark
+}
