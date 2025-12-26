@@ -17,7 +17,7 @@ const wordSuggestionsBox = document.querySelector("#word-suggestions");
 wordSuggestionsBox.style.display = "none";
 
 // LOAD THEME FROM HTML
-document.documentElement.dataset.theme = "bronze";
+document.documentElement.dataset.theme = "gold-gray";
 
 // Debouncing and race condition state
 let debounceTimer;

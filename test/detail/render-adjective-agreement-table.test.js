@@ -23,7 +23,9 @@ describe("renderAdjectiveAgreementTable highlighting", () => {
             cell => cell.textContent === "pulchrum"
         );
 
-        expect(accusativeSingular.classList.contains("inflection-match-highlight")).toBe(true);
+        // Check that the cell contains a mark element with the search-match class
+        const markElement = accusativeSingular.querySelector("mark.search-match");
+        expect(markElement).not.toBeNull();
 
         // Test that all other inflection cells are NOT highlighted
         const otherInflectionCells = [...cells].filter(
@@ -33,7 +35,7 @@ describe("renderAdjectiveAgreementTable highlighting", () => {
         );
 
         for (const cell of otherInflectionCells) {
-            expect(cell.classList.contains("inflection-match-highlight")).toBe(false);
+            expect(cell.classList.contains("search-match")).toBe(false);
         }
 
     });
@@ -49,7 +51,9 @@ describe("renderAdjectiveAgreementTable highlighting", () => {
             cell => cell.textContent === "pulchrum"
         );
 
-        expect(accusativeSingular.classList.contains("inflection-match-highlight")).toBe(true);
+        // Check that the cell contains a mark element with the search-match class
+        const markElement = accusativeSingular.querySelector("mark.search-match");
+        expect(markElement).not.toBeNull();
 
         // Test that all other inflection cells are NOT highlighted
         const otherInflectionCells = [...cells].filter(
@@ -59,7 +63,7 @@ describe("renderAdjectiveAgreementTable highlighting", () => {
         );
 
         for (const cell of otherInflectionCells) {
-            expect(cell.classList.contains("inflection-match-highlight")).toBe(false);
+            expect(cell.classList.contains("search-match")).toBe(false);
         }
 
     });
