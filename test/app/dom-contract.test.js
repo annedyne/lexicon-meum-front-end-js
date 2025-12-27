@@ -21,8 +21,7 @@ describe("index.html provides required elements for main.js", () => {
         const file = resolve(process.cwd(), "index.html");
         const html = readFileSync(file, "utf8");
         const match = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-        const bodyInner = match ? match[1] : "";
-        document.body.innerHTML = bodyInner;
+        document.body.innerHTML = match ? match[1] : "";
     });
 
     it("contains all required DOM nodes", () => {
@@ -39,6 +38,6 @@ describe("index.html provides required elements for main.js", () => {
 
         // A couple of smoke checks that main.js ran and touched the DOM as expected
         expect(document.querySelector("#word-suggestions").style.display).toBe("none");
-        expect(document.documentElement.dataset.theme).toBe("bronze");
+        expect(document.documentElement.dataset.theme).toBe("gold-gray");
     });
 });

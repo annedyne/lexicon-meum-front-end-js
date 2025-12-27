@@ -1,4 +1,4 @@
-import {matchesInflection} from "./utilities.js";
+import {matchesInflection, formatCaseNameForTableRowHeader, highlightMatch} from "./utilities.js";
 import {getSearchInput} from "./detail-context";
 
 const GENDER_ABBR = { MASCULINE: "m", FEMININE: "f", NEUTER: "n" };
@@ -30,28 +30,39 @@ export function renderAdjectiveAgreementTable(agreements) {
     const numbers = Object.keys(sortedAgreements[0].inflections);
     const cases = Object.keys(sortedAgreements[0].inflections[numbers[0]]);
 
+    // Create a wrapper div to allow expansion to full width while allowing
+    // column width percentage to work as expected.
+    const tableWrapper = document.createElement("div");
+    tableWrapper.classList.add("table-grid-container");
+
     const table = document.createElement("table");
     table.classList.add("inflection-table", "agreement-table");
-    container.append(table);
 
     const thead = document.createElement("thead");
     thead.append(getHeaderRow(numbers[0], sortedAgreements));
     table.append(thead);
 
-    const tbody = document.createElement("tbody");
-    tbody.append(addCaseRows(sortedAgreements, cases, numbers[0]));
-    tbody.append(
-        createSectionHeaderRow(numbers[1], sortedAgreements.length + 1, "section-header"),
-    );
-    tbody.append(addCaseRows(sortedAgreements, cases, numbers[1]));
-    table.append(tbody);
+    const tbodySingular = document.createElement("tbody");
+    tbodySingular.append(addCaseRows(sortedAgreements, cases, numbers[0]));
+    table.append(tbodySingular);
+
+    const tbodyPlural = document.createElement("tbody");
+    tbodyPlural.append(createSectionHeaderRow(numbers[1], sortedAgreements.length + 1, "section-header"));
+    tbodyPlural.append(addCaseRows(sortedAgreements, cases, numbers[1]));
+    table.append(tbodyPlural);
+
+    tableWrapper.append(table);
+    container.append(tableWrapper);
 }
 
 function getHeaderRow(numberLabel, agreements) {
   const tr = document.createElement("tr");
+
+
   const th = document.createElement("th");
   th.textContent = numberLabel;
   tr.append(th);
+
 
   for (const { genders } of agreements) {
     const cell = document.createElement("th");
@@ -80,16 +91,19 @@ function addCaseRows(agreements, cases, numberLabel) {
     const row = document.createElement("tr");
     const caseTh = document.createElement("th");
     caseTh.scope = "row";
-    caseTh.textContent = abbrevCase(gramCase);
+    caseTh.classList.add("case-row-header");
+    caseTh.textContent = formatCaseNameForTableRowHeader(gramCase);
     row.append(caseTh);
 
     for (const { inflections } of agreements) {
       const td = document.createElement("td");
 
       const inflection = inflections[numberLabel]?.[gramCase] ?? "";
-      td.textContent = inflection;
+
       if(matchesInflection(inflection, searchInput)){
-          td.classList.add("inflection-match-highlight");
+         td.append(highlightMatch(inflection));
+      } else {
+          td.textContent = inflection;
       }
       row.append(td);
     }
@@ -98,11 +112,6 @@ function addCaseRows(agreements, cases, numberLabel) {
   }
 
   return frag;
-}
-
-function abbrevCase(name) {
-  const p = name.slice(0, 3);
-  return p.charAt(0) + p.slice(1).toLowerCase() + ".";
 }
 
 function createSectionHeaderRow(label, colspan, cls) {
@@ -115,3 +124,4 @@ function createSectionHeaderRow(label, colspan, cls) {
   row.append(cell);
   return row;
 }
+

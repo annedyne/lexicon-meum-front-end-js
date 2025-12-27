@@ -5,13 +5,13 @@ import { TABS } from "./tabs/tab-registry.js";
 /**
  * Initializes the inflection tabs by setting up the necessary render and route mechanisms.
  *
- * @param {Object} inflectionTable - The data or configuration object used to set up the tabs and their content routing.
+ * @param {Object} inflectionTableData - The data or configuration object used to set up the tabs and their content routing.
  * @return {void} This method does not return a value.
  */
-export function initializeInflectionTabs(inflectionTable) {
+export function initializeInflectionTabs(inflectionTableData) {
     // render tabs first (pass a callback to render the tab contents )
-    renderTabs(inflectionTable, (voiceTabId, genderTabId) => {
-        routeTabContent(voiceTabId, genderTabId, inflectionTable);
+    renderTabs(inflectionTableData, (voiceTabId, genderTabId) => {
+        routeTabContent(voiceTabId, genderTabId, inflectionTableData);
     });
 }
 

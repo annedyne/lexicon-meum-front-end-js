@@ -1,5 +1,5 @@
 import {getSearchInput} from "@detail/detail-context.js";
-import { matchesInflection} from "@detail/utilities.js";
+import {highlightMatch, matchesInflection} from "@detail/utilities.js";
 import { TAB_KEY } from "./tabs/tab-keys.js";
 
 /**
@@ -18,41 +18,48 @@ export function renderActiveConjugation(conjugations, gender) {
     console.log(`gender is ${gender}`);
     const container = document.querySelector("#inflections-container");
     
-    // Only clear if table doesn't exist (when called from tabs, table is already cleared)
+    // Clear previous tab's content.
     const existingTable = container.querySelector("#conjugation-table");
     if (existingTable) {
         existingTable.remove();
     }
 
     if (!Array.isArray(conjugations) || conjugations.length === 0) {
+        console.warn("No active conjugations found");
         return;
     }
 
     const activeMoods = conjugations.filter((d) => d?.voice === TAB_KEY.ACTIVE);
     if (activeMoods.length === 0) {
+        console.warn("No active conjugations found");
         return;
     }
 
     const table = document.createElement("table");
-    table.classList.add("inflection-table");
-    table.id = "conjugation-table";
+    table.classList.add("inflection-table", "active-conjugation-table");
+    table.id = "conjugation-table"; // So it can be referenced by other tab operations
     container.append(table);
 
-
-    for (const data of activeMoods) {
-        buildRows(data);
+    for (const moodSectionData of activeMoods) {
+        buildRows(moodSectionData);
     }
 }
 
 /**
- * @param {Conjugation} data - Conjugation data containing mood and tenses
+ * Builds and appends rows of conjugation tenses and their inflections to a pre-existing table.
+ * This method organizes mood-related tense forms into a tabular structure for display.
+ *
+ * @param {Object} moodSectionData - The data for the current mood section, containing mood details and tenses.
+ * @param {string} [moodSectionData.mood] - The name of the mood for which conjugation rows are to be built.
+ * @param {Object[]} [moodSectionData.tenses] - An array of tense objects, each containing tense information like names and forms.
+ * @return {void} This method does not return any value.
  */
-function buildRows(data) {
+function buildRows(moodSectionData) {
     const searchInput = getSearchInput();
-    const mood = data?.mood ?? "";
-    const tenses = Array.isArray(data?.tenses) ? data.tenses : [];
+    const mood = moodSectionData?.mood ?? "";
+    const tenses = Array.isArray(moodSectionData?.tenses) ? moodSectionData.tenses : [];
 
-    // No tenses to render for this mood; skip safely
+    // Skip if no tenses to render for this mood;
     if (tenses.length === 0) {
         return;
     }
@@ -60,6 +67,7 @@ function buildRows(data) {
     // Table body with tenses in pairs
     const tbody = document.createElement("tbody");
 
+    // for each pair of tenses, create a header row and inflection rows
     for (let index = 0; index < tenses.length; index += 2) {
         const left = tenses[index];
         const right = tenses[index + 1]; // can be undefined if odd count
@@ -96,20 +104,20 @@ function createInflectionFormRows(maxRows, tbody, left, right, searchInput) {
         const formRow = tbody.insertRow();
         const leftForm = left?.forms?.[index] ?? "";   // pad if undefined
         const rightForm = right?.forms?.[index] ?? ""; // pad if no right tense
-
         const leftCell = formRow.insertCell();
-        leftCell.textContent = leftForm;
 
         // Highlight if matches search input
         if (matchesInflection(leftForm, searchInput)) {
-            leftCell.classList.add("inflection-match-highlight");
+            leftCell.append(highlightMatch(leftForm));
+        } else {
+            leftCell.textContent = leftForm;
         }
 
         const rightCell = formRow.insertCell();
         rightCell.textContent = rightForm;
         // Highlight if matches search input
         if (matchesInflection(rightForm, searchInput)) {
-            rightCell.classList.add("inflection-match-highlight");
+            rightCell.classList.add("search-match");
         }
     }
 }
