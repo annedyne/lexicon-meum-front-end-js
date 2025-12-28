@@ -33,11 +33,6 @@ export function renderTabParticiple(participles, gender) {
     // Clear previous tab's content.
     const container = document.querySelector("#inflections-container");
 
-    const existingTable = container.querySelector("#conjugation-table");
-    if (existingTable) {
-        existingTable.remove();
-    }
-
     const participleTenses = participles
         ?.find(d => d.gender?.toLowerCase() === gender.toLowerCase())
         ?.tenses;
