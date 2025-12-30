@@ -8,6 +8,7 @@ export function renderTabs(inflectionTable, onChange) {
 
     const tabsWrapper = document.createElement("div");
     tabsWrapper.className = "conjugation-tabs-wrapper";
+    tabsWrapper.id = "conjugation-tabs";
 
     // Top row - Voice tabs
     const voiceTabRow = document.createElement("div");
@@ -42,13 +43,8 @@ export function renderTabs(inflectionTable, onChange) {
         genderTabRow.append(tabElement);
     }
 
-    // Spacer between tabs and content
-    const tabSpacer = document.createElement("div");
-    tabSpacer.className = "tab-spacer";
-
     tabsWrapper.append(voiceTabRow);
     tabsWrapper.append(genderTabRow);
-    tabsWrapper.append(tabSpacer);
 
     wireTabs(tabsWrapper, inflectionTable, onChange);
     container.append(tabsWrapper);

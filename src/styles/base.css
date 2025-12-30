@@ -32,7 +32,7 @@ input, select, textarea, button {
 }
 
 input:focus {
-    box-shadow: 0 0 5px rgba(255, 165, 0, 0.5); /* Adds a glow effect */
+    box-shadow: 0 0 5px rgba(255, 219, 32, 0.7); /* Adds a glow effect */
     border-color: var(--color-brand-accent-orange); /* Changes the border color */
     outline: none; /* Removes the default outline */
 }
@@ -227,6 +227,13 @@ label {
     margin-top: 1rem;
 }
 
+.coming-soon {
+    display: block;
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--color-brand-primary);
+    margin-top: 5rem;
+}
 
 #inflection-type-container {
     text-align: center;

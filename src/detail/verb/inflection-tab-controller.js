@@ -22,6 +22,9 @@ export function initializeInflectionTabs(inflectionTableData) {
  * @param inflectionTable
  */
 function routeTabContent(voiceTabId, genderTabId, inflectionTable) {
+    // Clear all previous tab content before rendering new content
+    clearTabContent();
+    
     // get voice tab from registry
     const voiceTab = TABS[voiceTabId];
 
@@ -34,7 +37,45 @@ function routeTabContent(voiceTabId, genderTabId, inflectionTable) {
     const dataSource = voiceTab.dataSource || 'conjugations'; // default to conjugations for backward compatibility
     const tabData = inflectionTable[dataSource] || [];
 
+    addTabSpacer();
     voiceTab.render(tabData, genderTabId);
+}
+
+function addTabSpacer() {
+    const container = document.querySelector("#conjugation-tabs");
+    if (!container) {
+        return;
+    }
+    const spacer = document.createElement("div");
+    spacer.id = "tab-spacer";
+    spacer.classList.add("tab-spacer");
+    container.append(spacer);
+}
+
+/**
+ * Centralized function to clear all tab content elements.
+ * This ensures all tab renderers don't need to remember to clear each other's content.
+ */
+function clearTabContent() {
+    const container = document.querySelector("#inflections-container");
+    if (!container) {
+        return;
+    }
+
+    // List all possible content elements that tabs might create
+    const elementsToRemove = [
+        "#conjugation-table",
+        "#tab-spacer",
+        "#coming-soon"
+        // Add any other selectors for elements that tabs create
+    ];
+    
+    for (const selector of elementsToRemove) {
+        const element = container.querySelector(selector);
+        if (element) {
+            element.remove();
+        }
+    }
 }
 
 

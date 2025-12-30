@@ -17,12 +17,6 @@ import { TAB_KEY } from "./tabs/tab-keys.js";
 export function renderActiveConjugation(conjugations, gender) {
     console.log(`gender is ${gender}`);
     const container = document.querySelector("#inflections-container");
-    
-    // Clear previous tab's content.
-    const existingTable = container.querySelector("#conjugation-table");
-    if (existingTable) {
-        existingTable.remove();
-    }
 
     if (!Array.isArray(conjugations) || conjugations.length === 0) {
         console.warn("No active conjugations found");
