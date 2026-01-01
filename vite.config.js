@@ -1,6 +1,8 @@
+// noinspection JSUnresolvedReference
+
 import {defineConfig} from "vite";
-import path from "path";
-import {fileURLToPath} from "url";
+import path from "node:path";
+import {fileURLToPath} from "node:url";
 
 // Get `__dirname` in ESM (since it's not available natively)
 const __filename = fileURLToPath(import.meta.url);
@@ -11,9 +13,11 @@ export default defineConfig({
         alias: {
             "@src": path.resolve(__dirname, "./src"),
             "@detail": path.resolve(__dirname, "./src/detail"),
+            "@detail-core": path.resolve(__dirname, "./src/detail/_internal"),
             "@search": path.resolve(__dirname, "./src/search"),
             "@api": path.resolve(__dirname, "./src/api"),
-            "@utils": path.resolve(__dirname, "./src/utils"),
+            "@utilities": path.resolve(__dirname, "./src/utilities"),
+            "@services": path.resolve(__dirname, "./src/services"),
         },
     },
     test: {

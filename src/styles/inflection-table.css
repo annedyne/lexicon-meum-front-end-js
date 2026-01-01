@@ -1,0 +1,177 @@
+/* ==========================================================================
+   PARTICIPLE TABLES LAYOUT
+   ========================================================================== */
+
+.search-match {
+    font-weight: 500;
+    background-color: var(--color-inflection-match);
+}
+
+.inflection-table {
+    width: auto; /* allow individual columns to be sized  */
+    max-width: 100%; /* Prevent overflow on small screens */
+    margin: 0 0 1.5rem 0;
+    border: 1px solid var(--color-inflection-table-border);
+    padding: 0 .5rem;
+    font-size: 1rem;
+    border-collapse: collapse;
+    border-top: none;
+    table-layout: fixed;
+}
+
+.inflection-table caption {
+    font-weight: bold;
+    text-align: left;
+    caption-side: top;
+    margin-bottom: 0.5rem;
+}
+
+/* Main Table header styling */
+.inflection-table thead th,
+.inflection-table.declension-table thead th,
+.inflection-table.agreement-table th.section-header {
+    padding: 0.3rem 0.5rem;
+    font-weight: 500;
+    text-align: left;
+    color: var(--color-bg);
+    background-color: var(--color-brand-secondary);
+}
+
+/* Default Table cell styling */
+.inflection-table td {
+    font-family: system-ui, sans-serif;
+    padding-left: .5rem;
+    vertical-align: top;
+}
+
+/* Default Table row hover styling */
+.inflection-table tbody tr:hover {
+    background-color: var(--color-row-hover);
+}
+
+/* tense section header for conjugation tables */
+.inflection-table th.tense-header,
+td.tense-header {
+    font-weight: 500;
+    text-align: left;
+    color: var(--color-brand-secondary-medium);
+    background-color: var(--color-brand-primary-light);
+    margin-bottom: 0.25rem;
+    padding-bottom: 0.2rem;
+    padding-top: 0.2rem;
+}
+
+/* Make conjugation table expand to match tabs */
+#conjugation-table {
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Active conjugation table column widths */
+.active-conjugation-table td {
+    width: 50%; /* Split remaining space equally between two columns */
+}
+
+/* Make tense headers span both columns properly */
+.active-conjugation-table .tense-header {
+    width: 50%;
+}
+
+.participle-table tbody thead th.tense-header,
+td.tense-header {
+    font-weight: 500;
+    text-align: left;
+    color: var(--color-text-header);
+    margin-bottom: 0.25rem;
+    padding-bottom: 0.2rem;
+    padding-top: 0.2rem;
+}
+
+/* default for case row headers */
+th[scope="row"].case-row-header {
+    width: 3rem;
+    min-width: 3ch;
+    max-width: 6ch;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    background-color: var(--color-brand-primary-light);
+    padding-left: .5rem;
+}
+tr.case-row-header:hover {
+    background-color: color-mix(in srgb, var(--color-brand-primary-light) 80%, black);
+}
+
+
+th[scope="col"].case-col-header {
+    width: 3rem;
+    min-width: 3ch;
+    max-width: 6ch;
+    height: 0;
+    line-height: 0;
+    background-color: var(--color-brand-primary-light);
+    content-visibility: hidden;
+}
+
+.participle-table thead th {
+    height: 0;
+    border: none;
+    padding: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+
+/* Container for expanding some inflection tables */
+.table-grid-container {
+    display: grid;
+    margin: 0;
+    gap: 0;
+}
+
+#inflections-container {
+    overflow-x: auto;
+}
+
+/* Conjugation Tabs Styling */
+.conjugation-tabs-wrapper {
+    margin: 1.5rem 0 0 0;
+}
+
+/* add a border to each tab row top, right and left */
+.tab-row {
+    display: flex;
+    gap: 0;
+}
+
+.tab-spacer {
+    padding: .4rem;
+    background-color: var(--color-tab-active);
+    border-left: 1px solid var(--color-inflection-table-border);
+    border-right: 1px solid var(--color-inflection-table-border);
+}
+
+.tab-row .tab-item {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--color-text-dark);
+    background-color: var(--color-tab);
+    transition: background-color 0.2s, color 0.2s;
+    cursor: pointer;
+    user-select: none;
+    border-top: 1px solid var(--color-inflection-table-border);
+}
+
+.tab-item:hover {
+    background-color: var(--color-tab-hover);
+}
+
+.tab-item.is-active {
+    color: var(--color-text-dark);
+    background-color: var(--color-tab-active);
+    border-left: 1px solid var(--color-inflection-table-border);
+    border-right: 1px solid var(--color-inflection-table-border);
+    border-top: 1px solid var(--color-inflection-table-border);
+}

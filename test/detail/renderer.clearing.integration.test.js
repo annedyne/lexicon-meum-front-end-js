@@ -3,16 +3,19 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
 // Use real implementations
-vi.mock("../../src/detail/renderDeclensionTable.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderConjugationTable.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderAdjectiveAgreementTable.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderLemmaHeader.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderDefinitions.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderInflectionType.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderPrincipalParts.js", async (orig) => await orig());
-vi.mock("../../src/detail/renderPOSAfterLemma.js", async (orig) => await orig());
+vi.mock("@detail/render-declension-table.js", async (orig) => await orig());
+vi.mock("@detail/inflection-tab-controller.js", async (orig) => await orig());
+vi.mock("@detail/render-adjective-agreement-table.js", async (orig) => await orig());
+vi.mock("@detail/render-lemma-header.js", async (orig) => await orig());
+vi.mock("@detail/render-definitions.js", async (orig) => await orig());
+vi.mock("@detail/render-inflection-type.js", async (orig) => await orig());
+vi.mock("@detail/render-principal-parts.js", async (orig) => await orig());
+vi.mock("@detail/render-pos-after-lemma.js", async (orig) => await orig());
+vi.mock("@detail/inflection-tab-controller.js", async (orig) => await orig());
+vi.mock("@detail/render-tabs.js", async (orig) => await orig());
 
-import { renderWordDetail } from "../../src/detail/renderWordDetail.js";
+
+import { renderWordDetail } from "@detail/render-word-detail.js";
 
 function setupDom() {
     document.body.innerHTML = `
@@ -26,7 +29,6 @@ function setupDom() {
 
 describe("Integration: real renderers clear correctly", () => {
     beforeEach(() => {
-        vi.resetModules();
         setupDom();
     });
 
@@ -44,21 +46,28 @@ describe("Integration: real renderers clear correctly", () => {
                 declensions: { SINGULAR: { NOMINATIVE: "puella" }, PLURAL: { NOMINATIVE: "puellae" } },
             },
         };
+        // RENDER NOUN DETAIL
         renderWordDetail(noun);
-        const afterNounHTML = document.getElementById("inflections-container").innerHTML;
+
+        // verify that declension table is rendered
+        const afterNounHTML = document.querySelector("#inflections-container").innerHTML;
         expect(afterNounHTML).toContain("declension-table");
 
+        // RENDER VERB DETAIL AFTER NOUN DETAIL
         const verb = {
             lemma: "amo",
             partOfSpeech: "VERB",
-            grammaticalGender: null,
+            grammaticalGender: undefined,
             inflectionClass: "FIRST",
             principalParts: ["amo", "amare", "amavi", "amatum"],
             definitions: ["love"],
             inflectionTable: { conjugations: [{ voice: "ACTIVE" }], agreements: [], declensions: {} },
         };
+
         renderWordDetail(verb);
-        const afterVerbHTML = document.getElementById("inflections-container").innerHTML;
+
+        // check that
+        const afterVerbHTML = document.querySelector("#inflections-container").innerHTML;
         expect(afterVerbHTML).toContain("conjugation-table");
         expect(afterVerbHTML).not.toContain("declension-table");
     });
@@ -74,20 +83,20 @@ describe("Integration: real renderers clear correctly", () => {
             inflectionTable: { conjugations: [], agreements: [], declensions: { SINGULAR: {}, PLURAL: {} } },
         };
         renderWordDetail(withParts);
-        expect(document.getElementById("principal-parts-container").textContent)
+        expect(document.querySelector("#principal-parts-container").textContent)
             .toMatch(/puella, puellae/);
 
         const noParts = {
             lemma: "bene",
             partOfSpeech: "ADVERB",
-            grammaticalGender: null,
-            inflectionClass: null,
+            grammaticalGender: undefined,
+            inflectionClass: undefined,
             principalParts: [],
             definitions: ["well"],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(noParts);
-        expect(document.getElementById("principal-parts-container").textContent.trim()).toBe("");
+        expect(document.querySelector("#principal-parts-container").textContent.trim()).toBe("");
     });
 
     it("inflection-type container is cleared each time and shows POS only for configured types", () => {
@@ -101,20 +110,20 @@ describe("Integration: real renderers clear correctly", () => {
             inflectionTable: { conjugations: [], agreements: [], declensions: { SINGULAR: {}, PLURAL: {} } },
         };
         renderWordDetail(noun);
-        const inflectionTypeAfterNoun = document.getElementById("inflection-type-container").textContent;
+        const inflectionTypeAfterNoun = document.querySelector("#inflection-type-container").textContent;
         expect(inflectionTypeAfterNoun).toMatch(/\(noun\)/i);
 
         const adverb = {
             lemma: "bene",
             partOfSpeech: "ADVERB",
-            grammaticalGender: null,
-            inflectionClass: null,
+            grammaticalGender: undefined,
+            inflectionClass: undefined,
             principalParts: [],
             definitions: [],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(adverb);
-        const inflectionTypeAfterAdverb = document.getElementById("inflection-type-container").textContent;
+        const inflectionTypeAfterAdverb = document.querySelector("#inflection-type-container").textContent;
         // should not include part-of-speech for adverb (rendered elsewhere)
         expect(inflectionTypeAfterAdverb.toLowerCase()).not.toMatch(/\(adverb\)/);
     });
@@ -123,8 +132,8 @@ describe("Integration: real renderers clear correctly", () => {
         const adverb = {
             lemma: "bene",
             partOfSpeech: "ADVERB",
-            grammaticalGender: null,
-            inflectionClass: null,
+            grammaticalGender: undefined,
+            inflectionClass: undefined,
             principalParts: [],
             definitions: ["well"],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
@@ -132,7 +141,7 @@ describe("Integration: real renderers clear correctly", () => {
 
         renderWordDetail(adverb);
 
-        const lemmaContainerAfterAdverb = document.getElementById("lemma-container");
+        const lemmaContainerAfterAdverb = document.querySelector("#lemma-container");
         const adverbBadge = lemmaContainerAfterAdverb.querySelector(".part-of-speech");
         expect(adverbBadge).toBeTruthy();
 
@@ -152,7 +161,7 @@ describe("Integration: real renderers clear correctly", () => {
 
         renderWordDetail(noun);
 
-        const lemmaContainerAfterNoun = document.getElementById("lemma-container");
+        const lemmaContainerAfterNoun = document.querySelector("#lemma-container");
         const nounBadge = lemmaContainerAfterNoun.querySelector(".part-of-speech");
         expect(nounBadge).toBeFalsy();
     });
