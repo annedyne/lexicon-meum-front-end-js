@@ -6,10 +6,6 @@ import {prepareSuggestionItems} from "@search";
 import {validateSearchQueryLength} from "@search";
 import {transformWordSuggestionData} from  "@search";
 import {handleLoadWordDetail} from "@detail";
-import {Router} from "@services/router.js"
-
-// INITIALIZE ROUTER
-Router.init();
 
 const isSuffixSearch = document.querySelector("#suffix-search");
 const wordLookupInput = document.querySelector("#word-lookup-input");
