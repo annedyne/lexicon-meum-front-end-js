@@ -27,7 +27,7 @@ import {renderDeclensionRow} from "@detail/render-declension-table.js";
  * @param {ParticipleData[]} participles - Array of participle data
  * @param {string} gender - The gender filter (MASCULINE, FEMININE, NEUTER)
  */
-export function renderTabParticiple(participles, gender) {
+export function renderParticipleInflections(participles, gender) {
     console.log(`Rendering participles for gender: ${gender}`);
 
     // Clear previous tab's content.
