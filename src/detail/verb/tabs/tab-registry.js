@@ -1,4 +1,4 @@
-import { renderActiveConjugation, renderTabPassive, renderTabParticiple } from "@detail/verb";
+import { renderActiveConjugation, renderPassiveConjugation, renderParticipleInflections } from "@detail/verb";
 import {TAB_KEY} from "./tab-keys.js";
 
 export const TABS = {
@@ -7,11 +7,11 @@ export const TABS = {
         dataSource: 'conjugations' // specify which part of inflectionTable to use
     },
     [TAB_KEY.PASSIVE]: {
-        render: renderTabPassive,
+        render: renderPassiveConjugation,
         dataSource: 'conjugations'
     },
     [TAB_KEY.PARTICIPLE]: {
-        render: renderTabParticiple,
+        render: renderParticipleInflections,
         dataSource: 'participles' // participle tab needs participle data
     },
 };
