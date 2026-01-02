@@ -26,16 +26,100 @@ body {
     grid-template-columns: 1fr;
 }
 
-/* Reset default styles */
+/* =============================================================================
+   FORM ELEMENTS - Default styles for all inputs, selects, etc.
+   ============================================================================= */
+
+/* Reset and standardize all form elements */
 input, select, textarea, button {
+    box-sizing: border-box;
     font: inherit;
 }
 
-input:focus {
-    box-shadow: 0 0 5px rgba(255, 219, 32, 0.7); /* Adds a glow effect */
-    border-color: var(--color-brand-accent-orange); /* Changes the border color */
-    outline: none; /* Removes the default outline */
+/* Default input styling - applies to all inputs */
+input {
+    border: 1px solid var(--color-border);
+    padding: 8px;
+    font-size: 16px; /* Prevents Safari zoom behavior */
+    color: var(--color-text);
+    background: var(--color-bg);
 }
+
+/* Default focus state for all inputs */
+input:focus {
+    box-shadow: 0 0 5px rgba(255, 219, 32, 0.7);
+    border-color: var(--color-brand-accent-orange);
+    outline: none;
+}
+
+label {
+    font-size: 1rem;
+}
+
+/* =============================================================================
+   SEARCH INPUT LAYOUT - Existing class names preserved
+   ============================================================================= */
+
+/* Container for the search input + checkbox layout */
+.input-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Horizontal layout with search input and checkbox */
+.input-with-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Wrapper for input + dropdown positioning */
+.input-field {
+    position: relative;
+    display: inline-block;
+    width: 200px; /* Fixed width so input and dropdown match */
+}
+
+/* Override default input styles for the search input specifically */
+.input-with-checkbox input[type="search"] {
+    width: 100%;
+    padding: 3px; /* Tighter padding for this specific input */
+}
+
+/* =============================================================================
+   DROPDOWN SUGGESTIONS
+   ============================================================================= */
+
+#word-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    max-height: 40vh;
+    border: 1px solid var(--color-border);
+    font-size: 1rem;
+    background: var(--color-bg);
+    overflow-y: auto;
+}
+
+#word-suggestions div {
+    padding: 1px;
+    cursor: pointer;
+}
+
+#word-suggestions div:hover {
+    background-color: var(--color-brand-secondary-light);
+}
+
+.suggestion-highlight {
+    font-weight: bold;
+    color: #222;
+}
+
+/* =============================================================================
+   BANNER
+   ============================================================================= */
 
 .banner {
     display: grid;
@@ -55,32 +139,35 @@ input:focus {
     filter: drop-shadow(var(--shadow-soft));
 }
 
+/* =============================================================================
+   TOAST NOTIFICATIONS
+   ============================================================================= */
+
 .toast {
-    position: fixed; /* Float on top of the content */
-    right: 20px; /* Distance from the left of the viewport */
-    bottom: 20px; /* Distance from the bottom of the viewport */
-    z-index: 9999; /* Ensure it's above other UI elements */
-    display: none; /* Hidden by default */
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9999;
+    display: none;
     border-radius: 8px;
     padding: 10px 20px;
     font-size: 14px;
-    color: #fff; /* White text */
-    background-color: #333; /* Dark background for contrast */
+    color: #fff;
+    background-color: #333;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    opacity: 0; /* Fully transparent by default */
-    transform: translateY(20px); /* Start off slightly lower */
+    opacity: 0;
+    transform: translateY(20px);
     transition:
             opacity 0.5s,
-            transform 0.5s ease-out; /* Smooth in/out */
+            transform 0.5s ease-out;
 }
 
 .toast.show {
-    display: block; /* Show when active */
-    opacity: 1; /* Fully visible */
-    transform: translateY(0); /* Slide into place */
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* Add success, error, or info styles */
 .toast.success {
     background-color: var(--color-success);
 }
@@ -93,73 +180,9 @@ input:focus {
     background-color: var(--color-info);
 }
 
-label {
-    font-size: 1rem;
-}
-
-.input-container {
-    position: relative;
-    display: inline-block;
-}
-
-.input-with-checkbox {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-/* Anchor dropdown to the input; make widths predictable */
-.input-field {
-    position: relative;
-    display: inline-block;
-}
-
-/* Ensure input and dropdown widths include padding/border */
-.input-field,
-.input-field input,
-#word-suggestions {
-    box-sizing: border-box;
-}
-
-/* Target the search input (width set by parent for exact matching) */
-.input-with-checkbox input[type="search"] {
-    width: 100%;
-    padding: 3px;
-}
-
-/* If you want a fixed width, set it on the wrapper so both match */
-.input-field {
-    width: 200px; /* adjust as preferred; input and dropdown will match this */
-}
-
-/* Position and size dropdown to match input width */
-#word-suggestions {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    width: 100%;
-    max-height: 40vh;
-    border: 1px solid var(--color-border);
-    font-size: 1rem;
-    background: var(--color-bg);
-
-    /* Scrolling when needed; JS will snap height to full rows */
-    overflow-y: auto;
-}
-
-#word-suggestions div {
-    padding: 1px;
-    cursor: pointer;
-}
-#word-suggestions div:hover {
-    background-color: var(--color-brand-secondary-light);
-}
-
-.suggestion-highlight {
-    font-weight: bold;
-    color: #222;
-}
+/* =============================================================================
+   WORD DETAIL DISPLAY
+   ============================================================================= */
 
 #lemma-container {
     text-align: center;
