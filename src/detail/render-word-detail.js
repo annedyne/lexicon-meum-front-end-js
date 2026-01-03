@@ -8,6 +8,7 @@ import { renderPrincipalParts } from "./verb/render-principal-parts.js";
 import { renderDefinitions } from "./render-definitions.js";
 import { renderInflectionType } from "./render-inflection-type.js";
 import {renderPOSAfterLemma} from "./render-pos-after-lemma.js";
+import {setMorphologicalSubtype} from "./detail-context.js";
 /**
  *  Displays word details
  *
@@ -32,6 +33,9 @@ export function renderWordDetail(wordDetailData) {
     } = wordDetailData;
 
     try {
+        // Set morphological subtype in context (can be undefined)
+        setMorphologicalSubtype(morphologicalSubtype);
+
         renderLemmaHeader(lemma);
         renderDefinitions(definitions, governedCase, partOfSpeech, syntacticSubtype);
 
