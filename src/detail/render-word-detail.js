@@ -22,7 +22,8 @@ export function renderWordDetail(wordDetailData) {
     const {
         lemma,
         partOfSpeech,
-        syntacticSubtype: subtype,
+        syntacticSubtype,
+        morphologicalSubtype,
         grammaticalGender: gender,
         governedCase,
         inflectionClass,
@@ -32,10 +33,10 @@ export function renderWordDetail(wordDetailData) {
 
     try {
         renderLemmaHeader(lemma);
-        renderDefinitions(definitions, governedCase, partOfSpeech, subtype);
+        renderDefinitions(definitions, governedCase, partOfSpeech, syntacticSubtype);
 
         renderPOSAfterLemma(partOfSpeech);
-        renderPrincipalParts(principalParts);
+        renderPrincipalParts(principalParts, morphologicalSubtype);
         renderInflectionType(inflectionClass, partOfSpeech);
 
         // Add noun gender only when relevant and principal parts exist
