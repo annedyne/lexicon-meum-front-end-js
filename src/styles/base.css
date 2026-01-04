@@ -214,6 +214,11 @@ label {
     color: var(--color-text-dark);
 }
 
+.principal-parts-subtype {
+    font-size: 1rem;
+    color: var(--color-brand-primary);
+}
+
 #definitions-container {
     font-size: 1rem;
     text-align: left;
