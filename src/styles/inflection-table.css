@@ -135,9 +135,12 @@ th[scope="col"].case-col-header {
 /* Conjugation Tabs Styling */
 .conjugation-tabs-wrapper {
     margin: 1.5rem 0 0 0;
+    /* outer border on the entire wrapper */
+    border: 1px solid var(--color-inflection-table-border);
+    border-bottom: none; /* Will be provided by the table or bottom row */
 }
 
-/* add a border to each tab row top, right and left */
+/* Remove gap and handle internal borders */
 .tab-row {
     display: flex;
     gap: 0;
@@ -146,11 +149,10 @@ th[scope="col"].case-col-header {
 .tab-spacer {
     padding: .4rem;
     background-color: var(--color-tab-active);
-    border-left: 1px solid var(--color-inflection-table-border);
-    border-right: 1px solid var(--color-inflection-table-border);
 }
 
-.tab-row .tab-item {
+/* Base tab styling - shared by both voice and gender tabs */
+.tab-item {
     flex: 1;
     padding: 0.6rem 1rem;
     font-size: 1rem;
@@ -161,17 +163,42 @@ th[scope="col"].case-col-header {
     transition: background-color 0.2s, color 0.2s;
     cursor: pointer;
     user-select: none;
-    border-top: 1px solid var(--color-inflection-table-border);
+    border-bottom: 1px solid var(--color-inflection-table-border);
+    border-right: 1px solid var(--color-inflection-table-border);
+}
+
+/* Remove right border from last tab in any row */
+.tab-item:last-child {
+    border-right: none;
+}
+
+/* Active tab styling - shared between both rows */
+.tab-item.is-active {
+    color: var(--color-brand-primary) !important;
+    background-color: var(--color-tab-active) !important;
+}
+
+/* Active tab in bottom row should be borderless at bottom */
+.tab-row.gender-tabs .tab-item.is-active {
+    border-bottom: none;
+    /* Add slight padding to compensate for missing border */
+    padding-bottom: calc(0.6rem + 1px);
 }
 
 .tab-item:hover {
-    background-color: var(--color-tab-hover);
+    color: color-mix(in srgb, var(--color-brand-primary) 70%, var(--color-text-dark) 30%) !important;
+    background-color: var(--color-tab-hover) !important;
+}
+.tab-item.is-active:hover {
+    color: var(--color-brand-primary) !important;
+    background-color: var(--color-tab-active) !important;
 }
 
-.tab-item.is-active {
-    color: var(--color-text-dark);
-    background-color: var(--color-tab-active);
-    border-left: 1px solid var(--color-inflection-table-border);
-    border-right: 1px solid var(--color-inflection-table-border);
-    border-top: 1px solid var(--color-inflection-table-border);
+.tab-item.is-disabled {
+    color: color-mix(in srgb, var(--color-text-dark) 40%, transparent) !important;
+    cursor: not-allowed !important;
+}
+
+.tab-item.is-disabled:hover {
+    background-color: var(--color-tab) !important;
 }

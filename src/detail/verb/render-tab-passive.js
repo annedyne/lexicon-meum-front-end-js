@@ -1,16 +1,6 @@
-export function renderTabPassive(conjugations, gender) {
+import {renderConjugationByVoice} from "@detail/verb/render-conjugation-shared.js";
+import {TAB_KEY} from "@detail/verb/tabs/index.js";
 
-    console.log(`gender is ${gender}`);
-    const container = document.querySelector("#inflections-container");
-    container.querySelector("#tab-spacer")?.remove();
-    const comingSoon = document.createElement("div");
-    comingSoon.append("Passive conjugations are not yet available for this gender.");
-    comingSoon.classList.add("coming-soon");
-    comingSoon.id = "coming-soon";
-
-    container.append(comingSoon);
-
-    if (!Array.isArray(conjugations) || conjugations.length === 0) {
-        console.log("No passive conjugations found");
-    }
+export function renderPassiveConjugation(conjugations, gender) {
+    return renderConjugationByVoice(conjugations, gender, TAB_KEY.PASSIVE, "passive-conjugation-table");
 }
