@@ -41,7 +41,7 @@
     --color-inflection-match: var(--color-brand-accent);
     --color-inflection-table-border: var(--color-brand-secondary);
 
-    --color-tab: #c7c7c7ff;
-    --color-tab-hover: var(--color-brand-secondary-hover);
+    --color-tab: var(--color-brand-secondary-hover);
+    --color-tab-hover: var(--color-brand-secondary-light);
     --color-tab-active: #ffffff;
 }
