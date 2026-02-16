@@ -1,5 +1,7 @@
 import {matchesInflection, formatCaseNameForTableRowHeader, highlightMatch} from "./utilities.js";
 import {getSearchInput} from "./detail-context";
+import {CSS_CLASSES} from "@utilities";
+
 
 const GENDER_ABBR = {MASCULINE: "m", FEMININE: "f", NEUTER: "n"};
 
@@ -35,11 +37,9 @@ export function renderAdjectiveAgreementTable(agreements, shouldClear = true) {
     // Create a wrapper div to allow expansion to full width while allowing
     // column width percentage to work as expected.
     const tableWrapper = document.createElement("div");
-    tableWrapper.classList.add("table-grid-container");
-
+    tableWrapper.classList.add(CSS_CLASSES.TABLE_GRID_CONTAINER);
     const table = document.createElement("table");
-    table.classList.add("inflection-table", "agreement-table");
-
+    table.classList.add(CSS_CLASSES.INFLECTION_TABLE, CSS_CLASSES.AGREEMENT_TABLE);
     const thead = document.createElement("thead");
     thead.append(getHeaderRow(numbers[0], sortedAgreements));
     table.append(thead);
@@ -93,7 +93,7 @@ function addCaseRows(agreements, cases, numberLabel) {
         const row = document.createElement("tr");
         const caseTh = document.createElement("th");
         caseTh.scope = "row";
-        caseTh.classList.add("case-row-header");
+        caseTh.classList.add(CSS_CLASSES.CASE_ROW_HEADER);
         caseTh.textContent = formatCaseNameForTableRowHeader(gramCase);
         row.append(caseTh);
 

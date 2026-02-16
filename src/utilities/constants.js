@@ -62,6 +62,7 @@ export const StatusMessageType = Object.freeze({
 export const CSS_CLASSES = Object.freeze({
     // Headers
     DEGREE_HEADER: "degree-header",
+    CASE_ROW_HEADER: "case-row-header",
     LEMMA: "lemma",
 
     // Layout containers

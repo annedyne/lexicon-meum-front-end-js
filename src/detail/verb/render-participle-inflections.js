@@ -1,4 +1,3 @@
-
 /**
  * @typedef {Object} ParticipleCase
  * @property {string} caseName - The case name (e.g., "nominative", "genitive")
@@ -21,6 +20,7 @@
  */
 
 import {renderDeclensionRow} from "@detail/render-declension-table.js";
+import {CSS_CLASSES} from "@utilities";
 
 /**
  * Renders participle data using the CSS Grid system
@@ -36,7 +36,7 @@ export function renderParticipleInflections(participles, gender) {
     const participleTenses = participles
         ?.find(d => d.gender?.toLowerCase() === gender.toLowerCase())
         ?.tenses;
-    
+
     if (!Array.isArray(participleTenses) || participleTenses.length === 0) {
         console.log(`No participle data found for gender: ${gender}`);
         return;
@@ -45,7 +45,7 @@ export function renderParticipleInflections(participles, gender) {
     // Create table container for the participle table
     const table = document.createElement("table");
     table.id = "conjugation-table"; // For tab-operations to reference
-    table.classList.add("inflection-table", "participle-table");
+    table.classList.add(CSS_CLASSES.INFLECTION_TABLE, CSS_CLASSES.PARTICIPLE_TABLE);
 
     table.append(buildTableColumnHeaderRow());
     for (const participleTense of participleTenses) {
@@ -80,7 +80,7 @@ export function renderParticipleInflections(participles, gender) {
     container.append(table);
 }
 
-function buildTableColumnHeaderRow(){
+function buildTableColumnHeaderRow() {
     // Add thead to establish column structure (this is likely what's missing!)
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");

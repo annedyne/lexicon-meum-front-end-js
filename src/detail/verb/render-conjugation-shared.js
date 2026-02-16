@@ -1,5 +1,6 @@
 import {getSearchInput} from "@detail/detail-context.js";
 import {highlightMatch, matchesInflection} from "@detail/utilities.js";
+import {CSS_CLASSES} from "@utilities";
 
 /**
  * @typedef {Object} Tense
@@ -31,7 +32,7 @@ export function renderConjugationByVoice(conjugations, gender, voice, tableClass
     }
 
     const table = document.createElement("table");
-    table.classList.add("inflection-table", tableClassName);
+    table.classList.add(CSS_CLASSES.INFLECTION_TABLE, tableClassName);
     table.id = "conjugation-table"; // So it can be referenced by other tab operations
     container.append(table);
 
@@ -39,6 +40,7 @@ export function renderConjugationByVoice(conjugations, gender, voice, tableClass
         buildRows(moodSectionData);
     }
 }
+
 /**
  * Builds and appends rows of conjugation tenses and their inflections to a pre-existing table.
  * This method organizes mood-related tense forms into a tabular structure for display.

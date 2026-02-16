@@ -1,20 +1,21 @@
-import { getSearchInput } from "./detail-context";
+import {getSearchInput} from "./detail-context";
 import {formatCaseNameForTableRowHeader, highlightMatch, matchesInflection} from "./utilities.js"
+import {CSS_CLASSES} from "@utilities";
 
 export function renderDeclensionTable(declensions) {
 
     // Replace existing content
     const container = document.querySelector("#inflections-container");
     container.replaceChildren();
-    
+
     // Create a wrapper div similar to conjugation tables
     const tableWrapper = document.createElement("div");
     tableWrapper.classList.add("table-grid-container");
 
     const tableElement = document.createElement("table");
-    tableElement.classList.add("inflection-table", "declension-table");
+    tableElement.classList.add(CSS_CLASSES.INFLECTION_TABLE, CSS_CLASSES.DECLENSION_TABLE);
     createDeclensionTable(declensions, tableElement);
-    
+
     tableWrapper.append(tableElement);
     container.append(tableWrapper);
 }
@@ -23,7 +24,7 @@ export function createDeclensionTable(declensions, tableElement) {
 
     //only render this table if this is declension data
     if (!declensions?.SINGULAR || !declensions?.PLURAL) {
-      return;
+        return;
     }
 
     const tableData = declensions;
@@ -67,12 +68,12 @@ export function createDeclensionTable(declensions, tableElement) {
  * @param {Object.<string, string>} tableData.PLURAL - An object mapping grammatical case names to their plural values.
  * @return {HTMLTableRowElement} The constructed HTML table row element representing the declension row.
  */
-export function renderDeclensionRow(caseName, tableData ) {
+export function renderDeclensionRow(caseName, tableData) {
     const row = document.createElement("tr");
 
     const caseCell = document.createElement("th");
     caseCell.scope = "row";
-    caseCell.classList.add("case-row-header");
+    caseCell.classList.add(CSS_CLASSES.CASE_ROW_HEADER);
     caseCell.textContent = formatCaseNameForTableRowHeader(caseName);
     row.append(caseCell);
 
