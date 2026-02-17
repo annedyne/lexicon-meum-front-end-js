@@ -1,7 +1,9 @@
 import {matchesInflection, formatCaseNameForTableRowHeader, highlightMatch} from "./utilities.js";
 import {getSearchInput} from "./detail-context";
+import {CSS_CLASSES} from "@utilities";
 
-const GENDER_ABBR = { MASCULINE: "m", FEMININE: "f", NEUTER: "n" };
+
+const GENDER_ABBR = {MASCULINE: "m", FEMININE: "f", NEUTER: "n"};
 
 // define  canonical sort order:
 const GENDER_ORDER = ["MASCULINE", "FEMININE", "NEUTER"];
@@ -11,16 +13,18 @@ const GENDER_ORDER = ["MASCULINE", "FEMININE", "NEUTER"];
  * @property {Object.<string, Object.<string, string>>} inflections
  * @property {string[]} genders
  */
-export function renderAdjectiveAgreementTable(agreements) {
+export function renderAdjectiveAgreementTable(agreements, shouldClear = true) {
     const container = document.querySelector("#inflections-container");
-    container.replaceChildren();
+    if (shouldClear) {
+        container.replaceChildren();
+    }
 
     if (!Array.isArray(agreements) || agreements.length === 0) {
         return;
     }
 
     // --- sort agreements by the lowest-index gender they contain ---
-    const sortedAgreements =  [...agreements].toSorted((a, b) => {
+    const sortedAgreements = [...agreements].toSorted((a, b) => {
         // eslint-disable-next-line unicorn/consistent-function-scoping
         const minIndex = (array) =>
             Math.min(...array.map((g) => GENDER_ORDER.indexOf(g)));
@@ -33,11 +37,9 @@ export function renderAdjectiveAgreementTable(agreements) {
     // Create a wrapper div to allow expansion to full width while allowing
     // column width percentage to work as expected.
     const tableWrapper = document.createElement("div");
-    tableWrapper.classList.add("table-grid-container");
-
+    tableWrapper.classList.add(CSS_CLASSES.TABLE_GRID_CONTAINER);
     const table = document.createElement("table");
-    table.classList.add("inflection-table", "agreement-table");
-
+    table.classList.add(CSS_CLASSES.INFLECTION_TABLE, CSS_CLASSES.AGREEMENT_TABLE);
     const thead = document.createElement("thead");
     thead.append(getHeaderRow(numbers[0], sortedAgreements));
     table.append(thead);
@@ -56,72 +58,72 @@ export function renderAdjectiveAgreementTable(agreements) {
 }
 
 function getHeaderRow(numberLabel, agreements) {
-  const tr = document.createElement("tr");
+    const tr = document.createElement("tr");
 
 
-  const th = document.createElement("th");
-  th.textContent = numberLabel;
-  tr.append(th);
+    const th = document.createElement("th");
+    th.textContent = numberLabel;
+    tr.append(th);
 
 
-  for (const { genders } of agreements) {
-    const cell = document.createElement("th");
-    cell.scope = "col";
-    cell.textContent = formatGenderLabel(genders);
-    tr.append(cell);
-  }
+    for (const {genders} of agreements) {
+        const cell = document.createElement("th");
+        cell.scope = "col";
+        cell.textContent = formatGenderLabel(genders);
+        tr.append(cell);
+    }
 
-  return tr;
+    return tr;
 }
 
 function formatGenderLabel(genders) {
-  const sorted = [...genders].toSorted(
-    (a, b) => GENDER_ORDER.indexOf(a) - GENDER_ORDER.indexOf(b),
-  );
-  const abbreviations = sorted.map((g) => GENDER_ABBR[g] || g.charAt(0).toLowerCase());
-  return abbreviations.join(" & ");
+    const sorted = [...genders].toSorted(
+        (a, b) => GENDER_ORDER.indexOf(a) - GENDER_ORDER.indexOf(b),
+    );
+    const abbreviations = sorted.map((g) => GENDER_ABBR[g] || g.charAt(0).toLowerCase());
+    return abbreviations.join(" & ");
 }
 
 function addCaseRows(agreements, cases, numberLabel) {
     const searchInput = getSearchInput();
 
-  const frag = document.createDocumentFragment();
+    const frag = document.createDocumentFragment();
 
-  for (const gramCase of cases) {
-    const row = document.createElement("tr");
-    const caseTh = document.createElement("th");
-    caseTh.scope = "row";
-    caseTh.classList.add("case-row-header");
-    caseTh.textContent = formatCaseNameForTableRowHeader(gramCase);
-    row.append(caseTh);
+    for (const gramCase of cases) {
+        const row = document.createElement("tr");
+        const caseTh = document.createElement("th");
+        caseTh.scope = "row";
+        caseTh.classList.add(CSS_CLASSES.CASE_ROW_HEADER);
+        caseTh.textContent = formatCaseNameForTableRowHeader(gramCase);
+        row.append(caseTh);
 
-    for (const { inflections } of agreements) {
-      const td = document.createElement("td");
+        for (const {inflections} of agreements) {
+            const td = document.createElement("td");
 
-      const inflection = inflections[numberLabel]?.[gramCase] ?? "";
+            const inflection = inflections[numberLabel]?.[gramCase] ?? "";
 
-      if(matchesInflection(inflection, searchInput)){
-         td.append(highlightMatch(inflection));
-      } else {
-          td.textContent = inflection;
-      }
-      row.append(td);
+            if (matchesInflection(inflection, searchInput)) {
+                td.append(highlightMatch(inflection));
+            } else {
+                td.textContent = inflection;
+            }
+            row.append(td);
+        }
+
+        frag.append(row);
     }
 
-    frag.append(row);
-  }
-
-  return frag;
+    return frag;
 }
 
 function createSectionHeaderRow(label, colspan, cls) {
-  const row = document.createElement("tr");
-  const cell = document.createElement("th");
-  cell.scope = "col";
-  cell.colSpan = colspan;
-  cell.textContent = label;
-  cell.classList.add(cls);
-  row.append(cell);
-  return row;
+    const row = document.createElement("tr");
+    const cell = document.createElement("th");
+    cell.scope = "col";
+    cell.colSpan = colspan;
+    cell.textContent = label;
+    cell.classList.add(cls);
+    row.append(cell);
+    return row;
 }
 
