@@ -30,7 +30,7 @@
 .inflection-table thead th,
 .inflection-table.declension-table thead th,
 .inflection-table.agreement-table th.section-header {
-    padding: 0.3rem 0.5rem;
+    padding: 0.2rem 0.5rem;
     font-weight: 500;
     text-align: left;
     color: var(--color-bg);
@@ -39,8 +39,9 @@
 
 /* Default Table cell styling */
 .inflection-table td {
-    font-family: system-ui, sans-serif;
+    padding-bottom: .1rem;
     padding-left: .5rem;
+    padding-top: .1rem;
     vertical-align: top;
 }
 
@@ -98,6 +99,7 @@ th[scope="row"].case-row-header {
     background-color: var(--color-brand-primary-light);
     padding-left: .5rem;
 }
+
 tr.case-row-header:hover {
     background-color: color-mix(in srgb, var(--color-brand-primary-light) 80%, black);
 }
@@ -130,6 +132,10 @@ th[scope="col"].case-col-header {
 
 #inflections-container {
     overflow-x: auto;
+}
+
+#inflections-container H3 {
+    color: var(--color-text-header);
 }
 
 /* Conjugation Tabs Styling */
@@ -189,6 +195,7 @@ th[scope="col"].case-col-header {
     color: color-mix(in srgb, var(--color-brand-primary) 70%, var(--color-text-dark) 30%) !important;
     background-color: var(--color-tab-hover) !important;
 }
+
 .tab-item.is-active:hover {
     color: var(--color-brand-primary) !important;
     background-color: var(--color-tab-active) !important;

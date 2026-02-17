@@ -1,7 +1,7 @@
 :root {
     /* Base colors */
     --color-bg: #ffffff;
-    --color-text: #0A0A0A;
+    --color-text: rgba(0, 0, 0, 0.75);
     --color-border: #cccccc;
 
     /* status colors */
@@ -32,8 +32,9 @@
     --color-brand-secondary-hover: #E8E8E8;
 
     /* key elements */
-    --color-text-header: var(--color-brand-secondary-medium);
-    --color-text-dark: #000000;
+    --color-text-header: rgba(0, 0, 0, 0.65);
+    --color-text-dark: rgba(0, 0, 0, 0.87);
+
     --color-link: var(--color-brand-primary);
     --color-banner-bg: var(--color-brand-secondary-light);
     --color-banner-border: var(--color-brand-primary);

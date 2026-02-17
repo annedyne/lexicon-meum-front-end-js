@@ -53,9 +53,9 @@ export function renderWordDetail(wordDetailData) {
         const {inflectionTable} = wordDetailData ?? {};
         const {
             agreements = [],
-            positive = [],
-            comparative = [],
-            superlative = [],
+            positive,
+            comparative,
+            superlative,
             declensions,
         } = inflectionTable ?? {};
 
