@@ -40,9 +40,42 @@
 /* Default Table cell styling */
 .inflection-table td {
     padding-bottom: .1rem;
-    padding-left: .5rem;
     padding-top: .1rem;
     vertical-align: top;
+}
+
+/* INFLECTION TABLE FORM COLUMN TEXT ALIGNMENT
+   prevent all from hugging their left neighbor
+   Nudge rightmost column inward
+   Without affecting the width of the table
+ */
+.inflection-table td:nth-child(2) {
+    padding-left: 1rem;
+}
+
+.inflection-table td:nth-child(3) {
+    padding-left: 1rem;
+}
+
+.inflection-table td:last-child {
+    padding-left: 1rem;
+    padding-right: 4rem;
+}
+
+/* INFLECTION TABLE FORM COLUMN HEADER TEXT ALIGNMENT
+    align column headers with column text
+ */
+.inflection-table thead th:nth-child(2) {
+    padding-left: 1.1rem;
+}
+
+.inflection-table thead th:nth-child(3) {
+    padding-left: 1.1rem;
+}
+
+.inflection-table thead th:last-child {
+    padding-left: 1.1rem;
+    padding-right: 4rem;
 }
 
 /* Default Table row hover styling */
@@ -100,10 +133,10 @@ th[scope="row"].case-row-header {
     padding-left: .5rem;
 }
 
-tr.case-row-header:hover {
-    background-color: color-mix(in srgb, var(--color-brand-primary-light) 80%, black);
-}
 
+.inflection-table tr:hover th[scope="row"].case-row-header {
+    background-color: color-mix(in srgb, var(--color-brand-primary-light) 93%, black);
+}
 
 th[scope="col"].case-col-header {
     width: 3rem;

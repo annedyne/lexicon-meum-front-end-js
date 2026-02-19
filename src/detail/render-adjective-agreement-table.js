@@ -1,6 +1,6 @@
 import {matchesInflection, formatCaseNameForTableRowHeader, highlightMatch} from "./utilities.js";
 import {getSearchInput} from "./detail-context";
-import {CSS_CLASSES} from "@utilities";
+import {capitalize, CSS_CLASSES} from "@utilities";
 
 
 const GENDER_ABBR = {MASCULINE: "m", FEMININE: "f", NEUTER: "n"};
@@ -41,7 +41,7 @@ export function renderAdjectiveAgreementTable(agreements, shouldClear = true) {
     const table = document.createElement("table");
     table.classList.add(CSS_CLASSES.INFLECTION_TABLE, CSS_CLASSES.AGREEMENT_TABLE);
     const thead = document.createElement("thead");
-    thead.append(getHeaderRow(numbers[0], sortedAgreements));
+    thead.append(getHeaderRow(capitalize(numbers[0]), sortedAgreements));
     table.append(thead);
 
     const tbodySingular = document.createElement("tbody");
@@ -49,7 +49,7 @@ export function renderAdjectiveAgreementTable(agreements, shouldClear = true) {
     table.append(tbodySingular);
 
     const tbodyPlural = document.createElement("tbody");
-    tbodyPlural.append(createSectionHeaderRow(numbers[1], sortedAgreements.length + 1, "section-header"));
+    tbodyPlural.append(createSectionHeaderRow(capitalize(numbers[1]), sortedAgreements.length + 1, "section-header"));
     tbodyPlural.append(addCaseRows(sortedAgreements, cases, numbers[1]));
     table.append(tbodyPlural);
 
