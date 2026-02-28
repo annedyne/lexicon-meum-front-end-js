@@ -4,7 +4,7 @@
 export const QUERY_CHAR_MIN = 1;
 export const AUTOCOMPLETE_DEBOUNCE_MS = 100;
 
-//Parts of Speech
+// ------- LEXICAL TERMS ------ //
 export const POS = Object.freeze({
     ADJECTIVE: "ADJECTIVE",
     ADVERB: "ADVERB",
@@ -41,9 +41,61 @@ export const GRAMMAR_ABBREV_LABEL = Object.freeze({
     [GRAMMAR_KEYS.DEPONENT]: "dep",
 });
 
+
+export const ADJECTIVE_DEGREES = Object.freeze({
+    POSITIVE: "Positive",
+    COMPARATIVE: "Comparative",
+    SUPERLATIVE: "Superlative",
+});
+
+
+// ------- APPLICATION  ------ //
+
 export const STATUS_TOAST_DURATION = 3000;
 export const StatusMessageType = Object.freeze({
-  INFO: "info",
-  ERROR: "error",
-  SUCCESS: "success",
+    INFO: "info",
+    ERROR: "error",
+    SUCCESS: "success",
+});
+
+// ------- CSS CLASS NAMES  ------ //
+export const CSS_CLASSES = Object.freeze({
+    // Headers
+    DEGREE_HEADER: "degree-header",
+    CASE_ROW_HEADER: "case-row-header",
+    LEMMA: "lemma",
+
+    // Layout containers
+    TABLE_GRID_CONTAINER: "table-grid-container",
+
+    // Tables
+    INFLECTION_TABLE: "inflection-table",
+    DECLENSION_TABLE: "declension-table",
+    AGREEMENT_TABLE: "agreement-table",
+    PARTICIPLE_TABLE: "participle-table",
+
+    // Text styling
+    GENDER: "gender",
+    PART_OF_SPEECH: "part-of-speech",
+    PRINCIPAL_PARTS: "principal-parts",
+    PRINCIPAL_PARTS_SUBTYPE: "principal-parts-subtype",
+    INFLECTION_TYPE: "inflection-type",
+
+    // Definitions
+    DEFINITIONS_LABEL: "definitions-label",
+    DEFINITIONS_LIST: "definitions-list",
+    DEFINITIONS_HIDDEN: "definitions-hidden",
+    DEFINITIONS_TOGGLE: "definitions-toggle",
+    DEFINITION_SUBHEADER: "definition-subheader",
+
+    // Search and highlighting
+    SEARCH_MATCH: "search-match",
+    CASE_SPAN: "case-span",
+    SUGGESTION_HIGHLIGHT: "suggestion-highlight",
+
+    // Tabs
+    TAB_ITEM: "tab-item",
+    TAB_SPACER: "tab-spacer",
+    IS_ACTIVE: "is-active",
+    IS_DISABLED: "is-disabled",
 });

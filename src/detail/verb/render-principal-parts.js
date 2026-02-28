@@ -1,4 +1,4 @@
-import {GRAMMAR_ABBREV_LABEL, GRAMMAR_KEYS} from "@utilities";
+import {CSS_CLASSES, GRAMMAR_ABBREV_LABEL, GRAMMAR_KEYS} from "@utilities";
 
 export function renderPrincipalParts(principalParts, morphologicalSubtype) {
     const principalPartsContainer = document.querySelector("#principal-parts-container");
@@ -6,7 +6,7 @@ export function renderPrincipalParts(principalParts, morphologicalSubtype) {
 
     if (principalParts && principalParts.length > 0) {
         const principalPartsSpan = document.createElement("span");
-        principalPartsSpan.classList.add("principal-parts");
+        principalPartsSpan.classList.add(CSS_CLASSES.PRINCIPAL_PARTS);
         principalPartsSpan.textContent = principalParts.join(", ");
         principalPartsContainer.append(principalPartsSpan);
 
