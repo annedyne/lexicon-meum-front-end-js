@@ -1,6 +1,11 @@
-
 import {renderTabs} from "./tabs/render-tabs.js";
-import { TABS } from "./tabs/tab-registry.js";
+import {TABS} from "./tabs/tab-registry.js";
+
+/**
+ * @typedef {Object} TabSupport
+ * @property {Function} addTabSpacer - Adds a spacer element to the tab container
+ * @property {Function} addEmptyContentMessage - Adds a message for empty content states
+ */
 
 /**
  * Initializes the inflection tabs by setting up the necessary render and route mechanisms.
@@ -15,16 +20,10 @@ export function initializeInflectionTabs(inflectionTableData) {
     });
 }
 
-/**
- * Routes appropriate inflection data to appropriate renderer for the active voice and gender tab.
- * @param voiceTabId
- * @param genderTabId
- * @param inflectionTable
- */
 function routeTabContent(voiceTabId, genderTabId, inflectionTable) {
     // Clear all previous tab content before rendering new content
     clearTabContent();
-    
+
     // get voice tab from registry
     const voiceTab = TABS[voiceTabId];
 
@@ -37,8 +36,40 @@ function routeTabContent(voiceTabId, genderTabId, inflectionTable) {
     const dataSource = voiceTab.dataSource || 'conjugations'; // default to conjugations for backward compatibility
     const tabData = inflectionTable[dataSource] || [];
 
-    addTabSpacer();
-    voiceTab.render(tabData, genderTabId);
+    /** @type {TabSupport} */
+    const tabSupport = {
+        addTabSpacer,
+        addEmptyContentMessage
+    };
+
+    // Pass utility functions to the renderer
+    voiceTab.render(tabData, genderTabId, tabSupport);
+}
+
+// ... existing code ...
+
+/**
+ * Adds a message for when there's no content to display for the active tab
+ * @param {string} message - The message to display
+ * @param {string} [additionalClass] - Optional additional CSS class
+ */
+function addEmptyContentMessage(message, additionalClass = '') {
+    const container = document.querySelector("#inflections-container");
+    if (!container) {
+        return;
+    }
+
+    const messageDiv = document.createElement("div");
+
+    messageDiv.id = "empty-content-message";
+    messageDiv.classList.add("empty-content-message");
+
+    if (additionalClass) {
+        messageDiv.classList.add(additionalClass);
+    }
+    messageDiv.textContent = message;
+
+    container.append(messageDiv);
 }
 
 function addTabSpacer() {
@@ -66,10 +97,11 @@ function clearTabContent() {
     const elementsToRemove = [
         "#conjugation-table",
         "#tab-spacer",
-        "#coming-soon"
+        "#coming-soon",
+        "#empty-content-message"
         // Add any other selectors for elements that tabs create
     ];
-    
+
     for (const selector of elementsToRemove) {
         const element = container.querySelector(selector);
         if (element) {
@@ -77,5 +109,3 @@ function clearTabContent() {
         }
     }
 }
-
-
