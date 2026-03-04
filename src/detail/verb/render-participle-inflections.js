@@ -26,12 +26,19 @@ import {CSS_CLASSES} from "@utilities";
  * Renders participle data using the CSS Grid system
  * @param {ParticipleData[]} participles - Array of participle data
  * @param {string} gender - The gender filter (MASCULINE, FEMININE, NEUTER)
+ * @param {TabSupport} tabSupport - utility functions provided by the tab controller for content management
  */
-export function renderParticipleInflections(participles, gender) {
+export function renderParticipleInflections(participles, gender, tabSupport) {
     console.log(`Rendering participles for gender: ${gender}`);
 
-    // Clear previous tab's content.
     const container = document.querySelector("#inflections-container");
+
+    // Check if participles is undefined or null
+    if (!participles) {
+        console.log('No participle data provided - participles parameter is undefined or null');
+        tabSupport?.addEmptyContentMessage('No participle data available for this word.', 'bordered-message');
+        return;
+    }
 
     const participleTenses = participles
         ?.find(d => d.gender?.toLowerCase() === gender.toLowerCase())
@@ -39,6 +46,8 @@ export function renderParticipleInflections(participles, gender) {
 
     if (!Array.isArray(participleTenses) || participleTenses.length === 0) {
         console.log(`No participle data found for gender: ${gender}`);
+        const genderLabel = gender.toLowerCase();
+        tabSupport?.addEmptyContentMessage(`No ${genderLabel} participle forms available for this word.`, 'bordered-message');
         return;
     }
 

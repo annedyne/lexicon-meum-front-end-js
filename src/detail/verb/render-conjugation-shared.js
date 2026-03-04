@@ -20,10 +20,12 @@ export function renderConjugationByVoice(conjugations, gender, voice, tableClass
     console.log(`gender is ${gender}`);
     const container = document.querySelector("#inflections-container");
 
+
     if (!Array.isArray(conjugations) || conjugations.length === 0) {
         console.warn("No active conjugations found");
         return;
     }
+
 
     const activeMoods = conjugations.filter((d) => d?.voice === voice);
     if (activeMoods.length === 0) {
