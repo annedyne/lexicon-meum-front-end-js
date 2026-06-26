@@ -1,26 +1,42 @@
-## LexiconMeum Frontend
+<img src="lexiconSearchAndDetail.png" alt="Lexicon search and detail" width="600">
 
-A vanilla JavaScript frontend for querying Latin word prefixes.
+# LexiconMeum
+
+A Latin dictionary and grammar lookup tool.
+
+_Vanilla JavaScript single-page app backed by a Spring Boot REST API._
 
 ---
 
-### Getting Started
+## Features
 
-#### Prerequisites
+- **Easy lookup** — autocomplete search by prefix or suffix; find a word by any of its inflected forms.
+- **Word meanings** — comprehensive definitions sourced from [Wiktionary](https://www.wiktionary.org).
+- **Complete inflection tables** — full inflections laid out for comparison, with your searched form highlighted.
+- **Grammatical detail** — additional information such as gender and governed case.
+
+---
+
+## Getting Started
+
+This is the frontend only; it talks to a separate Spring Boot backend (see below).
+
+### Prerequisites
 
 - Node.js (v18+ recommended)
-- A running backend (see `../backend/README.md`)
+- A running backend (see [lexiconmeum](https://github.com/annedyne/lexiconmeum))
 
-#### Running Locally
+### Running Locally
 
 1. Clone the repo
 2. Install dependencies: `npm install`
 3. Start the dev server: `npm run dev`
-4. Ensure the backend is running at the URL configured in `.env.development` (VITE_API_BASE_URL). By default: `http://localhost:8085/api/v1`
+4. Ensure the backend is running at the URL configured in `.env.development` (VITE_API_BASE_URL). By default:
+   `http://localhost:8085/api/v1`
 
 ---
 
-### Testing
+## Testing
 
 - Run all tests: `npm test`
 - Watch mode (re-run on file changes): `npm run test -- --watch`
@@ -31,28 +47,17 @@ Tests are located in the `test/` directory.
 
 ---
 
-### ️ Env Configuration
-This project uses Vite’s environment variables instead of a config.js switch. Environment-specific values live in root-level .env files:
+## Configuration
 
-- .env.development
-    - VITE_API_BASE_URL=http://localhost:8085/api/v1
-- .env.production
-    - VITE_API_BASE_URL=/api/v1
+API base URL is set per environment via `VITE_API_BASE_URL` in root `.env` files
+(loaded automatically by Vite based on mode):
 
-How it works:
-- Vite loads .env.[mode] automatically:
-    - npm run dev uses mode development -> .env.development
-    - npm run build and npm run preview use mode production -> .env.production
-- You can override the mode with the --mode flag (e.g., vite build --mode development).
-- Only variables prefixed with VITE_ are exposed to the client code.
-- Access variables in code via import.meta.env, for example:
-  import.meta.env.VITE_API_BASE_URL
-
-To change environments, edit the corresponding .env.* file or run commands with a different mode as needed.
+- `.env.development` — `http://localhost:8085/api/v1` (used by `npm run dev`)
+- `.env.production` — `/api/v1` (used by `npm run build` / `preview`)
 
 ---
 
-### Deployment
+## Deployment
 
 When ready for production:
 
@@ -60,44 +65,20 @@ When ready for production:
 - Deploy the contents of `dist/` to a static host (Netlify, Vercel, S3, etc.)
 - Configure the production API base URL via `.env.production` (VITE_API_BASE_URL), not a config.js file
 
-## Backend Info (External)
+## Backend
 
-This frontend depends on a Spring Boot backend available in a **separate repository**.
-
-### Repository
-
-- **URL**: `https://github.com/annedyne/lexiconmeum`
-
-### Running the Backend
-
-- Make sure Java 8+ is installed
-- Clone and start the backend:
-
-  ```bash
-  git clone https://github.com/annedyne/lexiconmeum.git
-  cd lexiconmeum
-  ./mvnw spring-boot:run
-  ```
-
-- By default it runs at `http://localhost:8080`. Adjust your `.env.*` files (VITE_API_BASE_URL) if your backend runs on a different host/port or path.
+This frontend talks to a separate Spring Boot backend:
+[github.com/annedyne/lexiconmeum](https://github.com/annedyne/lexiconmeum).
+Runs at `http://localhost:8085` by default — see that repo for setup.
 
 ### API Contract
 
 - The frontend relies on these endpoints:
-  - `GET /api/v1/autocomplete/prefix?prefix=<string>`
-    Response: JSON array of matching words (e.g., `["amare", "amatus"]`)
+    - `GET /api/v1/lexemes/autocomplete/prefix?prefix=<string>`
+      Response: JSON array of matching words (e.g., `["amare", "amatus"]`)
 
-  - `GET /api/v1/autocomplete/suffix?suffix=<string>`
-    Response: JSON array of matching words (e.g., `["amaturus", "amonibus, "]`)
-  - `GET /api/v1/lexemes/123/detail?type=<string>` #type is optional
-    Response: JSON object of word definitions and inflections
+    - `GET /api/v1/lexemes/autocomplete/suffix?suffix=<string>`
+      Response: JSON array of matching words (e.g., `["amaturus", "amonibus"]`)
 
-### CORS
-
-Ensure CORS is enabled in the backend to allow frontend requests from `http://localhost:PORT` during development.
-
-## TODO
-
-- [x] Add front-end unit tests
-- [x] Port to Vite
-- Port to React
+    - `GET /api/v1/lexemes/{id}/detail`
+      Response: JSON object of word definitions and inflections
