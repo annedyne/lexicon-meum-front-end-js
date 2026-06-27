@@ -1,11 +1,12 @@
 import "./styles/index.css";
 import {QUERY_CHAR_MIN, AUTOCOMPLETE_DEBOUNCE_MS, STATUS_TOAST_DURATION, StatusMessageType} from "@utilities/constants"
 import {fetchWordSuggestions} from "@api";
-import {handleWordLookup} from  "@search";
+import {handleWordLookup} from "@search";
 import {prepareSuggestionItems} from "@search";
 import {validateSearchQueryLength} from "@search";
-import {transformWordSuggestionData} from  "@search";
+import {transformWordSuggestionData} from "@search";
 import {handleLoadWordDetail} from "@detail";
+import {normalizeSearchQuery} from "@search/validate.js";
 
 const isSuffixSearch = document.querySelector("#suffix-search");
 const wordLookupInput = document.querySelector("#word-lookup-input");
@@ -42,17 +43,20 @@ function hideSuggestions() {
  */
 wordLookupInput.addEventListener("input", async () => {
     const searchWord = wordLookupInput.value;
-    const query = validateSearchQueryLength(searchWord, QUERY_CHAR_MIN);
+    const validatedQuery = validateSearchQueryLength(searchWord, QUERY_CHAR_MIN);
 
     // Clear any pending debounce
     if (debounceTimer) {
         clearTimeout(debounceTimer);
     }
 
-    if (!query) {
+    if (!validatedQuery) {
         hideSuggestions();
         return;
     }
+
+    const normalizedQuery = normalizeSearchQuery(validatedQuery);
+
     debounceTimer = setTimeout(async () => {
         // race condition tracking
         const requestId = ++currentRequestId;
@@ -60,7 +64,7 @@ wordLookupInput.addEventListener("input", async () => {
         // Clear while loading
         wordSuggestionsBox.replaceChildren();
 
-        const result = await handleWordLookup(query, fetchWordSuggestions, isSuffixSearch.checked);
+        const result = await handleWordLookup(normalizedQuery, fetchWordSuggestions, isSuffixSearch.checked);
 
         // Ignore stale responses
         if (requestId !== currentRequestId) {
@@ -137,7 +141,7 @@ export function renderWordSuggestionBox(
 
     wordSuggestionsBox.style.display = "block";
 
-   // Build the drop-down list
+    // Build the drop-down list
     for (const {word, lexemeId, display, highlight, showInflection} of preparedItems) {
         const item = document.createElement("div");
         if (highlight) {
@@ -198,7 +202,6 @@ export function renderWordSuggestionBox(
         wordSuggestionsBox.style.overflowY = totalHeight > snappedHeight ? "auto" : "hidden";
     });
 }
-
 
 
 /**
