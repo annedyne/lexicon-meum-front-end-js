@@ -28,7 +28,7 @@ Vanilla JS, no framework. Vite build. ESM modules throughout.
 ### Feature modules
 
 **`src/search/`** — autocomplete pipeline, left-to-right:
-1. `validate.js` — checks minimum query length
+1. `validate.js` — checks minimum query length; normalizes query (trim + lowercase)
 2. `handle-word-lookup.js` — calls the injected `fetchSuggestions` fn, returns `{status, data|message}`
 3. `transform-word-suggestion-data.js` — normalizes raw API array
 4. `prepare-suggestion-items.js` — applies highlight logic for display
