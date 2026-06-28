@@ -112,10 +112,11 @@ function createInflectionFormRows(maxRows, tbody, left, right, searchInput) {
         }
 
         const rightCell = formRow.insertCell();
-        rightCell.textContent = rightForm;
         // Highlight if matches search input
         if (matchesInflection(rightForm, searchInput)) {
-            rightCell.classList.add("search-match");
+            rightCell.append(highlightMatch(rightForm));
+        } else {
+            rightCell.textContent = rightForm;
         }
     }
 }
