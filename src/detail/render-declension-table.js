@@ -95,9 +95,11 @@ export function renderDeclensionRow(caseName, tableData) {
 
     // Highlight if matches search input
     if (matchesInflection(pluralValue, searchInput)) {
-        pluralCell.classList.add("search-match");
+        pluralCell.append(highlightMatch(pluralValue));
+    } else {
+        pluralCell.textContent = pluralValue;
     }
-    pluralCell.textContent = pluralValue;
+
     row.append(pluralCell);
     return row;
 }
