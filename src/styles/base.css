@@ -230,10 +230,20 @@ label {
     color: var(--color-text-header);
 }
 
+.definitions-short {
+    display: block;
+    margin: 0.5rem 0;
+}
+
 .definitions-list {
     margin: 0.5rem 0;
-    list-style-type: disc;
+    list-style-type: decimal;
     padding-left: 1.5rem;
+}
+
+.definitions-list.definitions-unnumbered {
+    list-style-type: none;
+    padding-left: 1rem;
 }
 
 .definitions-toggle {

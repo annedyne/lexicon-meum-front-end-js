@@ -83,7 +83,9 @@ export const CSS_CLASSES = Object.freeze({
 
     // Definitions
     DEFINITIONS_LABEL: "definitions-label",
+    DEFINITIONS_SHORT: "definitions-short",
     DEFINITIONS_LIST: "definitions-list",
+    DEFINITIONS_UNNUMBERED: "definitions-unnumbered",
     DEFINITIONS_HIDDEN: "definitions-hidden",
     DEFINITIONS_TOGGLE: "definitions-toggle",
     DEFINITION_SUBHEADER: "definition-subheader",
