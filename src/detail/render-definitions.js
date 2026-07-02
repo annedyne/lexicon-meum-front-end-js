@@ -28,7 +28,7 @@ export function renderDefinitions(definitions, governedCase, partOfSpeech, subty
     if (shortDefinition) {
         const shortDefinitionSpan = document.createElement("span");
         shortDefinitionSpan.classList.add(CSS_CLASSES.DEFINITIONS_SHORT);
-        shortDefinitionSpan.textContent = shortDefinition;
+        shortDefinitionSpan.append(buildTextWithContextNotes(shortDefinition));
         container.append(shortDefinitionSpan);
     }
 
@@ -71,7 +71,7 @@ function buildDefinitionsList(nodes) {
 
     for (const node of nodes) {
         const li = document.createElement("li");
-        li.textContent = node.text;
+        li.append(buildTextWithContextNotes(node.text));
 
         if (node.children && node.children.length > 0) {
             li.append(buildDefinitionsList(node.children));
@@ -81,4 +81,32 @@ function buildDefinitionsList(nodes) {
     }
 
     return list;
+}
+
+// Builds text content with parenthetical context notes (e.g. "(transitive)") wrapped in
+// their own span, so they can be styled as notation distinct from the definition itself.
+function buildTextWithContextNotes(text) {
+    const fragment = document.createDocumentFragment();
+    const contextNotePattern = /\([^()]*\)/g;
+    let lastIndex = 0;
+    let match;
+
+    while ((match = contextNotePattern.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+            fragment.append(document.createTextNode(text.slice(lastIndex, match.index)));
+        }
+
+        const contextSpan = document.createElement("span");
+        contextSpan.classList.add(CSS_CLASSES.DEFINITION_CONTEXT);
+        contextSpan.textContent = match[0];
+        fragment.append(contextSpan);
+
+        lastIndex = contextNotePattern.lastIndex;
+    }
+
+    if (lastIndex < text.length) {
+        fragment.append(document.createTextNode(text.slice(lastIndex)));
+    }
+
+    return fragment;
 }

@@ -34,6 +34,7 @@
     /* key elements */
     --color-text-header: rgba(0, 0, 0, 0.65);
     --color-text-dark: rgba(0, 0, 0, 0.87);
+    --color-text-accent: #A2CCF6;
 
     --color-link: var(--color-brand-primary);
     --color-banner-bg: var(--color-brand-secondary-light);

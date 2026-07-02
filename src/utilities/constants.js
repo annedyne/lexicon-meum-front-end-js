@@ -95,6 +95,7 @@ export const CSS_CLASSES = Object.freeze({
     DEFINITIONS_HIDDEN: "definitions-hidden",
     DEFINITIONS_TOGGLE: "definitions-toggle",
     DEFINITION_SUBHEADER: "definition-subheader",
+    DEFINITION_CONTEXT: "definition-context",
 
     // Search and highlighting
     SEARCH_MATCH: "search-match",

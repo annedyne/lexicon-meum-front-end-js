@@ -6,6 +6,14 @@ function directChildren(list) {
     return [...list.children].filter((element) => element.tagName === "LI");
 }
 
+// A li's own text, excluding any nested list of child definitions
+function ownText(li) {
+    return [...li.childNodes]
+        .filter((node) => node.nodeName !== "OL")
+        .map((node) => node.textContent)
+        .join("");
+}
+
 describe("renderDefinitions", () => {
     beforeEach(() => {
         const container = document.createElement("div");
@@ -89,16 +97,31 @@ describe("renderDefinitions", () => {
         expect(topList.classList.contains(CSS_CLASSES.DEFINITIONS_UNNUMBERED)).toBe(true);
 
         const topLi = directChildren(topList)[0];
-        expect(topLi.firstChild.textContent).toBe("(literally):");
+        expect(ownText(topLi)).toBe("(literally):");
 
         const secondLevelList = topLi.querySelector(`.${CSS_CLASSES.DEFINITIONS_LIST}`);
         expect(secondLevelList.classList.contains(CSS_CLASSES.DEFINITIONS_UNNUMBERED)).toBe(false);
         expect(directChildren(secondLevelList)).toHaveLength(2);
 
         const especiallyLi = directChildren(secondLevelList)
-            .find((li) => li.firstChild.textContent === "especially:");
+            .find((li) => ownText(li) === "especially:");
         const thirdLevelList = especiallyLi.querySelector(`.${CSS_CLASSES.DEFINITIONS_LIST}`);
         expect(thirdLevelList.classList.contains(CSS_CLASSES.DEFINITIONS_UNNUMBERED)).toBe(true);
+    });
+
+    it("wraps parenthetical context notes in their own span", () => {
+        const definitions = [{text: "(reflexive) to be pleased (with oneself), to be content"}];
+
+        renderDefinitions(definitions, undefined, "VERB", undefined, "to love");
+
+        const li = document.querySelector(`#definitions-container .${CSS_CLASSES.DEFINITIONS_LIST} li`);
+        const contextSpans = li.querySelectorAll(`.${CSS_CLASSES.DEFINITION_CONTEXT}`);
+
+        expect([...contextSpans].map((span) => span.textContent)).toEqual([
+            "(reflexive)",
+            "(with oneself)",
+        ]);
+        expect(ownText(li)).toBe("(reflexive) to be pleased (with oneself), to be content");
     });
 
     it("does not render a toggle or list when there are no definitions", () => {
