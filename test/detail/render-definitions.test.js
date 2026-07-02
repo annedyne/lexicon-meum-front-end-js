@@ -1,0 +1,144 @@
+import {describe, it, expect, beforeEach} from "vitest";
+import {renderDefinitions} from "@detail/render-definitions.js";
+import {CSS_CLASSES, DEFINITIONS_TOGGLE_LABEL} from "@utilities/constants.js";
+
+function directChildren(list) {
+    return [...list.children].filter((element) => element.tagName === "LI");
+}
+
+// A li's own text, excluding any nested list of child definitions
+function ownText(li) {
+    return [...li.childNodes]
+        .filter((node) => node.nodeName !== "OL")
+        .map((node) => node.textContent)
+        .join("");
+}
+
+describe("renderDefinitions", () => {
+    beforeEach(() => {
+        const container = document.createElement("div");
+        container.id = "definitions-container";
+        document.body.replaceChildren(container);
+    });
+
+    it("renders the shortDefinition above the toggle, and hides the full list until toggled", () => {
+        const definitions = [
+            {text: "to be fond of, like, admire"},
+            {text: "to be thankful, grateful to, feel obliged for a service"},
+        ];
+
+        renderDefinitions(definitions, undefined, "VERB", undefined, "to love");
+
+        const container = document.querySelector("#definitions-container");
+        const shortDefinition = container.querySelector(`.${CSS_CLASSES.DEFINITIONS_SHORT}`);
+        expect(shortDefinition.textContent).toBe("to love");
+
+        const hiddenList = container.querySelector(`.${CSS_CLASSES.DEFINITIONS_LIST}`);
+        expect(hiddenList.style.display).toBe("none");
+
+        const toggle = container.querySelector(`.${CSS_CLASSES.DEFINITIONS_TOGGLE}`);
+        expect(toggle.textContent).toBe(DEFINITIONS_TOGGLE_LABEL.SHOW);
+
+        toggle.click();
+        expect(hiddenList.style.display).toBe("block");
+        expect(toggle.textContent).toBe(DEFINITIONS_TOGGLE_LABEL.HIDE);
+    });
+
+    it("hides the shortDefinition once the full list is shown, and restores it on collapse", () => {
+        const definitions = [{text: "to love"}, {text: "to be fond of"}];
+
+        renderDefinitions(definitions, undefined, "VERB", undefined, "to love");
+
+        const container = document.querySelector("#definitions-container");
+        const shortDefinition = container.querySelector(`.${CSS_CLASSES.DEFINITIONS_SHORT}`);
+        const toggle = container.querySelector(`.${CSS_CLASSES.DEFINITIONS_TOGGLE}`);
+
+        expect(shortDefinition.style.display).toBe("");
+
+        toggle.click();
+        expect(shortDefinition.style.display).toBe("none");
+
+        toggle.click();
+        expect(shortDefinition.style.display).toBe("");
+    });
+
+    it("numbers a flat list when there are multiple entries at that level", () => {
+        const definitions = [
+            {text: "to be fond of, like, admire"},
+            {text: "to be thankful, grateful to, feel obliged for a service"},
+        ];
+
+        renderDefinitions(definitions, undefined, "VERB", undefined, "to love");
+
+        const list = document.querySelector(`#definitions-container .${CSS_CLASSES.DEFINITIONS_LIST}`);
+        expect(list.tagName).toBe("OL");
+        expect(list.classList.contains(CSS_CLASSES.DEFINITIONS_UNNUMBERED)).toBe(false);
+        expect(directChildren(list)).toHaveLength(2);
+    });
+
+    it("does not number a level with a single node, at any depth", () => {
+        const definitions = [
+            {
+                text: "(literally):",
+                children: [
+                    {text: "great, large, big"},
+                    {
+                        text: "especially:",
+                        children: [{text: "great, much, abundant"}],
+                    },
+                ],
+            },
+        ];
+
+        renderDefinitions(definitions, undefined, "ADJECTIVE", undefined, "great, large, big");
+
+        const container = document.querySelector("#definitions-container");
+        const topList = container.querySelector(`.${CSS_CLASSES.DEFINITIONS_LIST}`);
+        expect(topList.classList.contains(CSS_CLASSES.DEFINITIONS_UNNUMBERED)).toBe(true);
+
+        const topLi = directChildren(topList)[0];
+        expect(ownText(topLi)).toBe("(literally):");
+
+        const secondLevelList = topLi.querySelector(`.${CSS_CLASSES.DEFINITIONS_LIST}`);
+        expect(secondLevelList.classList.contains(CSS_CLASSES.DEFINITIONS_UNNUMBERED)).toBe(false);
+        expect(directChildren(secondLevelList)).toHaveLength(2);
+
+        const especiallyLi = directChildren(secondLevelList)
+            .find((li) => ownText(li) === "especially:");
+        const thirdLevelList = especiallyLi.querySelector(`.${CSS_CLASSES.DEFINITIONS_LIST}`);
+        expect(thirdLevelList.classList.contains(CSS_CLASSES.DEFINITIONS_UNNUMBERED)).toBe(true);
+    });
+
+    it("wraps parenthetical context notes in their own span", () => {
+        const definitions = [{text: "(reflexive) to be pleased (with oneself), to be content"}];
+
+        renderDefinitions(definitions, undefined, "VERB", undefined, "to love");
+
+        const li = document.querySelector(`#definitions-container .${CSS_CLASSES.DEFINITIONS_LIST} li`);
+        const contextSpans = li.querySelectorAll(`.${CSS_CLASSES.DEFINITION_CONTEXT}`);
+
+        expect([...contextSpans].map((span) => span.textContent)).toEqual([
+            "(reflexive)",
+            "(with oneself)",
+        ]);
+        expect(ownText(li)).toBe("(reflexive) to be pleased (with oneself), to be content");
+    });
+
+    it("does not render a toggle or list when there are no definitions", () => {
+        renderDefinitions([], undefined, "VERB", undefined, "to love");
+
+        const container = document.querySelector("#definitions-container");
+        expect(container.querySelector(`.${CSS_CLASSES.DEFINITIONS_TOGGLE}`)).toBeNull();
+        expect(container.querySelector(`.${CSS_CLASSES.DEFINITIONS_LIST}`)).toBeNull();
+        expect(container.querySelector(`.${CSS_CLASSES.DEFINITIONS_SHORT}`).textContent).toBe("to love");
+    });
+
+    it("clears previously rendered content on re-render", () => {
+        renderDefinitions([{text: "to love"}], undefined, "VERB", undefined, "short 1");
+        renderDefinitions([{text: "girl"}], undefined, "NOUN", undefined, "short 2");
+
+        const container = document.querySelector("#definitions-container");
+        expect(container.querySelectorAll(`.${CSS_CLASSES.DEFINITIONS_SHORT}`)).toHaveLength(1);
+        expect(container.querySelector(`.${CSS_CLASSES.DEFINITIONS_SHORT}`).textContent).toBe("short 2");
+    });
+});

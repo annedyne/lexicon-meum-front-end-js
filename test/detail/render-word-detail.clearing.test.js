@@ -76,7 +76,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: undefined,
             inflectionClass: undefined,
             principalParts: [],
-            definitions: ["well"],
+            definitions: [{text: "well"}],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(adverb);
@@ -89,7 +89,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: ["girl"],
+            definitions: [{text: "girl"}],
             inflectionTable: {
                 conjugations: [{ voice: "ACTIVE" }],
                 agreements: [{}],
@@ -110,7 +110,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: ["girl"],
+            definitions: [{text: "girl"}],
             inflectionTable: {
                 conjugations: [{ voice: "ACTIVE" }],
                 agreements: [{}],
@@ -126,7 +126,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: undefined,
             inflectionClass: "FIRST",
             principalParts: ["amo", "amare", "amavi", "amatum"],
-            definitions: ["love"],
+            definitions: [{text: "love"}],
             inflectionTable: { conjugations: [{ voice: "ACTIVE" }], agreements: [], declensions: {} },
         };
         renderWordDetail(verb);
@@ -142,7 +142,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: ["girl"],
+            definitions: [{text: "girl"}],
             inflectionTable: { conjugations: [], agreements: [], declensions: { SINGULAR: {}, PLURAL: {} } },
         };
         renderWordDetail(first);
@@ -155,7 +155,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: undefined,
             inflectionClass: undefined,
             principalParts: [],
-            definitions: ["well"],
+            definitions: [{text: "well"}],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(second);
@@ -169,7 +169,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: undefined,
             inflectionClass: undefined,
             principalParts: [],
-            definitions: ["well"],
+            definitions: [{text: "well"}],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(data);
