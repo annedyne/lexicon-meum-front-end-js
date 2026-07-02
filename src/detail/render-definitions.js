@@ -1,6 +1,6 @@
 import {renderPrepositionElements} from "./render-preposition-elements.js";
 import {renderSubtypeSpecificElements} from "./render-subtype-specific-elements.js";
-import {CSS_CLASSES, POS} from "@utilities/constants.js";
+import {CSS_CLASSES, DEFINITIONS_TOGGLE_LABEL, POS} from "@utilities/constants.js";
 
 export function renderDefinitions(definitions, governedCase, partOfSpeech, subtype, shortDefinition) {
     const container = document.querySelector("#definitions-container");
@@ -41,14 +41,20 @@ export function renderDefinitions(definitions, governedCase, partOfSpeech, subty
     hiddenList.style.display = "none";
     container.append(hiddenList);
 
-    // Toggle button
+    // Toggle button: swaps the short definition for the full definitions tree, since the
+    // tree already repeats the short definition as its first entry
     const toggle = document.createElement("button");
     toggle.classList.add(CSS_CLASSES.DEFINITIONS_TOGGLE);
-    toggle.textContent = "Show more";
+    toggle.textContent = DEFINITIONS_TOGGLE_LABEL.SHOW;
     toggle.addEventListener("click", () => {
         const isHidden = hiddenList.style.display === "none";
         hiddenList.style.display = isHidden ? "block" : "none";
-        toggle.textContent = isHidden ? "Show less" : "Show more";
+        toggle.textContent = isHidden ? DEFINITIONS_TOGGLE_LABEL.HIDE : DEFINITIONS_TOGGLE_LABEL.SHOW;
+
+        const shortDefinitionSpan = container.querySelector(`.${CSS_CLASSES.DEFINITIONS_SHORT}`);
+        if (shortDefinitionSpan) {
+            shortDefinitionSpan.style.display = isHidden ? "none" : "";
+        }
     });
 
     container.append(toggle);

@@ -58,6 +58,12 @@ export const StatusMessageType = Object.freeze({
     SUCCESS: "success",
 });
 
+// ------- UI TEXT  ------ //
+export const DEFINITIONS_TOGGLE_LABEL = Object.freeze({
+    SHOW: "Show details",
+    HIDE: "Show less",
+});
+
 // ------- CSS CLASS NAMES  ------ //
 export const CSS_CLASSES = Object.freeze({
     // Headers

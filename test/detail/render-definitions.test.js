@@ -1,6 +1,6 @@
 import {describe, it, expect, beforeEach} from "vitest";
 import {renderDefinitions} from "@detail/render-definitions.js";
-import {CSS_CLASSES} from "@utilities/constants.js";
+import {CSS_CLASSES, DEFINITIONS_TOGGLE_LABEL} from "@utilities/constants.js";
 
 function directChildren(list) {
     return [...list.children].filter((element) => element.tagName === "LI");
@@ -29,11 +29,29 @@ describe("renderDefinitions", () => {
         expect(hiddenList.style.display).toBe("none");
 
         const toggle = container.querySelector(`.${CSS_CLASSES.DEFINITIONS_TOGGLE}`);
-        expect(toggle.textContent).toBe("Show more");
+        expect(toggle.textContent).toBe(DEFINITIONS_TOGGLE_LABEL.SHOW);
 
         toggle.click();
         expect(hiddenList.style.display).toBe("block");
-        expect(toggle.textContent).toBe("Show less");
+        expect(toggle.textContent).toBe(DEFINITIONS_TOGGLE_LABEL.HIDE);
+    });
+
+    it("hides the shortDefinition once the full list is shown, and restores it on collapse", () => {
+        const definitions = [{text: "to love"}, {text: "to be fond of"}];
+
+        renderDefinitions(definitions, undefined, "VERB", undefined, "to love");
+
+        const container = document.querySelector("#definitions-container");
+        const shortDefinition = container.querySelector(`.${CSS_CLASSES.DEFINITIONS_SHORT}`);
+        const toggle = container.querySelector(`.${CSS_CLASSES.DEFINITIONS_TOGGLE}`);
+
+        expect(shortDefinition.style.display).toBe("");
+
+        toggle.click();
+        expect(shortDefinition.style.display).toBe("none");
+
+        toggle.click();
+        expect(shortDefinition.style.display).toBe("");
     });
 
     it("numbers a flat list when there are multiple entries at that level", () => {
