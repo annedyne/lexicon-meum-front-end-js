@@ -58,6 +58,13 @@ export const StatusMessageType = Object.freeze({
     SUCCESS: "success",
 });
 
+export const KEY = Object.freeze({
+    ESCAPE: "Escape",
+    ENTER: "Enter",
+    ARROW_UP: "ArrowUp",
+    ARROW_DOWN: "ArrowDown",
+});
+
 // ------- UI TEXT  ------ //
 export const DEFINITIONS_TOGGLE_LABEL = Object.freeze({
     SHOW: "Show details",
@@ -101,6 +108,7 @@ export const CSS_CLASSES = Object.freeze({
     SEARCH_MATCH: "search-match",
     CASE_SPAN: "case-span",
     SUGGESTION_HIGHLIGHT: "suggestion-highlight",
+    SUGGESTION_SELECTED: "suggestion-selected",
 
     // Tabs
     TAB_ITEM: "tab-item",

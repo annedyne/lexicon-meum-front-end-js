@@ -1,5 +1,5 @@
 import "./styles/index.css";
-import {QUERY_CHAR_MIN, AUTOCOMPLETE_DEBOUNCE_MS, STATUS_TOAST_DURATION, StatusMessageType} from "@utilities/constants"
+import {QUERY_CHAR_MIN, AUTOCOMPLETE_DEBOUNCE_MS, STATUS_TOAST_DURATION, StatusMessageType, CSS_CLASSES, KEY} from "@utilities/constants"
 import {fetchWordSuggestions} from "@api";
 import {handleWordLookup} from "@search";
 import {prepareSuggestionItems} from "@search";
@@ -7,6 +7,7 @@ import {validateSearchQueryLength} from "@search";
 import {transformWordSuggestionData} from "@search";
 import {handleLoadWordDetail} from "@detail";
 import {normalizeSearchQuery} from "@search/validate.js";
+import {getSelectedSuggestionIndex, setSelectedSuggestionIndex, resetSelectedSuggestionIndex} from "@search";
 
 const isSuffixSearch = document.querySelector("#suffix-search");
 const wordLookupInput = document.querySelector("#word-lookup-input");
@@ -30,6 +31,24 @@ function hideSuggestions() {
     wordSuggestionsBox.style.overflowY = "";
     // Reflect collapsed state for a11y
     wordLookupInput.setAttribute("aria-expanded", "false");
+    resetSelectedSuggestionIndex();
+}
+
+/**
+ * Marks the suggestion at `index` as the selected one, clearing any previous
+ * selection, and scrolls it into view.
+ */
+function selectSuggestion(index) {
+    const children = [...wordSuggestionsBox.children];
+    if (children.length === 0) {
+        return;
+    }
+    for (const child of children) {
+        child.classList.remove(CSS_CLASSES.SUGGESTION_SELECTED);
+    }
+    children[index].classList.add(CSS_CLASSES.SUGGESTION_SELECTED);
+    children[index].scrollIntoView({block: "nearest"});
+    setSelectedSuggestionIndex(index);
 }
 
 /**
@@ -87,13 +106,41 @@ wordLookupInput.addEventListener("input", async () => {
 });
 
 /**
- * ESCAPE KEY HANDLER
+ * SUGGESTION LIST KEYBOARD NAVIGATION
  *
- * Hides the word suggestions dropdown when the escape key is pressed.
+ * Escape hides the dropdown. Arrow keys move the selection within the
+ * suggestion list. Enter activates the selected suggestion the same way a
+ * click on it would.
  */
 wordLookupInput.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
+    if (event.key === KEY.ESCAPE) {
         hideSuggestions();
+        return;
+    }
+
+    const suggestionItems = [...wordSuggestionsBox.children];
+    if (suggestionItems.length === 0) {
+        return;
+    }
+
+    switch (event.key) {
+        case KEY.ARROW_DOWN: {
+            event.preventDefault();
+            const nextIndex = Math.min(getSelectedSuggestionIndex() + 1, suggestionItems.length - 1);
+            selectSuggestion(nextIndex);
+            break;
+        }
+        case KEY.ARROW_UP: {
+            event.preventDefault();
+            const previousIndex = Math.max(getSelectedSuggestionIndex() - 1, 0);
+            selectSuggestion(previousIndex);
+            break;
+        }
+        case KEY.ENTER: {
+            event.preventDefault();
+            suggestionItems[getSelectedSuggestionIndex()].click();
+            break;
+        }
     }
 });
 
@@ -165,6 +212,8 @@ export function renderWordSuggestionBox(
 
         wordSuggestionsBox.append(item);
     }
+
+    selectSuggestion(0);
 
     // After rendering items, snap the dropdown height to full rows
     // so the last item is never cut off mid-row.
