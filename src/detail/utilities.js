@@ -7,8 +7,7 @@ export function matchesInflection(inflection, searchInput) {
     }
 
     // Normalize by removing macrons and converting to lowercase
-    const normalizedInput = normalizeDiacritics(searchInput);
-    return normalizeDiacritics(inflection).split(" ").some((word) => word === normalizedInput);
+    return normalizeDiacritics(inflection) === normalizeDiacritics(searchInput);
 }
 
 export function normalizeDiacritics(toBeNormalized){

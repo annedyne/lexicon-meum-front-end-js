@@ -1,8 +1,4 @@
 export function validateSearchQueryLength(query, minQueryLength) {
-    const trimmedQuery = query.trim();
-    return trimmedQuery.length >= minQueryLength ? trimmedQuery : undefined;
-}
-
-export function normalizeSearchQuery(query) {
-    return query.trim().toLowerCase();
+  const trimmedQuery = query.trim();
+  return trimmedQuery.length >= minQueryLength ? trimmedQuery : undefined;
 }
