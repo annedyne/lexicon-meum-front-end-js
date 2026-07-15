@@ -123,3 +123,48 @@ didn't bother adding it to below example. But it should only be numbered if ther
         3. loud, powerful, strong, mighty (of voice)
 ```
 
+## Issue Found
+
+Currently, the 'show more' link appears regardless of whether there are multiple definitions.
+
+Ex: definition for noun 'raeda':
+There is only one definition in the definitions array
+
+```json
+{
+  "definitions": [
+    {
+      "text": "A carriage (four-wheeled), coach"
+    }
+  ]
+}
+```
+
+And the 'short definition' is identical to the definition in 'definitions' array.
+
+```json
+{
+  "shortDefinition": "A carriage (four-wheeled), coach"
+}
+```
+
+So if you click on the 'show more' toggle, nothing changes (which is fine since there is only one definition)
+
+However, it should be obvious to the user that there is no point in clicking the toggle since they won't get any more
+info. What are your suggestions for acheiving this? The most obvious seems to me to be to hide the 'show more' link if
+there is only one definition.
+
+Here, there is only one definition but the detail is different from the short definition, so the 'show more' link should
+appear.
+
+```json
+{
+  "definitions": [
+    {
+      "text": "(hapax legomenon) a bogus spice"
+    }
+  ],
+  "shortDefinition": "a bogus spice"
+}
+
+```

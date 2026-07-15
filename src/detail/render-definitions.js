@@ -36,6 +36,10 @@ export function renderDefinitions(definitions, governedCase, partOfSpeech, subty
         return;
     }
 
+    if (isOnlyDefinitionSameAsShort(definitions, shortDefinition)) {
+        return;
+    }
+
     const hiddenList = buildDefinitionsList(definitions);
     hiddenList.classList.add(CSS_CLASSES.DEFINITIONS_HIDDEN);
     hiddenList.style.display = "none";
@@ -58,6 +62,15 @@ export function renderDefinitions(definitions, governedCase, partOfSpeech, subty
     });
 
     container.append(toggle);
+}
+
+// True if expanding would just repeat the shortDefinition already shown, so no toggle is needed
+export function isOnlyDefinitionSameAsShort(definitions, shortDefinition) {
+    return (
+        definitions.length === 1 &&
+        !(definitions[0].children && definitions[0].children.length > 0) &&
+        definitions[0].text === shortDefinition
+    );
 }
 
 // Recursively builds a numbered list from definition nodes ({ text, children? }).

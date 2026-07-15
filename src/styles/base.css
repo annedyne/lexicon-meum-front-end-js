@@ -229,7 +229,7 @@ label {
 #definitions-container {
     font-size: 1rem;
     text-align: left;
-    margin-left: 2rem;
+    margin-left: .5rem;
     margin-top: 1rem;
 }
 
@@ -242,28 +242,30 @@ label {
 .definitions-short {
     display: block;
     margin: 0.5rem 0;
+    padding-left: .5rem;
 }
 
 .definitions-list {
     margin: 0.5rem 0;
     list-style-type: decimal;
-    padding-left: 1.5rem;
+    padding-left: .5rem;
 }
 
 .definitions-list.definitions-unnumbered {
     list-style-type: none;
-    padding-left: 1rem;
+    padding-left: .5rem;
 }
 
 .definitions-toggle {
     border: none;
     padding: 0;
-    font-size: 0.95rem;
+    font-size: 0.90rem;
+    font-weight: 200;
     text-decoration: underline;
-    color: var(--color-text-header);
+    color: var(--color-brand-secondary-medium);
     background: none;
     cursor: pointer;
-    margin-left: 1.5rem;
+    margin-top: .5rem;
 }
 
 .definition-subheader {
