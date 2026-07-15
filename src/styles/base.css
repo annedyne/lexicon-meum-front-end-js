@@ -1,3 +1,7 @@
+html {
+    font-size: 112.5%; /* 18px base instead of the browser default 16px */
+}
+
 body {
     width: min(95%, 800px);
     margin: 0 auto;
@@ -117,6 +121,10 @@ label {
     color: #222;
 }
 
+.suggestion-selected {
+    background-color: var(--color-brand-primary-light);
+}
+
 /* =============================================================================
    BANNER
    ============================================================================= */
@@ -221,30 +229,43 @@ label {
 #definitions-container {
     font-size: 1rem;
     text-align: left;
-    margin-left: 2rem;
+    margin-left: .5rem;
     margin-top: 1rem;
 }
 
 .definitions-label {
+
     font-weight: bold;
     color: var(--color-text-header);
 }
 
+.definitions-short {
+    display: block;
+    margin: 0.5rem 0;
+    padding-left: .5rem;
+}
+
 .definitions-list {
     margin: 0.5rem 0;
-    list-style-type: disc;
-    padding-left: 1.5rem;
+    list-style-type: decimal;
+    padding-left: .5rem;
+}
+
+.definitions-list.definitions-unnumbered {
+    list-style-type: none;
+    padding-left: .5rem;
 }
 
 .definitions-toggle {
     border: none;
     padding: 0;
-    font-size: 0.95rem;
+    font-size: 0.90rem;
+    font-weight: 200;
     text-decoration: underline;
-    color: var(--color-text-header);
+    color: var(--color-brand-secondary-medium);
     background: none;
     cursor: pointer;
-    margin-left: 1.5rem;
+    margin-top: .5rem;
 }
 
 .definition-subheader {
@@ -252,6 +273,11 @@ label {
     font-size: 0.95rem;
     color: var(--color-brand-primary);
     margin-top: 1rem;
+}
+
+.definition-context {
+    font-size: 0.90em;
+    font-weight: 200;
 }
 
 .coming-soon {
