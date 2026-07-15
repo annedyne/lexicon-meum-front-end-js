@@ -17,6 +17,14 @@ npx vitest run path/to/file.test.js  # single test file
 
 Tests default to jsdom environment (set in `vite.config.js`). Override per-file with `/* @vitest-environment jsdom */`.
 
+## Git workflow
+
+This project uses gitflow. See `docs/RELEASING.md` for the full release process.
+
+- `master` — production, deployed automatically on push. Only receives merges from `release/<version>` or `hotfix/<version>` branches.
+- `develop` — integration branch. All feature/fix branches PR into `develop`, never `master`.
+- Default PR base for feature/fix work is **`develop`**, not `master`.
+
 ## Architecture
 
 Vanilla JS, no framework. Vite build. ESM modules throughout.
