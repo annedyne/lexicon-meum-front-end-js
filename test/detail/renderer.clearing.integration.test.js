@@ -39,7 +39,7 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: [{text: "girl"}],
+            definitions: ["girl"],
             inflectionTable: {
                 conjugations: [{ voice: "ACTIVE" }],
                 agreements: [{}],
@@ -60,7 +60,7 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: undefined,
             inflectionClass: "FIRST",
             principalParts: ["amo", "amare", "amavi", "amatum"],
-            definitions: [{text: "love"}],
+            definitions: ["love"],
             inflectionTable: { conjugations: [{ voice: "ACTIVE" }], agreements: [], declensions: {} },
         };
 
@@ -79,7 +79,7 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: [{text: "girl"}],
+            definitions: ["girl"],
             inflectionTable: { conjugations: [], agreements: [], declensions: { SINGULAR: {}, PLURAL: {} } },
         };
         renderWordDetail(withParts);
@@ -92,7 +92,7 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: undefined,
             inflectionClass: undefined,
             principalParts: [],
-            definitions: [{text: "well"}],
+            definitions: ["well"],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(noParts);
@@ -135,7 +135,7 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: undefined,
             inflectionClass: undefined,
             principalParts: [],
-            definitions: [{text: "well"}],
+            definitions: ["well"],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
 
@@ -151,7 +151,7 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: [{text: "girl"}],
+            definitions: ["girl"],
             inflectionTable: {
                 conjugations: [{ voice: "ACTIVE" }],
                 agreements: [{}],

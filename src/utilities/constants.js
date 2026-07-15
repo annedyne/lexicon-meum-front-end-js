@@ -58,19 +58,6 @@ export const StatusMessageType = Object.freeze({
     SUCCESS: "success",
 });
 
-export const KEY = Object.freeze({
-    ESCAPE: "Escape",
-    ENTER: "Enter",
-    ARROW_UP: "ArrowUp",
-    ARROW_DOWN: "ArrowDown",
-});
-
-// ------- UI TEXT  ------ //
-export const DEFINITIONS_TOGGLE_LABEL = Object.freeze({
-    SHOW: "Show details",
-    HIDE: "Show less",
-});
-
 // ------- CSS CLASS NAMES  ------ //
 export const CSS_CLASSES = Object.freeze({
     // Headers
@@ -96,19 +83,15 @@ export const CSS_CLASSES = Object.freeze({
 
     // Definitions
     DEFINITIONS_LABEL: "definitions-label",
-    DEFINITIONS_SHORT: "definitions-short",
     DEFINITIONS_LIST: "definitions-list",
-    DEFINITIONS_UNNUMBERED: "definitions-unnumbered",
     DEFINITIONS_HIDDEN: "definitions-hidden",
     DEFINITIONS_TOGGLE: "definitions-toggle",
     DEFINITION_SUBHEADER: "definition-subheader",
-    DEFINITION_CONTEXT: "definition-context",
 
     // Search and highlighting
     SEARCH_MATCH: "search-match",
     CASE_SPAN: "case-span",
     SUGGESTION_HIGHLIGHT: "suggestion-highlight",
-    SUGGESTION_SELECTED: "suggestion-selected",
 
     // Tabs
     TAB_ITEM: "tab-item",

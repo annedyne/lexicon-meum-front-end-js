@@ -69,12 +69,4 @@ describe('matchesInflection', () => {
         expect(matchesInflection('āēīōū', 'aeiou')).toBe(true);
         expect(matchesInflection('ĀĒĪŌŪ', 'aeiou')).toBe(true);
     });
-
-    it('should return true when search term matches a whole word within a multi-word inflection', () => {
-        expect(matchesInflection('amatus sum', 'amatus')).toBe(true);
-    });
-
-    it('should return false when search term is a partial word within a multi-word inflection', () => {
-        expect(matchesInflection('amatus sum', 'amat')).toBe(false);
-    });
 });

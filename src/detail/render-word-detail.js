@@ -32,7 +32,6 @@ export function renderWordDetail(wordDetailData) {
         inflectionClass,
         principalParts,
         definitions,
-        shortDefinition,
     } = wordDetailData;
 
     try {
@@ -40,7 +39,7 @@ export function renderWordDetail(wordDetailData) {
         setMorphologicalSubtype(morphologicalSubtype);
 
         renderLemmaHeader(lemma);
-        renderDefinitions(definitions, governedCase, partOfSpeech, syntacticSubtype, shortDefinition);
+        renderDefinitions(definitions, governedCase, partOfSpeech, syntacticSubtype);
 
         renderPOSAfterLemma(partOfSpeech);
         renderPrincipalParts(principalParts, morphologicalSubtype);
