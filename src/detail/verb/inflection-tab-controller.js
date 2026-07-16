@@ -1,5 +1,8 @@
 import {renderTabs} from "./tabs/render-tabs.js";
 import {TABS} from "./tabs/tab-registry.js";
+import {findSearchMatchesByTab} from "./find-search-matches-in-tabs.js";
+import {resolveInitialTab} from "./resolve-initial-tab.js";
+import {getSearchInput, setActiveTabVoice, setActiveTabGender} from "@detail-core";
 
 /**
  * @typedef {Object} TabSupport
@@ -14,6 +17,12 @@ import {TABS} from "./tabs/tab-registry.js";
  * @return {void} This method does not return a value.
  */
 export function initializeInflectionTabs(inflectionTableData) {
+    // Select the tab containing the search match before rendering
+    const matches = findSearchMatchesByTab(inflectionTableData, getSearchInput());
+    const {voice, gender} = resolveInitialTab(matches);
+    setActiveTabVoice(voice);
+    setActiveTabGender(gender);
+
     // render tabs first (pass a callback to render the tab contents )
     renderTabs(inflectionTableData, (voiceTabId, genderTabId) => {
         routeTabContent(voiceTabId, genderTabId, inflectionTableData);
