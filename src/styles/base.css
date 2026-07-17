@@ -188,6 +188,32 @@ label {
 }
 
 /* =============================================================================
+   NARROW VIEWPORT (PHONE) ADJUSTMENTS
+   ============================================================================= */
+
+@media (max-width: 480px) {
+    .header-container {
+        gap: 1rem;
+    }
+
+    /* Let the checkbox drop to its own line instead of squeezing/wrapping its label text */
+    .input-with-checkbox {
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+    }
+
+    .input-field {
+        width: min(200px, 50vw);
+    }
+
+    /* Pin both edges so long messages wrap within the screen instead of overflowing past it */
+    .toast {
+        left: 20px;
+        right: 20px;
+    }
+}
+
+/* =============================================================================
    WORD DETAIL DISPLAY
    ============================================================================= */
 
