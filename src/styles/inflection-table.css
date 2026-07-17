@@ -257,4 +257,48 @@ th[scope="col"].case-col-header {
     border-top: none;
 }
 
+/* ==========================================================================
+   NARROW VIEWPORT (PHONE) ADJUSTMENTS
+
+   The desktop paddings above (in particular the 4rem right padding meant to
+   visually balance the last column) cost more width than a phone has to
+   spare, and were clipping the last form column instead of wrapping it into
+   view. Trim them so 2-3 form columns keep fitting side-by-side. Font-size
+   is left untouched so it stays at/above the mobile-readable minimum.
+   ========================================================================== */
+
+@media (max-width: 480px) {
+    .inflection-table {
+        padding: 0 0.25rem;
+    }
+
+    .inflection-table td:nth-child(2),
+    .inflection-table td:nth-child(3) {
+        padding-left: 0.4rem;
+    }
+
+    .inflection-table td:last-child {
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+    }
+
+    .inflection-table thead th:nth-child(2),
+    .inflection-table thead th:nth-child(3) {
+        padding-left: 0.5rem;
+    }
+
+    .inflection-table thead th:last-child {
+        padding-left: 0.5rem;
+        padding-right: 0.4rem;
+    }
+
+    th[scope="row"].case-row-header,
+    th[scope="col"].case-col-header {
+        width: 2.4rem;
+        min-width: 2ch;
+        max-width: 4ch;
+        padding-left: 0.3rem;
+    }
+}
+
 
