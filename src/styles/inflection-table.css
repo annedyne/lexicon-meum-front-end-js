@@ -164,7 +164,29 @@ th[scope="col"].case-col-header {
 }
 
 #inflections-container {
+    position: relative; /* containing block for the scroll-hint fade below */
     overflow-x: auto;
+}
+
+/* Right-edge fade hinting there's more to scroll, shown only while content
+   actually overflows and hasn't been scrolled all the way to the end
+   (toggled in main.js). Fixed to the container's own edge rather than the
+   scrolled content, so it stays put as the user scrolls. */
+#inflections-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 24px;
+    background: linear-gradient(to right, transparent, var(--color-bg));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+}
+
+#inflections-container.is-scrollable::after {
+    opacity: 1;
 }
 
 #inflections-container H3 {

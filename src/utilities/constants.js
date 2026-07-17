@@ -80,6 +80,7 @@ export const CSS_CLASSES = Object.freeze({
 
     // Layout containers
     TABLE_GRID_CONTAINER: "table-grid-container",
+    IS_SCROLLABLE: "is-scrollable",
 
     // Tables
     INFLECTION_TABLE: "inflection-table",
