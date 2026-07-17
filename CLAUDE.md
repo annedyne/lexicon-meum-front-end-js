@@ -24,6 +24,8 @@ This project uses gitflow. See `docs/RELEASING.md` for the full release process.
 - `master` — production, deployed automatically on push. Only receives merges from `release/<version>` or `hotfix/<version>` branches.
 - `develop` — integration branch. All feature/fix branches PR into `develop`, never `master`.
 - Default PR base for feature/fix work is **`develop`**, not `master`.
+- Never run `git commit` unless the user explicitly asks for a commit in that turn. Implementing or approving a change
+  ("looks good", "keep it") is not a commit request — ask, or wait to be asked.
 
 ## Architecture
 
