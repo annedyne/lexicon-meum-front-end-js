@@ -321,6 +321,11 @@ th[scope="col"].case-col-header {
         max-width: 4ch;
         padding-left: 0.3rem;
     }
+
+    .tab-item {
+        padding: 0.5rem 0.3rem;
+        font-size: 0.85rem;
+    }
 }
 
 
