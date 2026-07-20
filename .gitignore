@@ -11,3 +11,6 @@ dist-ssr
 # Editor directories and files
 .idea/
 .DS_Store
+
+# Manual visual-check screenshots (not committed baselines)
+test/manual/screenshots/

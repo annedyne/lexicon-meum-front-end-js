@@ -17,6 +17,19 @@ wordSuggestionsBox.style.display = "none";
 // LOAD THEME FROM HTML
 document.documentElement.dataset.theme = "gold-gray";
 
+// SHOW/HIDE THE INFLECTION TABLE'S SCROLL-HINT FADE AS ITS CONTENT CHANGES OR SCROLLS
+const inflectionsContainer = document.querySelector("#inflections-container");
+
+function updateInflectionsScrollFade() {
+    const hasMoreToScroll = inflectionsContainer.scrollLeft + inflectionsContainer.clientWidth
+        < inflectionsContainer.scrollWidth - 1;
+    inflectionsContainer.classList.toggle(CSS_CLASSES.IS_SCROLLABLE, hasMoreToScroll);
+}
+
+new MutationObserver(updateInflectionsScrollFade).observe(inflectionsContainer, {childList: true, subtree: true});
+inflectionsContainer.addEventListener("scroll", updateInflectionsScrollFade);
+window.addEventListener("resize", updateInflectionsScrollFade);
+
 // Debouncing and race condition state
 let debounceTimer;
 let currentRequestId = 0;

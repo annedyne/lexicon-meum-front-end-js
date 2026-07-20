@@ -164,7 +164,29 @@ th[scope="col"].case-col-header {
 }
 
 #inflections-container {
+    position: relative; /* containing block for the scroll-hint fade below */
     overflow-x: auto;
+}
+
+/* Right-edge fade hinting there's more to scroll, shown only while content
+   actually overflows and hasn't been scrolled all the way to the end
+   (toggled in main.js). Fixed to the container's own edge rather than the
+   scrolled content, so it stays put as the user scrolls. */
+#inflections-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 24px;
+    background: linear-gradient(to right, transparent, var(--color-bg));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+}
+
+#inflections-container.is-scrollable::after {
+    opacity: 1;
 }
 
 #inflections-container H3 {
@@ -255,6 +277,55 @@ th[scope="col"].case-col-header {
     border-left: 1px solid var(--color-inflection-table-border);
     border-right: 1px solid var(--color-inflection-table-border);
     border-top: none;
+}
+
+/* ==========================================================================
+   NARROW VIEWPORT (PHONE) ADJUSTMENTS
+
+   The desktop paddings above (in particular the 4rem right padding meant to
+   visually balance the last column) cost more width than a phone has to
+   spare, and were clipping the last form column instead of wrapping it into
+   view. Trim them so 2-3 form columns keep fitting side-by-side. Font-size
+   is left untouched so it stays at/above the mobile-readable minimum.
+   ========================================================================== */
+
+@media (max-width: 480px) {
+    .inflection-table {
+        padding: 0 0.25rem;
+    }
+
+    .inflection-table td:nth-child(2),
+    .inflection-table td:nth-child(3) {
+        padding-left: 0.4rem;
+    }
+
+    .inflection-table td:last-child {
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+    }
+
+    .inflection-table thead th:nth-child(2),
+    .inflection-table thead th:nth-child(3) {
+        padding-left: 0.5rem;
+    }
+
+    .inflection-table thead th:last-child {
+        padding-left: 0.5rem;
+        padding-right: 0.4rem;
+    }
+
+    th[scope="row"].case-row-header,
+    th[scope="col"].case-col-header {
+        width: 2.4rem;
+        min-width: 2ch;
+        max-width: 4ch;
+        padding-left: 0.3rem;
+    }
+
+    .tab-item {
+        padding: 0.5rem 0.3rem;
+        font-size: 0.85rem;
+    }
 }
 
 
