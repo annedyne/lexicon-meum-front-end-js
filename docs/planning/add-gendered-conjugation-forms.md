@@ -52,3 +52,27 @@ the active gender already flows into `renderConjugationByVoice`. The only gap is
 
 - Not expected to occur, but if a `formsByGender` tense omits the active gender's key, render an empty/padded column
   (matching current odd-count behavior).
+
+## Follow-up refactor: separate view-model from render
+
+The first pass put `resolveForms` inside the renderer, so the gender-resolution logic is only reachable through the
+DOM. This follow-up hoists a pure view-model layer above the DOM so the interesting logic is unit-testable on plain
+data, matching the altitude of the `search/` pipeline.
+
+### New pure layer (verb module)
+
+- Add a pure builder: `(conjugations, gender, voice) -> mood view-models`, each mood carrying its resolved tenses as
+  `{ header, forms }` (header = mood + tense name; forms already resolved for the active gender via `resolveForms`).
+- This folds away the `forms`/`formsByGender` split and the voice filter, so downstream code deals only with a uniform
+  shape.
+
+### Thin render layer (`render-conjugation-shared.js`)
+
+- Renderer consumes the view-model: pairs resolved tenses into the two-column layout, builds rows/cells, applies search
+  highlight. No data-shape decisions or gender/voice logic remain here — layout only.
+
+### Tests
+
+- Unit-test the builder as pure logic (no DOM): voice filtering, header composition, gender resolution, missing-key
+  padding.
+- Reduce the DOM test to a thin smoke check that rendered cells carry the expected text.
