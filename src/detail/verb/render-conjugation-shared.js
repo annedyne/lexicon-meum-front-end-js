@@ -5,8 +5,26 @@ import {CSS_CLASSES} from "@utilities";
 /**
  * @typedef {Object} Tense
  * @property {string} defaultName - The default name of the tense
- * @property {string[]} forms - Array of conjugated forms
+ * @property {string[]} [forms] - Gender-agnostic conjugated forms
+ * @property {Object.<string, string[]>} [formsByGender] - Gender-specific forms keyed by lowercase gender
  */
+
+/**
+ * Resolves the forms array to display for a tense given the active gender.
+ * A tense is either gender-agnostic (`forms`, shown for every gender) or
+ * gender-specific (`formsByGender`, only the active gender's forms are shown).
+ *
+ * @param {Tense} [tense] - The tense to resolve forms for
+ * @param {string} gender - Active gender tab key (e.g. TAB_KEY.MASCULINE)
+ * @return {string[]} The forms to display, or an empty array when none apply
+ */
+function resolveForms(tense, gender) {
+    if (Array.isArray(tense?.forms)) {
+        return tense.forms;
+    }
+    const genderKey = String(gender).toLowerCase();
+    return tense?.formsByGender?.[genderKey] ?? [];
+}
 
 /**
  * @typedef {Object} Conjugation
@@ -17,7 +35,6 @@ import {CSS_CLASSES} from "@utilities";
 
 export function renderConjugationByVoice(conjugations, gender, voice, tableClassName) {
 
-    console.log(`gender is ${gender}`);
     const container = document.querySelector("#inflections-container");
 
 
@@ -39,7 +56,7 @@ export function renderConjugationByVoice(conjugations, gender, voice, tableClass
     container.append(table);
 
     for (const moodSectionData of activeMoods) {
-        buildRows(moodSectionData);
+        buildRows(moodSectionData, gender);
     }
 }
 
@@ -50,9 +67,10 @@ export function renderConjugationByVoice(conjugations, gender, voice, tableClass
  * @param {Object} moodSectionData - The data for the current mood section, containing mood details and tenses.
  * @param {string} [moodSectionData.mood] - The name of the mood for which conjugation rows are to be built.
  * @param {Object[]} [moodSectionData.tenses] - An array of tense objects, each containing tense information like names and forms.
+ * @param {string} gender - Active gender tab key, used to resolve gender-specific forms.
  * @return {void} This method does not return any value.
  */
-function buildRows(moodSectionData) {
+function buildRows(moodSectionData, gender) {
     const searchInput = getSearchInput();
     const mood = moodSectionData?.mood ?? "";
     const tenses = Array.isArray(moodSectionData?.tenses) ? moodSectionData.tenses : [];
@@ -83,12 +101,14 @@ function buildRows(moodSectionData) {
         rightHeader.className = "tense-header";
         rightHeader.textContent = right ? `${mood} ${right.defaultName ?? ""}` : "";
 
-        // Compute max form count
-        const leftLength = Array.isArray(left?.forms) ? left.forms.length : 0;
-        const rightLength = Array.isArray(right?.forms) ? right.forms.length : 0;
-        const maxRows = Math.max(leftLength, rightLength);
+        // Resolve the forms to display for the active gender
+        const leftForms = resolveForms(left, gender);
+        const rightForms = resolveForms(right, gender);
 
-        createInflectionFormRows(maxRows, tbody, left, right, searchInput);
+        // Compute max form count
+        const maxRows = Math.max(leftForms.length, rightForms.length);
+
+        createInflectionFormRows(maxRows, tbody, leftForms, rightForms, searchInput);
     }
     const table = document.querySelector("#conjugation-table");
     if (table) {
@@ -96,12 +116,12 @@ function buildRows(moodSectionData) {
     }
 }
 
-function createInflectionFormRows(maxRows, tbody, left, right, searchInput) {
+function createInflectionFormRows(maxRows, tbody, leftForms, rightForms, searchInput) {
     // Build one row per form index
     for (let index = 0; index < maxRows; index++) {
         const formRow = tbody.insertRow();
-        const leftForm = left?.forms?.[index] ?? "";   // pad if undefined
-        const rightForm = right?.forms?.[index] ?? ""; // pad if no right tense
+        const leftForm = leftForms[index] ?? "";   // pad if undefined
+        const rightForm = rightForms[index] ?? ""; // pad if no right tense
         const leftCell = formRow.insertCell();
 
         // Highlight if matches search input

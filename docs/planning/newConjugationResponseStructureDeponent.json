@@ -1,0 +1,58 @@
+{
+  "tenses": [
+    {
+      "altName": "Simple Present",
+      "defaultName": "Present",
+      "forms": [
+        "sequor",
+        "sequeris",
+        "sequitur",
+        "sequimur",
+        "sequiminī",
+        "sequuntur"
+      ]
+    },
+    {
+      "altName": "Past Progressive",
+      "defaultName": "Imperfect",
+      "forms": [
+        "sequēbar",
+        "sequēbāris",
+        "sequēbātur",
+        "sequēbāmur",
+        "sequēbāminī",
+        "sequēbantur"
+      ]
+    },
+    {
+      "altName": "Present Perfect",
+      "defaultName": "perfect",
+      "formsByGender": {
+        "masculine": [
+          "secūtus sum",
+          "secūtus es",
+          "secūtus est",
+          "secūtī sumus",
+          "secūtī estis",
+          "secūtī sunt"
+        ],
+        "feminine": [
+          "secūta sum",
+          "secūta es",
+          "secūta est",
+          "secūtae sumus",
+          "secūtae estis",
+          "secūtae sunt"
+        ],
+        "neuter": [
+          "secūtum sum",
+          "secūtum es",
+          "secūtum est",
+          "secūta sumus",
+          "secūta estis",
+          "secūta sunt"
+        ]
+      }
+    }
+  ]
+}

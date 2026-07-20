@@ -1,0 +1,58 @@
+{
+  "tenses": [
+    {
+      "altName": "Simple Present",
+      "defaultName": "Present",
+      "forms": [
+        "amor",
+        "amāris",
+        "amātur",
+        "amāmur",
+        "amāminī",
+        "amantur"
+      ]
+    },
+    {
+      "altName": "Past Progressive",
+      "defaultName": "Imperfect",
+      "forms": [
+        "amābar",
+        "amābāris",
+        "amābātur",
+        "amābāmur",
+        "amābāminī",
+        "amābantur"
+      ]
+    },
+    {
+      "altName": "Present Perfect",
+      "defaultName": "perfect",
+      "formsByGender": {
+        "masculine": [
+          "amātus sum",
+          "amātus es",
+          "amātus est",
+          "amātī sumus",
+          "amātī estis",
+          "amātī sunt"
+        ],
+        "feminine": [
+          "amāta sum",
+          "amāta es",
+          "amāta est",
+          "amātae sumus",
+          "amātae estis",
+          "amātae sunt"
+        ],
+        "neuter": [
+          "amātum sum",
+          "amātum es",
+          "amātum est",
+          "amāta sumus",
+          "amāta estis",
+          "amāta sunt"
+        ]
+      }
+    }
+  ]
+}
