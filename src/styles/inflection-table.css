@@ -173,7 +173,6 @@ th[scope="col"].case-col-header {
    (toggled in main.js). Fixed to the container's own edge rather than the
    scrolled content, so it stays put as the user scrolls. */
 #inflections-container::after {
-    content: "";
     position: absolute;
     top: 0;
     right: 0;
@@ -181,8 +180,9 @@ th[scope="col"].case-col-header {
     width: 24px;
     background: linear-gradient(to right, transparent, var(--color-bg));
     opacity: 0;
-    pointer-events: none;
     transition: opacity 0.15s ease;
+    pointer-events: none;
+    content: "";
 }
 
 #inflections-container.is-scrollable::after {

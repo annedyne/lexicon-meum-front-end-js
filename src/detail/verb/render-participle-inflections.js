@@ -66,7 +66,7 @@ export function renderParticipleInflections(participles, gender, tabSupport) {
             const declensionSectionContainer = document.createElement("tbody");
             declensionSectionContainer.classList.add("participle-table", "declension-table");
 
-            // Empty case colum header - Duplicates header in thead of the table
+            // Empty case column header - Duplicates header in thead of the table
             // BUT if I span the tbody's tense-header across the three columns,
             // the width setting for first column is ignored.
             const emptyCaseHeader = document.createElement("th");

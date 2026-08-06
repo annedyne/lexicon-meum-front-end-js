@@ -208,8 +208,8 @@ label {
 
     /* Pin both edges so long messages wrap within the screen instead of overflowing past it */
     .toast {
-        left: 20px;
         right: 20px;
+        left: 20px;
     }
 }
 

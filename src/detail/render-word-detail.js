@@ -75,13 +75,13 @@ export function renderWordDetail(wordDetailData) {
                 break;
 
             case "ADJECTIVE":
-                // Use adjectve-degree renderer for adjectives
+                // Use adjective-degree renderer for adjectives
                 renderAdjectiveDegreeTables({positive, comparative, superlative});
                 break;
 
             case "DETERMINER":
             case "PRONOUN":
-                // Use single agreement table renderer for non-degree words with agreement inflections
+                // Use single agreement table renderer for nondegree words with agreement inflections
                 renderAdjectiveAgreementTable(agreements);
                 break;
 
