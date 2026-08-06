@@ -3,7 +3,7 @@
 1. I want 'enter' to trigger detail request (handleLoadWordDetail in src/detail/handle-load-word-detail.js ) for the top
    item in the
    current search suggestion list.
-2. I want 'up arrow' and 'down arrow to select the previous and next items in the current search suggestion list.
+2. I want 'up arrow' and 'down arrow' to select the previous and next items in the current search suggestion list.
 
 ---
 

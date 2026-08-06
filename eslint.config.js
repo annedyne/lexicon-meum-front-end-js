@@ -7,6 +7,9 @@ import eslintPluginBoundaries from "eslint-plugin-boundaries";
 import { internalAliasRestrictions } from './eslint.config.utilities.js';
 
 export default defineConfig([
+    {
+        ignores: ["dist/**"],
+    },
     eslintPluginUnicorn.configs["flat/recommended"],
     {
         files: ["**/*.{js,mjs,cjs}"],
@@ -32,21 +35,20 @@ export default defineConfig([
                 {
                     type: "directory",
                     pattern: "src/*",
-                    mode: "folder",
                 },
             ],
         },
         rules: {
             // Warn when importing anything from another directory that's not from index.js
-            "boundaries/element-types": [
+            "boundaries/dependencies": [
                 "warn",
                 {
                     default: "disallow",
-                    rules: [
+                    policies: [
                         {
-                            from: ["directory"],
+                            from: {element: {type: "directory"}},
                             // Allow only imports from index.js in other directories
-                            allow: ["index.js"],
+                            allow: {to: {element: {type: "directory", fileInternalPath: "index.js"}}},
                         },
                     ],
                 },
@@ -88,6 +90,14 @@ export default defineConfig([
     {
         files: ["**/*.{js,mjs,cjs}"],
         languageOptions: {globals: globals.browser},
+    },
+    {
+        // Standalone CLI scripts for manual screenshotting -- allow process.exit and short names
+        files: ["test/manual/**"],
+        rules: {
+            "unicorn/no-process-exit": "off",
+            "unicorn/prevent-abbreviations": "off",
+        },
     },
     ...internalAliasRestrictions, // <-- inserts the internal alias restrictions here
 ]);
