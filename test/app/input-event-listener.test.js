@@ -1,8 +1,8 @@
 /* @vitest-environment jsdom */
-import {describe, it, expect, beforeAll, afterEach, vi} from "vitest";
-import {readFileSync} from "node:fs";
+import { describe, it, expect, beforeAll, afterEach, vi } from "vitest";
+import { readFileSync } from "node:fs";
 import path from "node:path";
-import {CSS_CLASSES} from "@utilities";
+import { CSS_CLASSES } from "@utilities";
 
 vi.mock("@search", async (importOriginal) => {
     const actual = await importOriginal();
@@ -21,8 +21,8 @@ vi.mock("@detail", async (importOriginal) => {
 });
 
 const rawSuggestions = [
-    {word: "alpha", lexemeId: 101, partOfSpeech: "NOUN", suggestionParent: "alpha"},
-    {word: "beta", lexemeId: 102, partOfSpeech: "NOUN", suggestionParent: "beta"},
+    { word: "alpha", lexemeId: 101, partOfSpeech: "NOUN", suggestionParent: "alpha" },
+    { word: "beta", lexemeId: 102, partOfSpeech: "NOUN", suggestionParent: "beta" },
 ];
 
 describe("wordLookupInput event listener", () => {
@@ -39,8 +39,8 @@ describe("wordLookupInput event listener", () => {
         const match = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
         document.body.innerHTML = match ? match[1] : "";
         await import("../../src/main.js");
-        ({handleWordLookup} = await import("@search"));
-        ({handleLoadWordDetail} = await import("@detail"));
+        ({ handleWordLookup } = await import("@search"));
+        ({ handleLoadWordDetail } = await import("@detail"));
         input = document.querySelector("#word-lookup-input");
         suggestionsBox = document.querySelector("#word-suggestions");
     });
@@ -53,7 +53,7 @@ describe("wordLookupInput event listener", () => {
     it("passes lowercased query to handleWordLookup", async () => {
         vi.useFakeTimers();
 
-        handleWordLookup.mockResolvedValue({status: "success", data: []});
+        handleWordLookup.mockResolvedValue({ status: "success", data: [] });
         input.value = "AMOR";
         input.dispatchEvent(new Event("input"));
 
@@ -65,7 +65,7 @@ describe("wordLookupInput event listener", () => {
     // Types a query and lets the debounced suggestion list render.
     async function renderSuggestions() {
         vi.useFakeTimers();
-        handleWordLookup.mockResolvedValue({status: "success", data: rawSuggestions});
+        handleWordLookup.mockResolvedValue({ status: "success", data: rawSuggestions });
         input.value = "a";
         input.dispatchEvent(new Event("input"));
         await vi.advanceTimersByTimeAsync(200);
@@ -74,7 +74,7 @@ describe("wordLookupInput event listener", () => {
     it("activates the top suggestion on Enter with no arrow presses", async () => {
         await renderSuggestions();
 
-        input.dispatchEvent(new KeyboardEvent("keydown", {key: "Enter"}));
+        input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
 
         expect(handleLoadWordDetail).toHaveBeenCalledWith("alpha", 101);
     });
@@ -82,8 +82,8 @@ describe("wordLookupInput event listener", () => {
     it("moves the selection down with ArrowDown and activates it on Enter", async () => {
         await renderSuggestions();
 
-        input.dispatchEvent(new KeyboardEvent("keydown", {key: "ArrowDown"}));
-        input.dispatchEvent(new KeyboardEvent("keydown", {key: "Enter"}));
+        input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+        input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
 
         expect(handleLoadWordDetail).toHaveBeenCalledWith("beta", 102);
     });
@@ -91,7 +91,7 @@ describe("wordLookupInput event listener", () => {
     it("keeps the selection on the first item when ArrowUp is pressed at the top", async () => {
         await renderSuggestions();
 
-        input.dispatchEvent(new KeyboardEvent("keydown", {key: "ArrowUp"}));
+        input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
 
         expect(suggestionsBox.children[0].classList.contains(CSS_CLASSES.SUGGESTION_SELECTED)).toBe(true);
     });
@@ -99,8 +99,8 @@ describe("wordLookupInput event listener", () => {
     it("keeps the selection on the last item when ArrowDown is pressed at the bottom", async () => {
         await renderSuggestions();
 
-        input.dispatchEvent(new KeyboardEvent("keydown", {key: "ArrowDown"}));
-        input.dispatchEvent(new KeyboardEvent("keydown", {key: "ArrowDown"}));
+        input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+        input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
 
         const lastIndex = suggestionsBox.children.length - 1;
         expect(suggestionsBox.children[lastIndex].classList.contains(CSS_CLASSES.SUGGESTION_SELECTED)).toBe(true);
@@ -108,12 +108,12 @@ describe("wordLookupInput event listener", () => {
 
     it("does nothing on Enter when no suggestions are shown", async () => {
         vi.useFakeTimers();
-        handleWordLookup.mockResolvedValue({status: "success", data: []});
+        handleWordLookup.mockResolvedValue({ status: "success", data: [] });
         input.value = "a";
         input.dispatchEvent(new Event("input"));
         await vi.advanceTimersByTimeAsync(200);
 
-        input.dispatchEvent(new KeyboardEvent("keydown", {key: "Enter"}));
+        input.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
 
         expect(handleLoadWordDetail).not.toHaveBeenCalled();
     });

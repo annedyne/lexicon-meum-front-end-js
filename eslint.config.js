@@ -1,10 +1,10 @@
 import js from "@eslint/js";
 import globals from "globals";
-import {defineConfig} from "eslint/config";
+import { defineConfig } from "eslint/config";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import eslintPluginImport from "eslint-plugin-import";
 import eslintPluginBoundaries from "eslint-plugin-boundaries";
-import { internalAliasRestrictions } from './eslint.config.utilities.js';
+import { internalAliasRestrictions } from "./eslint.config.utilities.js";
 
 export default defineConfig([
     {
@@ -46,9 +46,9 @@ export default defineConfig([
                     default: "disallow",
                     policies: [
                         {
-                            from: {element: {type: "directory"}},
+                            from: { element: { type: "directory" } },
                             // Allow only imports from index.js in other directories
-                            allow: {to: {element: {type: "directory", fileInternalPath: "index.js"}}},
+                            allow: { to: { element: { type: "directory", fileInternalPath: "index.js" } } },
                         },
                     ],
                 },
@@ -82,14 +82,14 @@ export default defineConfig([
                 "error",
                 {
                     case: "kebabCase",
-                }
+                },
             ],
             "unicorn/switch-case-braces": "off",
         },
     },
     {
         files: ["**/*.{js,mjs,cjs}"],
-        languageOptions: {globals: globals.browser},
+        languageOptions: { globals: globals.browser },
     },
     {
         // Standalone CLI scripts for manual screenshotting -- allow process.exit and short names

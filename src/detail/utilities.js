@@ -1,4 +1,4 @@
-import {capitalize} from "@utilities";
+import { capitalize } from "@utilities";
 
 export function matchesInflection(inflection, searchInput) {
     // Return false if either value is falsy (undefined, null, empty string)
@@ -11,13 +11,16 @@ export function matchesInflection(inflection, searchInput) {
     return normalizeDiacritics(inflection).split(" ").includes(normalizedInput);
 }
 
-export function normalizeDiacritics(toBeNormalized){
-    return toBeNormalized.toLowerCase().normalize("NFD").replaceAll(/[\u0300-\u036F]/g, "");
+export function normalizeDiacritics(toBeNormalized) {
+    return toBeNormalized
+        .toLowerCase()
+        .normalize("NFD")
+        .replaceAll(/[\u0300-\u036F]/g, "");
 }
 
 export function formatCaseNameForTableRowHeader(caseName) {
     const capitalized = capitalize(caseName.toLowerCase());
-    return capitalized.slice(0, 3) + '.';
+    return capitalized.slice(0, 3) + ".";
 }
 
 export function highlightMatch(singularValue) {
@@ -25,5 +28,5 @@ export function highlightMatch(singularValue) {
     mark.textContent = "Case";
     mark.classList.add("case-span", "search-match");
     mark.textContent = singularValue;
-    return mark
+    return mark;
 }

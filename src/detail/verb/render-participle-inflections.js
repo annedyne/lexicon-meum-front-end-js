@@ -19,9 +19,9 @@
  * @property {ParticipleTense[]} tenses - Array of participle tenses
  */
 
-import {renderDeclensionRow} from "@detail/render-declension-table.js";
-import {formatCaseNameForTableRowHeader, getSearchInput, highlightMatch, matchesInflection} from "@detail-core";
-import {CSS_CLASSES} from "@utilities";
+import { renderDeclensionRow } from "@detail/render-declension-table.js";
+import { formatCaseNameForTableRowHeader, getSearchInput, highlightMatch, matchesInflection } from "@detail-core";
+import { CSS_CLASSES } from "@utilities";
 
 const GERUND = "gerund";
 const SUPINE = "supine";
@@ -39,19 +39,20 @@ export function renderParticipleInflections(participles, gender, tabSupport) {
 
     // Check if participles is undefined or null
     if (!participles) {
-        console.log('No participle data provided - participles parameter is undefined or null');
-        tabSupport?.addEmptyContentMessage('No participle data available for this word.', 'bordered-message');
+        console.log("No participle data provided - participles parameter is undefined or null");
+        tabSupport?.addEmptyContentMessage("No participle data available for this word.", "bordered-message");
         return;
     }
 
-    const participleTenses = participles
-        ?.find(d => d.gender?.toLowerCase() === gender.toLowerCase())
-        ?.tenses;
+    const participleTenses = participles?.find((d) => d.gender?.toLowerCase() === gender.toLowerCase())?.tenses;
 
     if (!Array.isArray(participleTenses) || participleTenses.length === 0) {
         console.log(`No participle data found for gender: ${gender}`);
         const genderLabel = gender.toLowerCase();
-        tabSupport?.addEmptyContentMessage(`No ${genderLabel} participle forms available for this word.`, 'bordered-message');
+        tabSupport?.addEmptyContentMessage(
+            `No ${genderLabel} participle forms available for this word.`,
+            "bordered-message",
+        );
         return;
     }
 
@@ -63,7 +64,6 @@ export function renderParticipleInflections(participles, gender, tabSupport) {
     table.append(buildTableColumnHeaderRow());
     for (const participleTense of participleTenses) {
         if (participleTense?.declensions && !isVerbalNoun(participleTense)) {
-
             const declensions = participleTense.declensions;
             const cases = Object.keys(declensions.SINGULAR);
 
@@ -115,8 +115,8 @@ function isVerbalNoun(participleTense) {
  * @returns {HTMLTableSectionElement|undefined} the section, or undefined when neither verbal noun is present
  */
 function buildVerbalNounSection(participleTenses) {
-    const gerund = participleTenses.find(tense => getTenseName(tense).toLowerCase() === GERUND);
-    const supine = participleTenses.find(tense => getTenseName(tense).toLowerCase() === SUPINE);
+    const gerund = participleTenses.find((tense) => getTenseName(tense).toLowerCase() === GERUND);
+    const supine = participleTenses.find((tense) => getTenseName(tense).toLowerCase() === SUPINE);
 
     const gerundForms = gerund?.declensions?.SINGULAR;
     const supineForms = supine?.declensions?.SINGULAR;
@@ -210,7 +210,6 @@ function buildTableColumnHeaderRow() {
 }
 
 function buildTenseHeader(participleTense) {
-
     const th = document.createElement("th");
     th.classList.add("tense-header");
     th.textContent = participleTense.defaultName ?? participleTense.altName ?? "";

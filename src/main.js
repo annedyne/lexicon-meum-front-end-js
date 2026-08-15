@@ -1,13 +1,20 @@
 import "./styles/index.css";
-import {QUERY_CHAR_MIN, AUTOCOMPLETE_DEBOUNCE_MS, STATUS_TOAST_DURATION, StatusMessageType, CSS_CLASSES, KEY} from "@utilities/constants"
-import {fetchWordSuggestions} from "@api";
-import {handleWordLookup} from "@search";
-import {prepareSuggestionItems} from "@search";
-import {validateSearchQueryLength} from "@search";
-import {transformWordSuggestionData} from "@search";
-import {handleLoadWordDetail} from "@detail";
-import {normalizeSearchQuery} from "@search/validate.js";
-import {getSelectedSuggestionIndex, setSelectedSuggestionIndex, resetSelectedSuggestionIndex} from "@search";
+import {
+    QUERY_CHAR_MIN,
+    AUTOCOMPLETE_DEBOUNCE_MS,
+    STATUS_TOAST_DURATION,
+    StatusMessageType,
+    CSS_CLASSES,
+    KEY,
+} from "@utilities/constants";
+import { fetchWordSuggestions } from "@api";
+import { handleWordLookup } from "@search";
+import { prepareSuggestionItems } from "@search";
+import { validateSearchQueryLength } from "@search";
+import { transformWordSuggestionData } from "@search";
+import { handleLoadWordDetail } from "@detail";
+import { normalizeSearchQuery } from "@search/validate.js";
+import { getSelectedSuggestionIndex, setSelectedSuggestionIndex, resetSelectedSuggestionIndex } from "@search";
 
 const isSuffixSearch = document.querySelector("#suffix-search");
 const wordLookupInput = document.querySelector("#word-lookup-input");
@@ -21,12 +28,12 @@ document.documentElement.dataset.theme = "gold-gray";
 const inflectionsContainer = document.querySelector("#inflections-container");
 
 function updateInflectionsScrollFade() {
-    const hasMoreToScroll = inflectionsContainer.scrollLeft + inflectionsContainer.clientWidth
-        < inflectionsContainer.scrollWidth - 1;
+    const hasMoreToScroll =
+        inflectionsContainer.scrollLeft + inflectionsContainer.clientWidth < inflectionsContainer.scrollWidth - 1;
     inflectionsContainer.classList.toggle(CSS_CLASSES.IS_SCROLLABLE, hasMoreToScroll);
 }
 
-new MutationObserver(updateInflectionsScrollFade).observe(inflectionsContainer, {childList: true, subtree: true});
+new MutationObserver(updateInflectionsScrollFade).observe(inflectionsContainer, { childList: true, subtree: true });
 inflectionsContainer.addEventListener("scroll", updateInflectionsScrollFade);
 window.addEventListener("resize", updateInflectionsScrollFade);
 
@@ -60,7 +67,7 @@ function selectSuggestion(index) {
         child.classList.remove(CSS_CLASSES.SUGGESTION_SELECTED);
     }
     children[index].classList.add(CSS_CLASSES.SUGGESTION_SELECTED);
-    children[index].scrollIntoView({block: "nearest"});
+    children[index].scrollIntoView({ block: "nearest" });
     setSelectedSuggestionIndex(index);
 }
 
@@ -176,11 +183,7 @@ function buildWordSuggestionBox(rawSuggestions, searchInput) {
     const suggestionItems = transformWordSuggestionData(rawSuggestions);
     const preparedItems = prepareSuggestionItems(suggestionItems, searchInput);
 
-    renderWordSuggestionBox(
-        preparedItems,
-        wordSuggestionsBox,
-        handleLoadWordDetail,
-    );
+    renderWordSuggestionBox(preparedItems, wordSuggestionsBox, handleLoadWordDetail);
 }
 
 /**
@@ -189,11 +192,7 @@ function buildWordSuggestionBox(rawSuggestions, searchInput) {
  * @param wordSuggestionsBox
  * @param handleLoadWordDetail
  */
-export function renderWordSuggestionBox(
-    preparedItems,
-    wordSuggestionsBox,
-    handleLoadWordDetail,
-) {
+export function renderWordSuggestionBox(preparedItems, wordSuggestionsBox, handleLoadWordDetail) {
     if (!preparedItems || preparedItems.length === 0) {
         hideSuggestions();
         return;
@@ -202,7 +201,7 @@ export function renderWordSuggestionBox(
     wordSuggestionsBox.style.display = "block";
 
     // Build the drop-down list
-    for (const {word, lexemeId, display, highlight, showInflection} of preparedItems) {
+    for (const { word, lexemeId, display, highlight, showInflection } of preparedItems) {
         const item = document.createElement("div");
         if (highlight) {
             item.classList.add("suggestion-highlight");
@@ -217,8 +216,10 @@ export function renderWordSuggestionBox(
             try {
                 await handleLoadWordDetail(word, lexemeId);
             } catch (error) {
-                const message = error && typeof error === "object" && "message" in error
-                    ? error.message : "There was a problem loading details.";
+                const message =
+                    error && typeof error === "object" && "message" in error
+                        ? error.message
+                        : "There was a problem loading details.";
                 setStatus(message);
             }
         });
@@ -264,7 +265,6 @@ export function renderWordSuggestionBox(
         wordSuggestionsBox.style.overflowY = totalHeight > snappedHeight ? "auto" : "hidden";
     });
 }
-
 
 /**
  * Updates the status display in the UI with the provided message.

@@ -1,8 +1,7 @@
-import {renderAdjectiveAgreementTable} from "./render-adjective-agreement-table.js";
-import {CSS_CLASSES, ADJECTIVE_DEGREES} from "@utilities";
+import { renderAdjectiveAgreementTable } from "./render-adjective-agreement-table.js";
+import { CSS_CLASSES, ADJECTIVE_DEGREES } from "@utilities";
 
 export function renderAdjectiveDegreeTables(degreeAgreements) {
-
     const container = document.querySelector("#inflections-container");
     container.replaceChildren();
 
@@ -25,5 +24,3 @@ function createTableHeader(degreeHeaderString) {
     headerElement.classList.add(CSS_CLASSES.DEGREE_HEADER);
     return headerElement;
 }
-
-

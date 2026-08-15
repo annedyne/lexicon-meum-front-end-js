@@ -4,9 +4,9 @@ export function capitalize(toBeCapitalized = "") {
         return "";
     }
     const lowerCase = toBeCapitalized.toLowerCase();
-    const words = lowerCase.split(' ');
+    const words = lowerCase.split(" ");
 
-    const capitalizedWords = words.map(word => {
+    const capitalizedWords = words.map((word) => {
         // Handle multiple spaces gracefully
         if (!word) {
             return "";
@@ -15,5 +15,4 @@ export function capitalize(toBeCapitalized = "") {
     });
 
     return capitalizedWords.join(" ");
-
 }

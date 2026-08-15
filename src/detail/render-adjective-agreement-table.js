@@ -1,9 +1,8 @@
-import {matchesInflection, formatCaseNameForTableRowHeader, highlightMatch} from "./utilities.js";
-import {getSearchInput} from "./detail-context";
-import {capitalize, CSS_CLASSES} from "@utilities";
+import { matchesInflection, formatCaseNameForTableRowHeader, highlightMatch } from "./utilities.js";
+import { getSearchInput } from "./detail-context";
+import { capitalize, CSS_CLASSES } from "@utilities";
 
-
-const GENDER_ABBR = {MASCULINE: "m", FEMININE: "f", NEUTER: "n"};
+const GENDER_ABBR = { MASCULINE: "m", FEMININE: "f", NEUTER: "n" };
 
 // define  canonical sort order:
 const GENDER_ORDER = ["MASCULINE", "FEMININE", "NEUTER"];
@@ -26,8 +25,7 @@ export function renderAdjectiveAgreementTable(agreements, shouldClear = true) {
     // --- sort agreements by the lowest-index gender they contain ---
     const sortedAgreements = [...agreements].toSorted((a, b) => {
         // eslint-disable-next-line unicorn/consistent-function-scoping
-        const minIndex = (array) =>
-            Math.min(...array.map((g) => GENDER_ORDER.indexOf(g)));
+        const minIndex = (array) => Math.min(...array.map((g) => GENDER_ORDER.indexOf(g)));
         return minIndex(a.genders) - minIndex(b.genders);
     });
 
@@ -60,13 +58,11 @@ export function renderAdjectiveAgreementTable(agreements, shouldClear = true) {
 function getHeaderRow(numberLabel, agreements) {
     const tr = document.createElement("tr");
 
-
     const th = document.createElement("th");
     th.textContent = numberLabel;
     tr.append(th);
 
-
-    for (const {genders} of agreements) {
+    for (const { genders } of agreements) {
         const cell = document.createElement("th");
         cell.scope = "col";
         cell.textContent = formatGenderLabel(genders);
@@ -77,9 +73,7 @@ function getHeaderRow(numberLabel, agreements) {
 }
 
 function formatGenderLabel(genders) {
-    const sorted = [...genders].toSorted(
-        (a, b) => GENDER_ORDER.indexOf(a) - GENDER_ORDER.indexOf(b),
-    );
+    const sorted = [...genders].toSorted((a, b) => GENDER_ORDER.indexOf(a) - GENDER_ORDER.indexOf(b));
     const abbreviations = sorted.map((g) => GENDER_ABBR[g] || g.charAt(0).toLowerCase());
     return abbreviations.join(" & ");
 }
@@ -97,7 +91,7 @@ function addCaseRows(agreements, cases, numberLabel) {
         caseTh.textContent = formatCaseNameForTableRowHeader(gramCase);
         row.append(caseTh);
 
-        for (const {inflections} of agreements) {
+        for (const { inflections } of agreements) {
             const td = document.createElement("td");
 
             const inflection = inflections[numberLabel]?.[gramCase] ?? "";
@@ -126,4 +120,3 @@ function createSectionHeaderRow(label, colspan, cls) {
     row.append(cell);
     return row;
 }
-

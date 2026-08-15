@@ -17,7 +17,6 @@ export const POS = Object.freeze({
     VERB: "VERB",
 });
 
-
 export const POS_ABBREV_LABEL = Object.freeze({
     [POS.ADVERB]: "adv",
     [POS.ADJECTIVE]: "adj",
@@ -41,13 +40,11 @@ export const GRAMMAR_ABBREV_LABEL = Object.freeze({
     [GRAMMAR_KEYS.DEPONENT]: "dep",
 });
 
-
 export const ADJECTIVE_DEGREES = Object.freeze({
     POSITIVE: "Positive",
     COMPARATIVE: "Comparative",
     SUPERLATIVE: "Superlative",
 });
-
 
 // ------- APPLICATION  ------ //
 

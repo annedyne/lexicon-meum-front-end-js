@@ -1,6 +1,6 @@
-import {describe, it, expect, beforeEach} from "vitest";
-import {renderDefinitions, isOnlyDefinitionSameAsShort} from "@detail/render-definitions.js";
-import {CSS_CLASSES, DEFINITIONS_TOGGLE_LABEL} from "@utilities/constants.js";
+import { describe, it, expect, beforeEach } from "vitest";
+import { renderDefinitions, isOnlyDefinitionSameAsShort } from "@detail/render-definitions.js";
+import { CSS_CLASSES, DEFINITIONS_TOGGLE_LABEL } from "@utilities/constants.js";
 
 function directChildren(list) {
     return [...list.children].filter((element) => element.tagName === "LI");
@@ -23,8 +23,8 @@ describe("renderDefinitions", () => {
 
     it("renders the shortDefinition above the toggle, and hides the full list until toggled", () => {
         const definitions = [
-            {text: "to be fond of, like, admire"},
-            {text: "to be thankful, grateful to, feel obliged for a service"},
+            { text: "to be fond of, like, admire" },
+            { text: "to be thankful, grateful to, feel obliged for a service" },
         ];
 
         renderDefinitions(definitions, undefined, "VERB", undefined, "to love");
@@ -45,7 +45,7 @@ describe("renderDefinitions", () => {
     });
 
     it("hides the shortDefinition once the full list is shown, and restores it on collapse", () => {
-        const definitions = [{text: "to love"}, {text: "to be fond of"}];
+        const definitions = [{ text: "to love" }, { text: "to be fond of" }];
 
         renderDefinitions(definitions, undefined, "VERB", undefined, "to love");
 
@@ -64,8 +64,8 @@ describe("renderDefinitions", () => {
 
     it("numbers a flat list when there are multiple entries at that level", () => {
         const definitions = [
-            {text: "to be fond of, like, admire"},
-            {text: "to be thankful, grateful to, feel obliged for a service"},
+            { text: "to be fond of, like, admire" },
+            { text: "to be thankful, grateful to, feel obliged for a service" },
         ];
 
         renderDefinitions(definitions, undefined, "VERB", undefined, "to love");
@@ -81,10 +81,10 @@ describe("renderDefinitions", () => {
             {
                 text: "(literally):",
                 children: [
-                    {text: "great, large, big"},
+                    { text: "great, large, big" },
                     {
                         text: "especially:",
-                        children: [{text: "great, much, abundant"}],
+                        children: [{ text: "great, much, abundant" }],
                     },
                 ],
             },
@@ -103,24 +103,20 @@ describe("renderDefinitions", () => {
         expect(secondLevelList.classList.contains(CSS_CLASSES.DEFINITIONS_UNNUMBERED)).toBe(false);
         expect(directChildren(secondLevelList)).toHaveLength(2);
 
-        const especiallyLi = directChildren(secondLevelList)
-            .find((li) => ownText(li) === "especially:");
+        const especiallyLi = directChildren(secondLevelList).find((li) => ownText(li) === "especially:");
         const thirdLevelList = especiallyLi.querySelector(`.${CSS_CLASSES.DEFINITIONS_LIST}`);
         expect(thirdLevelList.classList.contains(CSS_CLASSES.DEFINITIONS_UNNUMBERED)).toBe(true);
     });
 
     it("wraps parenthetical context notes in their own span", () => {
-        const definitions = [{text: "(reflexive) to be pleased (with oneself), to be content"}];
+        const definitions = [{ text: "(reflexive) to be pleased (with oneself), to be content" }];
 
         renderDefinitions(definitions, undefined, "VERB", undefined, "to love");
 
         const li = document.querySelector(`#definitions-container .${CSS_CLASSES.DEFINITIONS_LIST} li`);
         const contextSpans = li.querySelectorAll(`.${CSS_CLASSES.DEFINITION_CONTEXT}`);
 
-        expect([...contextSpans].map((span) => span.textContent)).toEqual([
-            "(reflexive)",
-            "(with oneself)",
-        ]);
+        expect([...contextSpans].map((span) => span.textContent)).toEqual(["(reflexive)", "(with oneself)"]);
         expect(ownText(li)).toBe("(reflexive) to be pleased (with oneself), to be content");
     });
 
@@ -134,8 +130,8 @@ describe("renderDefinitions", () => {
     });
 
     it("clears previously rendered content on re-render", () => {
-        renderDefinitions([{text: "to love"}], undefined, "VERB", undefined, "short 1");
-        renderDefinitions([{text: "girl"}], undefined, "NOUN", undefined, "short 2");
+        renderDefinitions([{ text: "to love" }], undefined, "VERB", undefined, "short 1");
+        renderDefinitions([{ text: "girl" }], undefined, "NOUN", undefined, "short 2");
 
         const container = document.querySelector("#definitions-container");
         expect(container.querySelectorAll(`.${CSS_CLASSES.DEFINITIONS_SHORT}`)).toHaveLength(1);
@@ -147,13 +143,13 @@ describe("renderDefinitions", () => {
             {
                 text: "(literally):",
                 children: [
-                    {text: "great, large, big; (of things) vast, extensive, spacious (of physical size or quantity)"},
+                    { text: "great, large, big; (of things) vast, extensive, spacious (of physical size or quantity)" },
                     {
                         text: "especially:",
                         children: [
-                            {text: "great, much, abundant, considerable (of measure, weight, quantity)"},
-                            {text: "(rare, of time) synonym of longus, multus"},
-                            {text: "loud, powerful, strong, mighty (of voice)"},
+                            { text: "great, much, abundant, considerable (of measure, weight, quantity)" },
+                            { text: "(rare, of time) synonym of longus, multus" },
+                            { text: "loud, powerful, strong, mighty (of voice)" },
                         ],
                     },
                 ],
@@ -161,12 +157,16 @@ describe("renderDefinitions", () => {
             {
                 text: "(figurative):",
                 children: [
-                    {text: "(in general) great, grand, mighty, noble, lofty, important, of great weight or importance, momentous"},
+                    {
+                        text: "(in general) great, grand, mighty, noble, lofty, important, of great weight or importance, momentous",
+                    },
                     {
                         text: "(in particular):",
                         children: [
-                            {text: "advanced in years, of great age, aged (of age, with nātu)"},
-                            {text: "(in specifications of value, in the neutral absolute) high, dear, of great value, at a high price"},
+                            { text: "advanced in years, of great age, aged (of age, with nātu)" },
+                            {
+                                text: "(in specifications of value, in the neutral absolute) high, dear, of great value, at a high price",
+                            },
                         ],
                     },
                 ],
@@ -199,7 +199,7 @@ describe("renderDefinitions", () => {
     });
 
     it("hides the toggle when the sole definition matches the shortDefinition (raeda example)", () => {
-        const definitions = [{text: "A carriage (four-wheeled), coach"}];
+        const definitions = [{ text: "A carriage (four-wheeled), coach" }];
 
         renderDefinitions(definitions, undefined, "NOUN", undefined, "A carriage (four-wheeled), coach");
 
@@ -212,7 +212,7 @@ describe("renderDefinitions", () => {
     });
 
     it("shows the toggle when the sole definition differs from the shortDefinition (bogus spice example)", () => {
-        const definitions = [{text: "(hapax legomenon) a bogus spice"}];
+        const definitions = [{ text: "(hapax legomenon) a bogus spice" }];
 
         renderDefinitions(definitions, undefined, "NOUN", undefined, "a bogus spice");
 
@@ -228,24 +228,22 @@ describe("renderDefinitions", () => {
 
 describe("isOnlyDefinitionSameAsShort", () => {
     it("is true when there is one definition with no children and its text matches shortDefinition (raeda example)", () => {
-        const definitions = [{text: "A carriage (four-wheeled), coach"}];
+        const definitions = [{ text: "A carriage (four-wheeled), coach" }];
         expect(isOnlyDefinitionSameAsShort(definitions, "A carriage (four-wheeled), coach")).toBe(true);
     });
 
     it("is false when the sole definition's text differs from shortDefinition (bogus spice example)", () => {
-        const definitions = [{text: "(hapax legomenon) a bogus spice"}];
+        const definitions = [{ text: "(hapax legomenon) a bogus spice" }];
         expect(isOnlyDefinitionSameAsShort(definitions, "a bogus spice")).toBe(false);
     });
 
     it("is false when there are multiple definitions", () => {
-        const definitions = [{text: "to love"}, {text: "to be fond of"}];
+        const definitions = [{ text: "to love" }, { text: "to be fond of" }];
         expect(isOnlyDefinitionSameAsShort(definitions, "to love")).toBe(false);
     });
 
     it("is false when the sole definition has children", () => {
-        const definitions = [
-            {text: "great, large, big", children: [{text: "especially:"}]},
-        ];
+        const definitions = [{ text: "great, large, big", children: [{ text: "especially:" }] }];
         expect(isOnlyDefinitionSameAsShort(definitions, "great, large, big")).toBe(false);
     });
 });
