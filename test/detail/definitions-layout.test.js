@@ -2,21 +2,17 @@
 // jsdom does not lay out text or render list markers, so this renders the real
 // markup with the real stylesheet in headless Chromium and measures positions.
 
-import {describe, it, expect, beforeAll, afterAll} from "vitest";
-import {chromium} from "playwright";
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { chromium } from "playwright";
 import fs from "node:fs/promises";
 import path from "node:path";
-import {fileURLToPath} from "node:url";
-import {renderDefinitions} from "@detail/render-definitions.js";
+import { fileURLToPath } from "node:url";
+import { renderDefinitions } from "@detail/render-definitions.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const stylesDirectory = path.join(__dirname, "../../src/styles");
 
-const definitions = [
-    {text: "a first sense"},
-    {text: "a second sense"},
-    {text: "a third sense"},
-];
+const definitions = [{ text: "a first sense" }, { text: "a second sense" }, { text: "a third sense" }];
 
 let browser;
 
@@ -34,11 +30,9 @@ describe("expanded definitions list alignment", () => {
         const css = await loadStyles();
 
         const page = await browser.newPage();
-        await page.setContent(
-            `<style>${css}</style><div id="definitions-container">${markup}</div>`
-        );
+        await page.setContent(`<style>${css}</style><div id="definitions-container">${markup}</div>`);
 
-        const {labelLeft, markerLeft} = await page.evaluate(measureAlignment);
+        const { labelLeft, markerLeft } = await page.evaluate(measureAlignment);
         await page.close();
 
         expect(markerLeft).toBeGreaterThanOrEqual(labelLeft - 1);
