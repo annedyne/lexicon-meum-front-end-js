@@ -20,7 +20,11 @@
  */
 
 import {renderDeclensionRow} from "@detail/render-declension-table.js";
+import {formatCaseNameForTableRowHeader, getSearchInput, highlightMatch, matchesInflection} from "@detail-core";
 import {CSS_CLASSES} from "@utilities";
+
+const GERUND = "gerund";
+const SUPINE = "supine";
 
 /**
  * Renders participle data using the CSS Grid system
@@ -58,7 +62,7 @@ export function renderParticipleInflections(participles, gender, tabSupport) {
 
     table.append(buildTableColumnHeaderRow());
     for (const participleTense of participleTenses) {
-        if (participleTense?.declensions) {
+        if (participleTense?.declensions && !isVerbalNoun(participleTense)) {
 
             const declensions = participleTense.declensions;
             const cases = Object.keys(declensions.SINGULAR);
@@ -86,7 +90,96 @@ export function renderParticipleInflections(participles, gender, tabSupport) {
             table.append(declensionSectionContainer);
         }
     }
+
+    const verbalNounSection = buildVerbalNounSection(participleTenses);
+    if (verbalNounSection) {
+        table.append(verbalNounSection);
+    }
+
     container.append(table);
+}
+
+function getTenseName(participleTense) {
+    return participleTense?.defaultName ?? participleTense?.altName ?? "";
+}
+
+function isVerbalNoun(participleTense) {
+    const name = getTenseName(participleTense).toLowerCase();
+    return name === GERUND || name === SUPINE;
+}
+
+/**
+ * Builds the verbal noun section: gerund forms in the left column, supine forms in the right.
+ * Only the SINGULAR set is used, since gerund and supine use one form for both numbers.
+ * @param {ParticipleTense[]} participleTenses - all tenses for the current gender
+ * @returns {HTMLTableSectionElement|undefined} the section, or undefined when neither verbal noun is present
+ */
+function buildVerbalNounSection(participleTenses) {
+    const gerund = participleTenses.find(tense => getTenseName(tense).toLowerCase() === GERUND);
+    const supine = participleTenses.find(tense => getTenseName(tense).toLowerCase() === SUPINE);
+
+    const gerundForms = gerund?.declensions?.SINGULAR;
+    const supineForms = supine?.declensions?.SINGULAR;
+    if (!gerundForms && !supineForms) {
+        return;
+    }
+
+    const section = document.createElement("tbody");
+    section.classList.add("participle-table", "declension-table");
+
+    // Empty case column header, matching the participle tense sections above
+    const emptyCaseHeader = document.createElement("th");
+    emptyCaseHeader.textContent = "Case";
+    emptyCaseHeader.scope = "col";
+    emptyCaseHeader.classList.add("case-col-header");
+    section.append(emptyCaseHeader);
+
+    section.append(buildVerbalNounHeader(gerund, "Gerund"));
+    section.append(buildVerbalNounHeader(supine, "Supine"));
+
+    for (const caseName of collectCaseNames(gerundForms, supineForms)) {
+        section.append(buildVerbalNounRow(caseName, gerundForms, supineForms));
+    }
+    return section;
+}
+
+// Single-column header for one verbal noun, or an empty placeholder when that form is missing
+function buildVerbalNounHeader(participleTense, fallbackName) {
+    const th = document.createElement("th");
+    th.classList.add("tense-header");
+    th.textContent = participleTense ? getTenseName(participleTense) || fallbackName : "";
+    return th;
+}
+
+// Cases present in either form, gerund order first
+function collectCaseNames(gerundForms, supineForms) {
+    return [...new Set([...Object.keys(gerundForms ?? {}), ...Object.keys(supineForms ?? {})])];
+}
+
+function buildVerbalNounRow(caseName, gerundForms, supineForms) {
+    const row = document.createElement("tr");
+
+    const caseCell = document.createElement("th");
+    caseCell.scope = "row";
+    caseCell.classList.add(CSS_CLASSES.CASE_ROW_HEADER);
+    caseCell.textContent = formatCaseNameForTableRowHeader(caseName);
+    row.append(caseCell);
+
+    row.append(buildVerbalNounCell(gerundForms?.[caseName]));
+    row.append(buildVerbalNounCell(supineForms?.[caseName]));
+    return row;
+}
+
+function buildVerbalNounCell(value) {
+    const cell = document.createElement("td");
+    const form = value || "";
+
+    if (matchesInflection(form, getSearchInput())) {
+        cell.append(highlightMatch(form));
+    } else {
+        cell.textContent = form;
+    }
+    return cell;
 }
 
 function buildTableColumnHeaderRow() {
