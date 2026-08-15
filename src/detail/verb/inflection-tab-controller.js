@@ -1,8 +1,8 @@
-import {renderTabs} from "./tabs/render-tabs.js";
-import {TABS} from "./tabs/tab-registry.js";
-import {findSearchMatchesByTab} from "./find-search-matches-in-tabs.js";
-import {resolveInitialTab} from "./resolve-initial-tab.js";
-import {getSearchInput, setActiveTabVoice, setActiveTabGender} from "@detail-core";
+import { renderTabs } from "./tabs/render-tabs.js";
+import { TABS } from "./tabs/tab-registry.js";
+import { findSearchMatchesByTab } from "./find-search-matches-in-tabs.js";
+import { resolveInitialTab } from "./resolve-initial-tab.js";
+import { getSearchInput, setActiveTabVoice, setActiveTabGender } from "@detail-core";
 
 /**
  * @typedef {Object} TabSupport
@@ -19,7 +19,7 @@ import {getSearchInput, setActiveTabVoice, setActiveTabGender} from "@detail-cor
 export function initializeInflectionTabs(inflectionTableData) {
     // Select the tab containing the search match before rendering
     const matches = findSearchMatchesByTab(inflectionTableData, getSearchInput());
-    const {voice, gender} = resolveInitialTab(matches);
+    const { voice, gender } = resolveInitialTab(matches);
     setActiveTabVoice(voice);
     setActiveTabGender(gender);
 
@@ -42,13 +42,13 @@ function routeTabContent(voiceTabId, genderTabId, inflectionTable) {
     }
 
     // Get the appropriate data based on the tab's dataSource
-    const dataSource = voiceTab.dataSource || 'conjugations'; // default to conjugations for backward compatibility
+    const dataSource = voiceTab.dataSource || "conjugations"; // default to conjugations for backward compatibility
     const tabData = inflectionTable[dataSource] || [];
 
     /** @type {TabSupport} */
     const tabSupport = {
         addTabSpacer,
-        addEmptyContentMessage
+        addEmptyContentMessage,
     };
 
     // Pass utility functions to the renderer
@@ -62,7 +62,7 @@ function routeTabContent(voiceTabId, genderTabId, inflectionTable) {
  * @param {string} message - The message to display
  * @param {string} [additionalClass] - Optional additional CSS class
  */
-function addEmptyContentMessage(message, additionalClass = '') {
+function addEmptyContentMessage(message, additionalClass = "") {
     const container = document.querySelector("#inflections-container");
     if (!container) {
         return;
@@ -107,7 +107,7 @@ function clearTabContent() {
         "#conjugation-table",
         "#tab-spacer",
         "#coming-soon",
-        "#empty-content-message"
+        "#empty-content-message",
         // Add any other selectors for elements that tabs create
     ];
 

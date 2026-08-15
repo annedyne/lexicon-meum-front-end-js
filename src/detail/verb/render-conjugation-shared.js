@@ -1,7 +1,7 @@
-import {getSearchInput} from "@detail/detail-context.js";
-import {highlightMatch, matchesInflection} from "@detail/utilities.js";
-import {CSS_CLASSES} from "@utilities";
-import {buildConjugationViewModel} from "./build-conjugation-view-model.js";
+import { getSearchInput } from "@detail/detail-context.js";
+import { highlightMatch, matchesInflection } from "@detail/utilities.js";
+import { CSS_CLASSES } from "@utilities";
+import { buildConjugationViewModel } from "./build-conjugation-view-model.js";
 
 /**
  * Renders the conjugation table for a single voice. Data-shape and gender/voice

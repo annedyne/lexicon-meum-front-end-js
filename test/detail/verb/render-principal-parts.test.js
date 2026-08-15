@@ -1,4 +1,3 @@
-
 // noinspection XHTMLIncompatabilitiesJS
 
 import { describe, it, expect, beforeEach } from "vitest";
@@ -8,8 +7,8 @@ import { GRAMMAR_KEYS, GRAMMAR_ABBREV_LABEL } from "@utilities/constants.js";
 describe("renderPrincipalParts", () => {
     beforeEach(() => {
         // Create the required DOM element
-        const container = document.createElement('div');
-        container.id = 'principal-parts-container';
+        const container = document.createElement("div");
+        container.id = "principal-parts-container";
         document.body.replaceChildren(container);
     });
 

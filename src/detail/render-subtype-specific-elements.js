@@ -1,8 +1,7 @@
-import {formatPOSForDefinitions} from "@utilities/format-part-of-speech.js";
+import { formatPOSForDefinitions } from "@utilities/format-part-of-speech.js";
 
-export function renderSubtypeSpecificElements(subtype, partOfSpeech){
-
-    if ( subtype === undefined) {
+export function renderSubtypeSpecificElements(subtype, partOfSpeech) {
+    if (subtype === undefined) {
         return;
     }
     const subtypeSpan = document.createElement("span");

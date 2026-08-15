@@ -1,5 +1,5 @@
-import {POS, POS_ABBREV_LABEL, POS_SET} from "./constants.js";
-import {capitalize} from "@src/utilities/string.js";
+import { POS, POS_ABBREV_LABEL, POS_SET } from "./constants.js";
+import { capitalize } from "@src/utilities/string.js";
 
 export function isPartOfSpeech(value) {
     return POS_SET.has(value);
@@ -18,7 +18,5 @@ export function parsePartOfSpeech(input) {
 }
 
 export function formatPOSForDefinitions(input) {
-   return capitalize(input);
+    return capitalize(input);
 }
-
-

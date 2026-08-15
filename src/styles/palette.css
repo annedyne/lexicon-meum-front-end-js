@@ -7,7 +7,7 @@
     /* status colors */
     --color-success: #4caf50;
     --color-error: #f3685e;
-    --color-info: #037EFF;
+    --color-info: #037eff;
 
     --color-row-hover: #f5f5f5;
     --shadow-soft: 0 6px 12px rgba(0, 0, 0, 0.08);
@@ -15,26 +15,26 @@
 
 :root[data-theme="gold-gray"] {
     /* status colors */
-    --color-success: #228B22;
+    --color-success: #228b22;
     --color-error: #ed4926ff;
-    --color-info: #037EFF;
+    --color-info: #037eff;
 
     /* Brand & accents */
-    --color-brand-primary: #B8860B;
-    --color-brand-primary-medium: #CDAA00;
-    --color-brand-primary-light: #FFF3AD;
+    --color-brand-primary: #b8860b;
+    --color-brand-primary-medium: #cdaa00;
+    --color-brand-primary-light: #fff3ad;
     --color-brand-accent: #ffec80ff;
-    --color-brand-accent-orange: #D1932E;
+    --color-brand-accent-orange: #d1932e;
 
-    --color-brand-secondary: #A9A9A9;
+    --color-brand-secondary: #a9a9a9;
     --color-brand-secondary-medium: #696969;
-    --color-brand-secondary-light: #F5F5F5;
-    --color-brand-secondary-hover: #E8E8E8;
+    --color-brand-secondary-light: #f5f5f5;
+    --color-brand-secondary-hover: #e8e8e8;
 
     /* key elements */
     --color-text-header: rgba(0, 0, 0, 0.65);
     --color-text-dark: rgba(0, 0, 0, 0.87);
-    --color-text-accent: #A2CCF6;
+    --color-text-accent: #a2ccf6;
 
     --color-link: var(--color-brand-primary);
     --color-banner-bg: var(--color-brand-secondary-light);

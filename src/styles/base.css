@@ -21,7 +21,7 @@ body {
     display: grid;
     grid-template-rows: 2fr 1fr;
     grid-template-columns: 1fr;
-    gap: 2rem
+    gap: 2rem;
 }
 
 .main-container {
@@ -35,7 +35,10 @@ body {
    ============================================================================= */
 
 /* Reset and standardize all form elements */
-input, select, textarea, button {
+input,
+select,
+textarea,
+button {
     box-sizing: border-box;
     font: inherit;
 }
@@ -165,8 +168,9 @@ label {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.5s,
-    transform 0.5s ease-out;
+    transition:
+        opacity 0.5s,
+        transform 0.5s ease-out;
 }
 
 .toast.show {
@@ -255,12 +259,11 @@ label {
 #definitions-container {
     font-size: 1rem;
     text-align: left;
-    margin-left: .5rem;
+    margin-left: 0.5rem;
     margin-top: 1rem;
 }
 
 .definitions-label {
-
     font-weight: bold;
     color: var(--color-text-header);
 }
@@ -268,7 +271,7 @@ label {
 .definitions-short {
     display: block;
     margin: 0.5rem 0;
-    padding-left: .5rem;
+    padding-left: 0.5rem;
 }
 
 .definitions-list {
@@ -280,19 +283,19 @@ label {
 
 .definitions-list.definitions-unnumbered {
     list-style-type: none;
-    padding-left: .5rem;
+    padding-left: 0.5rem;
 }
 
 .definitions-toggle {
     border: none;
     padding: 0;
-    font-size: 0.90rem;
+    font-size: 0.9rem;
     font-weight: 200;
     text-decoration: underline;
     color: var(--color-brand-secondary-medium);
     background: none;
     cursor: pointer;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
 }
 
 .definition-subheader {
@@ -303,7 +306,7 @@ label {
 }
 
 .definition-context {
-    font-size: 0.90em;
+    font-size: 0.9em;
     font-weight: 200;
     color: var(--color-brand-secondary-medium);
 }
@@ -327,4 +330,3 @@ label {
     font-weight: 500;
     color: var(--color-text-header);
 }
-

@@ -1,9 +1,8 @@
-import {getSearchInput} from "./detail-context";
-import {formatCaseNameForTableRowHeader, highlightMatch, matchesInflection} from "./utilities.js"
-import {CSS_CLASSES} from "@utilities";
+import { getSearchInput } from "./detail-context";
+import { formatCaseNameForTableRowHeader, highlightMatch, matchesInflection } from "./utilities.js";
+import { CSS_CLASSES } from "@utilities";
 
 export function renderDeclensionTable(declensions) {
-
     // Replace existing content
     const container = document.querySelector("#inflections-container");
     container.replaceChildren();
@@ -21,7 +20,6 @@ export function renderDeclensionTable(declensions) {
 }
 
 export function createDeclensionTable(declensions, tableElement) {
-
     //only render this table if this is declension data
     if (!declensions?.SINGULAR || !declensions?.PLURAL) {
         return;
@@ -103,6 +101,3 @@ export function renderDeclensionRow(caseName, tableData) {
     row.append(pluralCell);
     return row;
 }
-
-
-

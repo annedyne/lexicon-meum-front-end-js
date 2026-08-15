@@ -1,14 +1,14 @@
-import {describe, it, expect, beforeEach, vi} from "vitest";
-import {renderAdjectiveDegreeTables} from "@detail/render-adjective-degree-tables.js";
-import {ADJECTIVE_DEGREES, CSS_CLASSES} from "@utilities/constants.js";
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { renderAdjectiveDegreeTables } from "@detail/render-adjective-degree-tables.js";
+import { ADJECTIVE_DEGREES, CSS_CLASSES } from "@utilities/constants.js";
 import testAgreements from "./testAgreements.json";
 
 // Mock the renderAdjectiveAgreementTable function
 vi.mock("@detail/render-adjective-agreement-table.js", () => ({
-    renderAdjectiveAgreementTable: vi.fn()
+    renderAdjectiveAgreementTable: vi.fn(),
 }));
 
-import {renderAdjectiveAgreementTable} from "@detail/render-adjective-agreement-table.js";
+import { renderAdjectiveAgreementTable } from "@detail/render-adjective-agreement-table.js";
 
 describe("renderAdjectiveDegreeTables", () => {
     beforeEach(() => {
@@ -28,7 +28,7 @@ describe("renderAdjectiveDegreeTables", () => {
         const degreeAgreements = {
             positive: testAgreements,
             comparative: [],
-            superlative: []
+            superlative: [],
         };
 
         // Sanity check - verify content exists before clearing
@@ -47,14 +47,13 @@ describe("renderAdjectiveDegreeTables", () => {
             // Or if the div itself was removed, that's also valid clearing behavior
             expect(divAfterClearing).toBeNull();
         }
-
     });
 
     it("should render positive degree when agreements exist", () => {
         const degreeAgreements = {
             positive: testAgreements,
             comparative: [],
-            superlative: []
+            superlative: [],
         };
 
         renderAdjectiveDegreeTables(degreeAgreements);
@@ -72,7 +71,7 @@ describe("renderAdjectiveDegreeTables", () => {
         const degreeAgreements = {
             positive: [],
             comparative: testAgreements,
-            superlative: []
+            superlative: [],
         };
 
         renderAdjectiveDegreeTables(degreeAgreements);
@@ -90,7 +89,7 @@ describe("renderAdjectiveDegreeTables", () => {
         const degreeAgreements = {
             positive: [],
             comparative: [],
-            superlative: testAgreements
+            superlative: testAgreements,
         };
 
         renderAdjectiveDegreeTables(degreeAgreements);
@@ -108,7 +107,7 @@ describe("renderAdjectiveDegreeTables", () => {
         const degreeAgreements = {
             positive: testAgreements,
             comparative: testAgreements,
-            superlative: testAgreements
+            superlative: testAgreements,
         };
 
         renderAdjectiveDegreeTables(degreeAgreements);
@@ -137,7 +136,7 @@ describe("renderAdjectiveDegreeTables", () => {
         const degreeAgreements = {
             positive: [],
             comparative: testAgreements,
-            superlative: []
+            superlative: [],
         };
 
         renderAdjectiveDegreeTables(degreeAgreements);
@@ -156,7 +155,7 @@ describe("renderAdjectiveDegreeTables", () => {
         const degreeAgreements = {
             positive: [],
             comparative: [],
-            superlative: []
+            superlative: [],
         };
 
         renderAdjectiveDegreeTables(degreeAgreements);
@@ -170,14 +169,14 @@ describe("renderAdjectiveDegreeTables", () => {
     });
 
     it("should maintain correct order of degrees", () => {
-        const positiveData = [{test: "positive"}];
-        const comparativeData = [{test: "comparative"}];
-        const superlativeData = [{test: "superlative"}];
+        const positiveData = [{ test: "positive" }];
+        const comparativeData = [{ test: "comparative" }];
+        const superlativeData = [{ test: "superlative" }];
 
         const degreeAgreements = {
             positive: positiveData,
             comparative: comparativeData,
-            superlative: superlativeData
+            superlative: superlativeData,
         };
 
         renderAdjectiveDegreeTables(degreeAgreements);
@@ -202,7 +201,7 @@ describe("renderAdjectiveDegreeTables", () => {
         const degreeAgreements = {
             positive: testAgreements,
             comparative: [],
-            superlative: []
+            superlative: [],
         };
 
         // Should throw an error when trying to access querySelector result
@@ -215,7 +214,7 @@ describe("renderAdjectiveDegreeTables", () => {
         const degreeAgreements = {
             positive: testAgreements,
             comparative: [],
-            superlative: []
+            superlative: [],
         };
 
         renderAdjectiveDegreeTables(degreeAgreements);

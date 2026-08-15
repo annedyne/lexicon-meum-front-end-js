@@ -60,9 +60,7 @@ function formsContainMatch(tenses, searchInput) {
         return false;
     }
     return tenses.some(
-        (tense) =>
-            Array.isArray(tense?.forms) &&
-            tense.forms.some((form) => matchesInflection(form, searchInput))
+        (tense) => Array.isArray(tense?.forms) && tense.forms.some((form) => matchesInflection(form, searchInput)),
     );
 }
 
@@ -77,10 +75,7 @@ function declensionValuesContainMatch(declensions, searchInput) {
     if (!declensions) {
         return false;
     }
-    const values = [
-        ...Object.values(declensions.SINGULAR ?? {}),
-        ...Object.values(declensions.PLURAL ?? {}),
-    ];
+    const values = [...Object.values(declensions.SINGULAR ?? {}), ...Object.values(declensions.PLURAL ?? {})];
     return values.some((form) => matchesInflection(form, searchInput));
 }
 

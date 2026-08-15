@@ -13,11 +13,10 @@ export function prepareSuggestionItems(suggestionItems, searchInput) {
     rolledUp.sort((a, b) => a.display.localeCompare(b.display));
 
     // Enrich with highlighting metadata
-    const enriched =  rolledUp.map(item => {
+    const enriched = rolledUp.map((item) => {
         const inputMatchesParent =
             item.suggestionParent.localeCompare(searchInput, undefined, { sensitivity: "base" }) === 0;
-        const inputMatchesWord =
-            item.word.localeCompare(searchInput, undefined, {sensitivity: "base"}) === 0;
+        const inputMatchesWord = item.word.localeCompare(searchInput, undefined, { sensitivity: "base" }) === 0;
 
         // Highlight if input matches parent or word
         const highlight = inputMatchesParent || inputMatchesWord;
@@ -33,14 +32,18 @@ export function prepareSuggestionItems(suggestionItems, searchInput) {
             ...item,
             word: normalizedWord,
             highlight,
-            showInflection
+            showInflection,
         };
     });
 
     // Sort highlighted items to the top.
     enriched.sort((a, b) => {
-        if (a.highlight && !b.highlight) { return -1;}
-        if (!a.highlight && b.highlight) { return 1; }
+        if (a.highlight && !b.highlight) {
+            return -1;
+        }
+        if (!a.highlight && b.highlight) {
+            return 1;
+        }
         return 0;
     });
 
@@ -56,9 +59,8 @@ export function prepareSuggestionItems(suggestionItems, searchInput) {
  * @return {Array} Filtered array of suggestion items, rolled up by unique lexeme IDs.
  */
 function rollUpMatchesToLexemes(suggestionItems, searchInput) {
-
     const seen = new Set();
-    return suggestionItems.filter(item => {
+    return suggestionItems.filter((item) => {
         // Make sure not to exclude an exact match to searchInput.
         if (seen.has(item.lexemeId) && item.word !== searchInput) {
             return false;
