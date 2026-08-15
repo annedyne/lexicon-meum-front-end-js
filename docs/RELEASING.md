@@ -26,21 +26,23 @@ Project version is defined in `package.json`.
 
 ### 1. Sync `develop`
 
-```bash 
-git checkout develop git pull origin develop
+```bash
+git checkout develop
+git pull origin develop
 ```
 
 ### 2. Create the release branch
 
 ```bash
-git checkout -b release/<version> git push origin release/<version>
+git checkout -b release/<version>
+git push origin release/<version>
 ```
 
-### 4. Open the release PR
+### 3. Open the release PR
 
 Open a pull request from:
 
-```bash 
+```
 release/<version> -> master
 ```
 
@@ -51,22 +53,27 @@ Recommended PR content:
 - deployment notes
 - known issues, if any
 
-### 5. Merge and tag the release
+### 4. Merge and tag the release
 
 After the PR is merged:
-bash git checkout master git pull origin master git tag -a v<version> -m "Release <version>" git push origin v<version>
 
-### 6. Bump `develop` to the next version
-
-```bash 
-git checkout develop 
-git pull origin develop 
+```bash
+git checkout master
+git pull origin master
+git tag -a v<version> -m "Release <version>"
+git push origin v<version>
 ```
 
-manually update package.json
+### 5. Bump `develop` to the next version
+
+```bash
+git checkout develop
+git pull origin develop
+```
+
+Manually update the version in `package.json`, then:
 
 ```bash
 git commit -am "Bump to <version>-SNAPSHOT"
 git push origin develop
 ```
-
