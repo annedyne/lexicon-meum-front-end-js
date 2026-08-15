@@ -64,7 +64,7 @@ export const KEY = Object.freeze({
 
 // ------- UI TEXT  ------ //
 export const DEFINITIONS_TOGGLE_LABEL = Object.freeze({
-    SHOW: "Show details",
+    SHOW: "Show more",
     HIDE: "Show less",
 });
 
