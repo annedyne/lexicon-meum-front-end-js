@@ -27,7 +27,7 @@ if (!word) {
 
 const suggestionsRes = await fetch(`${apiBaseUrl}/lexemes/autocomplete/prefix?prefix=${encodeURIComponent(word)}`);
 const suggestions = await suggestionsRes.json();
-const match = suggestions.find(s => s.word === word && (!partOfSpeech || s.partOfSpeech === partOfSpeech));
+const match = suggestions.find((s) => s.word === word && (!partOfSpeech || s.partOfSpeech === partOfSpeech));
 
 if (!match) {
     console.error(`No suggestion found for "${word}"${partOfSpeech ? ` (${partOfSpeech})` : ""}`);
@@ -46,10 +46,14 @@ const viewports = {
 const browser = await chromium.launch();
 const page = await browser.newPage();
 
-await page.route(url => url.pathname.includes("/autocomplete/prefix"), route =>
-    route.fulfill({ json: [match] }));
-await page.route(url => url.pathname.includes(`/lexemes/${match.lexemeId}/detail`), route =>
-    route.fulfill({ json: detail }));
+await page.route(
+    (url) => url.pathname.includes("/autocomplete/prefix"),
+    (route) => route.fulfill({ json: [match] }),
+);
+await page.route(
+    (url) => url.pathname.includes(`/lexemes/${match.lexemeId}/detail`),
+    (route) => route.fulfill({ json: detail }),
+);
 
 await page.goto(appUrl);
 await page.fill("#word-lookup-input", word);

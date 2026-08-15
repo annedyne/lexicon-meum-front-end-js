@@ -1,4 +1,3 @@
-
 /* @vitest-environment jsdom */
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
@@ -13,7 +12,6 @@ vi.mock("@detail/render-principal-parts.js", async (orig) => await orig());
 vi.mock("@detail/render-pos-after-lemma.js", async (orig) => await orig());
 vi.mock("@detail/inflection-tab-controller.js", async (orig) => await orig());
 vi.mock("@detail/render-tabs.js", async (orig) => await orig());
-
 
 import { renderWordDetail } from "@detail/render-word-detail.js";
 
@@ -39,7 +37,7 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: [{text: "girl"}],
+            definitions: [{ text: "girl" }],
             inflectionTable: {
                 conjugations: [{ voice: "ACTIVE" }],
                 agreements: [{}],
@@ -60,7 +58,7 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: undefined,
             inflectionClass: "FIRST",
             principalParts: ["amo", "amare", "amavi", "amatum"],
-            definitions: [{text: "love"}],
+            definitions: [{ text: "love" }],
             inflectionTable: { conjugations: [{ voice: "ACTIVE" }], agreements: [], declensions: {} },
         };
 
@@ -79,12 +77,11 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: [{text: "girl"}],
+            definitions: [{ text: "girl" }],
             inflectionTable: { conjugations: [], agreements: [], declensions: { SINGULAR: {}, PLURAL: {} } },
         };
         renderWordDetail(withParts);
-        expect(document.querySelector("#principal-parts-container").textContent)
-            .toMatch(/puella, puellae/);
+        expect(document.querySelector("#principal-parts-container").textContent).toMatch(/puella, puellae/);
 
         const noParts = {
             lemma: "bene",
@@ -92,7 +89,7 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: undefined,
             inflectionClass: undefined,
             principalParts: [],
-            definitions: [{text: "well"}],
+            definitions: [{ text: "well" }],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(noParts);
@@ -135,7 +132,7 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: undefined,
             inflectionClass: undefined,
             principalParts: [],
-            definitions: [{text: "well"}],
+            definitions: [{ text: "well" }],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
 
@@ -151,7 +148,7 @@ describe("Integration: real renderers clear correctly", () => {
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: [{text: "girl"}],
+            definitions: [{ text: "girl" }],
             inflectionTable: {
                 conjugations: [{ voice: "ACTIVE" }],
                 agreements: [{}],
@@ -165,5 +162,4 @@ describe("Integration: real renderers clear correctly", () => {
         const nounBadge = lemmaContainerAfterNoun.querySelector(".part-of-speech");
         expect(nounBadge).toBeFalsy();
     });
-
 });

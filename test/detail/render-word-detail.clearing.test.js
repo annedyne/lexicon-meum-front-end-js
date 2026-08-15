@@ -65,7 +65,7 @@ function setupDom() {
 
 describe("renderWordDetail clearing/orchestration behavior (with markers)", () => {
     beforeEach(() => {
-       // vi.resetModules();
+        // vi.resetModules();
         setupDom();
     });
 
@@ -76,7 +76,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: undefined,
             inflectionClass: undefined,
             principalParts: [],
-            definitions: [{text: "well"}],
+            definitions: [{ text: "well" }],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(adverb);
@@ -89,7 +89,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: [{text: "girl"}],
+            definitions: [{ text: "girl" }],
             inflectionTable: {
                 conjugations: [{ voice: "ACTIVE" }],
                 agreements: [{}],
@@ -110,7 +110,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: [{text: "girl"}],
+            definitions: [{ text: "girl" }],
             inflectionTable: {
                 conjugations: [{ voice: "ACTIVE" }],
                 agreements: [{}],
@@ -126,7 +126,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: undefined,
             inflectionClass: "FIRST",
             principalParts: ["amo", "amare", "amavi", "amatum"],
-            definitions: [{text: "love"}],
+            definitions: [{ text: "love" }],
             inflectionTable: { conjugations: [{ voice: "ACTIVE" }], agreements: [], declensions: {} },
         };
         renderWordDetail(verb);
@@ -142,12 +142,11 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: "FEMININE",
             inflectionClass: "FIRST",
             principalParts: ["puella", "puellae"],
-            definitions: [{text: "girl"}],
+            definitions: [{ text: "girl" }],
             inflectionTable: { conjugations: [], agreements: [], declensions: { SINGULAR: {}, PLURAL: {} } },
         };
         renderWordDetail(first);
-        expect(document.querySelector("#principal-parts-container").textContent)
-            .toMatch(/puella, puellae/);
+        expect(document.querySelector("#principal-parts-container").textContent).toMatch(/puella, puellae/);
 
         const second = {
             lemma: "bene",
@@ -155,7 +154,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: undefined,
             inflectionClass: undefined,
             principalParts: [],
-            definitions: [{text: "well"}],
+            definitions: [{ text: "well" }],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(second);
@@ -169,7 +168,7 @@ describe("renderWordDetail clearing/orchestration behavior (with markers)", () =
             grammaticalGender: undefined,
             inflectionClass: undefined,
             principalParts: [],
-            definitions: [{text: "well"}],
+            definitions: [{ text: "well" }],
             inflectionTable: { conjugations: [], agreements: [], declensions: {} },
         };
         renderWordDetail(data);

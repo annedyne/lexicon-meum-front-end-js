@@ -1,11 +1,10 @@
 import { TAB_KEY } from "./verb/tabs/tab-keys.js";
 
-
 const state = {
     lexemeId: undefined,
     searchInput: undefined,
     detailData: undefined,
-    activeTab: {voice: TAB_KEY.ACTIVE, gender: TAB_KEY.MASCULINE},
+    activeTab: { voice: TAB_KEY.ACTIVE, gender: TAB_KEY.MASCULINE },
     morphologicalSubtype: undefined,
 };
 

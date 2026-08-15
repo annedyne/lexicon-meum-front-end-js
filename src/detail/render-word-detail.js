@@ -1,15 +1,15 @@
 // noinspection SpellCheckingInspection
 
-import {renderDeclensionTable} from "./render-declension-table.js";
-import {initializeInflectionTabs} from "./verb/inflection-tab-controller.js";
-import {renderAdjectiveAgreementTable} from "./render-adjective-agreement-table.js";
-import {renderLemmaHeader} from "./render-lemma-header.js";
-import {renderPrincipalParts} from "./verb/render-principal-parts.js";
-import {renderDefinitions} from "./render-definitions.js";
-import {renderInflectionType} from "./render-inflection-type.js";
-import {renderPOSAfterLemma} from "./render-pos-after-lemma.js";
-import {setMorphologicalSubtype} from "./detail-context.js";
-import {renderAdjectiveDegreeTables} from "./render-adjective-degree-tables.js";
+import { renderDeclensionTable } from "./render-declension-table.js";
+import { initializeInflectionTabs } from "./verb/inflection-tab-controller.js";
+import { renderAdjectiveAgreementTable } from "./render-adjective-agreement-table.js";
+import { renderLemmaHeader } from "./render-lemma-header.js";
+import { renderPrincipalParts } from "./verb/render-principal-parts.js";
+import { renderDefinitions } from "./render-definitions.js";
+import { renderInflectionType } from "./render-inflection-type.js";
+import { renderPOSAfterLemma } from "./render-pos-after-lemma.js";
+import { setMorphologicalSubtype } from "./detail-context.js";
+import { renderAdjectiveDegreeTables } from "./render-adjective-degree-tables.js";
 
 /**
  *  Displays word details
@@ -51,15 +51,8 @@ export function renderWordDetail(wordDetailData) {
             addNounGender(gender);
         }
 
-        const {inflectionTable} = wordDetailData ?? {};
-        const {
-            agreements = [],
-            positive,
-            comparative,
-            superlative,
-            declensions,
-        } = inflectionTable ?? {};
-
+        const { inflectionTable } = wordDetailData ?? {};
+        const { agreements = [], positive, comparative, superlative, declensions } = inflectionTable ?? {};
 
         // Show exactly one inflection table depending on POS; clear otherwise
         const pos = typeof partOfSpeech === "string" ? partOfSpeech.trim().toUpperCase() : "";
@@ -75,13 +68,13 @@ export function renderWordDetail(wordDetailData) {
                 break;
 
             case "ADJECTIVE":
-                // Use adjectve-degree renderer for adjectives
-                renderAdjectiveDegreeTables({positive, comparative, superlative});
+                // Use adjective-degree renderer for adjectives
+                renderAdjectiveDegreeTables({ positive, comparative, superlative });
                 break;
 
             case "DETERMINER":
             case "PRONOUN":
-                // Use single agreement table renderer for non-degree words with agreement inflections
+                // Use single agreement table renderer for nondegree words with agreement inflections
                 renderAdjectiveAgreementTable(agreements);
                 break;
 
@@ -90,23 +83,19 @@ export function renderWordDetail(wordDetailData) {
                 const container = document.querySelector("#inflections-container");
                 container && container.replaceChildren();
             }
-
         }
-
     } catch (error) {
         console.error(`Rendering error for ${lemma} details:`, error);
         throw error;
     }
 }
 
-
 function addNounGender(gender) {
     const container = document.querySelector("#principal-parts-container");
     const ppSpan = container?.querySelector(".principal-parts");
     if (ppSpan) {
-        const abbr = (typeof gender === "string" && gender.trim().length > 0)
-            ? gender.trim().charAt(0).toLowerCase()
-            : "";
+        const abbr =
+            typeof gender === "string" && gender.trim().length > 0 ? gender.trim().charAt(0).toLowerCase() : "";
 
         if (abbr) {
             // Add a leading space so it reads like: "puella, puellae f."
@@ -119,4 +108,3 @@ function addNounGender(gender) {
         }
     }
 }
-

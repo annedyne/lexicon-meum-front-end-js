@@ -1,11 +1,10 @@
 import { fetchWordDetailData } from "@api";
 import { toErrorMessage } from "@utilities";
 import { renderWordDetail } from "./render-word-detail.js";
-import {setSearchInputContext} from "./detail-context.js";
+import { setSearchInputContext } from "./detail-context.js";
 
 export async function handleLoadWordDetail(searchForm, lexemeId) {
     try {
-
         // Set the search context before rendering.
         setSearchInputContext(searchForm);
 

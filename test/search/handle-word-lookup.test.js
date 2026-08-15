@@ -1,5 +1,5 @@
-import {describe, it, expect} from "vitest";
-import {handleWordLookup} from "@search";
+import { describe, it, expect } from "vitest";
+import { handleWordLookup } from "@search";
 
 const fetchMock = async (query) => {
     // Mock API results
@@ -19,9 +19,7 @@ describe("handleWordLookup", () => {
 
         expect(result.status).toBe("success");
         // Order-insensitive check + ensure exact cardinality
-        expect(result.data).toEqual(
-            expect.arrayContaining(["Apple", "Applet", "Applejack"]),
-        );
+        expect(result.data).toEqual(expect.arrayContaining(["Apple", "Applet", "Applejack"]));
         expect(result.data).toHaveLength(3);
     });
 
@@ -35,14 +33,11 @@ describe("handleWordLookup", () => {
     });
 
     it("returns an error for fetch failures", async () => {
-
-
         const result = await handleWordLookup("apple", errorFetchMock, 3);
 
         expect(result).toEqual({
             status: "error",
-            message:
-                "We're having trouble fetching suggestions right now. Please try again later.",
+            message: "We're having trouble fetching suggestions right now. Please try again later.",
         });
     });
 });

@@ -12,7 +12,7 @@
     max-width: 100%; /* Prevent overflow on small screens */
     margin: 0 0 1.5rem 0;
     border: 1px solid var(--color-inflection-table-border);
-    padding: 0 .5rem;
+    padding: 0 0.5rem;
     font-size: 1rem;
     border-collapse: collapse;
     border-top: none;
@@ -39,8 +39,8 @@
 
 /* Default Table cell styling */
 .inflection-table td {
-    padding-bottom: .1rem;
-    padding-top: .1rem;
+    padding-bottom: 0.1rem;
+    padding-top: 0.1rem;
     vertical-align: top;
 }
 
@@ -130,9 +130,8 @@ th[scope="row"].case-row-header {
     text-align: left;
     white-space: nowrap;
     background-color: var(--color-brand-primary-light);
-    padding-left: .5rem;
+    padding-left: 0.5rem;
 }
-
 
 .inflection-table tr:hover th[scope="row"].case-row-header {
     background-color: color-mix(in srgb, var(--color-brand-primary-light) 93%, black);
@@ -173,7 +172,6 @@ th[scope="col"].case-col-header {
    (toggled in main.js). Fixed to the container's own edge rather than the
    scrolled content, so it stays put as the user scrolls. */
 #inflections-container::after {
-    content: "";
     position: absolute;
     top: 0;
     right: 0;
@@ -181,8 +179,9 @@ th[scope="col"].case-col-header {
     width: 24px;
     background: linear-gradient(to right, transparent, var(--color-bg));
     opacity: 0;
-    pointer-events: none;
     transition: opacity 0.15s ease;
+    pointer-events: none;
+    content: "";
 }
 
 #inflections-container.is-scrollable::after {
@@ -212,7 +211,7 @@ th[scope="col"].case-col-header {
 }
 
 .tab-spacer {
-    padding: .4rem;
+    padding: 0.4rem;
     background-color: var(--color-tab-active);
 }
 
@@ -225,7 +224,9 @@ th[scope="col"].case-col-header {
     text-align: center;
     color: var(--color-text-dark);
     background-color: var(--color-tab);
-    transition: background-color 0.2s, color 0.2s;
+    transition:
+        background-color 0.2s,
+        color 0.2s;
     cursor: pointer;
     user-select: none;
     border-bottom: 1px solid var(--color-inflection-table-border);
@@ -327,5 +328,3 @@ th[scope="col"].case-col-header {
         font-size: 0.85rem;
     }
 }
-
-

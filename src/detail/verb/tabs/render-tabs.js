@@ -3,10 +3,10 @@ import {
     setActiveTabVoice,
     getActiveTabGender,
     setActiveTabGender,
-    getMorphologicalSubtype
+    getMorphologicalSubtype,
 } from "@detail-core";
 import { TAB_KEY, TAB_LABEL } from "./tab-keys.js";
-import {GRAMMAR_KEYS} from "@utilities";
+import { GRAMMAR_KEYS } from "@utilities";
 
 /**
  * Renders tabs for the specified inflection table and attaches interaction logic.
@@ -61,7 +61,7 @@ export function createVoiceTabRow() {
         const isDisabled = isDeponent && isPassiveTab;
         const isActive = !isDisabled && getActiveTabVoice() === tabId;
 
-        const tabElement = createTabElement(tabId, 'voice', isActive, isDisabled);
+        const tabElement = createTabElement(tabId, "voice", isActive, isDisabled);
         voiceTabRow.append(tabElement);
     }
 
@@ -80,7 +80,7 @@ export function createGenderTabRow() {
 
     for (const tabId of genderTabIds) {
         const isActive = getActiveTabGender() === tabId;
-        const tabElement = createTabElement(tabId, 'gender', isActive, false);
+        const tabElement = createTabElement(tabId, "gender", isActive, false);
         genderTabRow.append(tabElement);
     }
 
@@ -99,17 +99,17 @@ export function createTabElement(tabId, tabGroup, isActive, isDisabled) {
     const tabElement = document.createElement("div");
 
     // Add base class
-    tabElement.classList.add('tab-item');
+    tabElement.classList.add("tab-item");
 
     // Add conditional classes
     if (isActive && !isDisabled) {
-        tabElement.classList.add('is-active');
+        tabElement.classList.add("is-active");
     }
 
     if (isDisabled) {
-        tabElement.classList.add('is-disabled');
-        tabElement.setAttribute('aria-disabled', 'true');
-        tabElement.setAttribute('title', 'Not available for deponent verbs');
+        tabElement.classList.add("is-disabled");
+        tabElement.setAttribute("aria-disabled", "true");
+        tabElement.setAttribute("title", "Not available for deponent verbs");
     }
 
     tabElement.textContent = TAB_LABEL[tabId];
@@ -119,8 +119,7 @@ export function createTabElement(tabId, tabGroup, isActive, isDisabled) {
     return tabElement;
 }
 
-export function wireTabs( tabsContainerElement, inflectionTable, onChange) {
-
+export function wireTabs(tabsContainerElement, inflectionTable, onChange) {
     tabsContainerElement.addEventListener("click", (event) => {
         const tabElement = event.target.closest(".tab-item");
         if (!tabElement) {
@@ -128,12 +127,12 @@ export function wireTabs( tabsContainerElement, inflectionTable, onChange) {
         }
 
         // Check if tab is disabled
-        if (tabElement.classList.contains('is-disabled')) {
+        if (tabElement.classList.contains("is-disabled")) {
             return;
         }
 
-        const tabId = tabElement.dataset.tabId;        // individual tab id (active, passive, etc.)
-        const tabGroup = tabElement.dataset.tabGroup;    // tab-row type (voice, gender)
+        const tabId = tabElement.dataset.tabId; // individual tab id (active, passive, etc.)
+        const tabGroup = tabElement.dataset.tabGroup; // tab-row type (voice, gender)
 
         if (!tabId || !tabGroup) {
             return;
@@ -147,7 +146,7 @@ export function wireTabs( tabsContainerElement, inflectionTable, onChange) {
             return;
         }
 
-        if(tabGroup === "voice"){
+        if (tabGroup === "voice") {
             setActiveTabVoice(tabId);
             updateTabUI(tabsContainerElement, tabGroup, tabId);
             onChange?.(tabId, getActiveTabGender());
@@ -157,12 +156,11 @@ export function wireTabs( tabsContainerElement, inflectionTable, onChange) {
             onChange?.(getActiveTabVoice(), tabId);
         }
     });
-
 }
 // Update tabs within the same row (voice row, gender row, etc.)
 export function updateTabUI(container, tabGroup, activeId) {
     for (const element of container.querySelectorAll(`.tab-item[data-tab-group="${tabGroup}"]`)) {
-        const shouldBeActive = element.dataset.tabId === activeId && !element.classList.contains('is-disabled');
+        const shouldBeActive = element.dataset.tabId === activeId && !element.classList.contains("is-disabled");
         element.classList.toggle("is-active", shouldBeActive);
     }
 }

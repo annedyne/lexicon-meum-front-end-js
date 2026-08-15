@@ -1,12 +1,11 @@
-import {abbrevPartOfSpeech} from "@utilities/format-part-of-speech.js";
-import {POS} from "@utilities/constants.js";
+import { abbrevPartOfSpeech } from "@utilities/format-part-of-speech.js";
+import { POS } from "@utilities/constants.js";
 
-export function renderPOSAfterLemma(partOfSpeech){
-
-        const positionsToRender = [POS.ADVERB, POS.PREPOSITION, POS.POSTPOSITION, POS.CONJUNCTION];
+export function renderPOSAfterLemma(partOfSpeech) {
+    const positionsToRender = [POS.ADVERB, POS.PREPOSITION, POS.POSTPOSITION, POS.CONJUNCTION];
 
     if (!positionsToRender.includes(partOfSpeech)) {
-        return; 
+        return;
     }
 
     const container = document.querySelector("#lemma-container");

@@ -1,6 +1,6 @@
-import {renderPrepositionElements} from "./render-preposition-elements.js";
-import {renderSubtypeSpecificElements} from "./render-subtype-specific-elements.js";
-import {CSS_CLASSES, DEFINITIONS_TOGGLE_LABEL, POS} from "@utilities/constants.js";
+import { renderPrepositionElements } from "./render-preposition-elements.js";
+import { renderSubtypeSpecificElements } from "./render-subtype-specific-elements.js";
+import { CSS_CLASSES, DEFINITIONS_TOGGLE_LABEL, POS } from "@utilities/constants.js";
 
 export function renderDefinitions(definitions, governedCase, partOfSpeech, subtype, shortDefinition) {
     const container = document.querySelector("#definitions-container");

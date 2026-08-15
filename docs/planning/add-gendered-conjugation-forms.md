@@ -1,11 +1,11 @@
-# Show appropriate form of congugation for currently active gender tab.
+# Show appropriate form of conjugation for currently active gender tab.
 
 ## UI
 
 When a verb detail is loaded, and ACTIVE or PASSIVE tab is ACTIVE and user clicks on a gender tab, only the forms
 appropriate
 for the active gender tab should be displayed. Some forms are gender agnostic and should always be displayed. Some forms
-are gender specific (Ex: compound tense forms that include a participle form)
+are gender-specific (Ex: compound tense forms that include a participle form)
 
 The conjugations part of the detail response object for verbs now includes the gendered conjugation forms. (see
 @docs/planning/newConjugationResponseStrucure.json)

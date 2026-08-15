@@ -1,4 +1,4 @@
-import {CSS_CLASSES, GRAMMAR_ABBREV_LABEL, GRAMMAR_KEYS} from "@utilities";
+import { CSS_CLASSES, GRAMMAR_ABBREV_LABEL, GRAMMAR_KEYS } from "@utilities";
 
 export function renderPrincipalParts(principalParts, morphologicalSubtype) {
     const principalPartsContainer = document.querySelector("#principal-parts-container");

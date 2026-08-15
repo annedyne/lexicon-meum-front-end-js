@@ -1,11 +1,11 @@
 // A Utility File (e.g., eslint.config.utilities.js)
 
 const RESTRICTED_DIRS = {
-    "api": "@api",
-    "detail": "@detail",
-    "search": "@users",
-    "utilities": "@utilities",
-    "services": "@services"
+    api: "@api",
+    detail: "@detail",
+    search: "@users",
+    utilities: "@utilities",
+    services: "@services",
 };
 
 /**
@@ -35,6 +35,6 @@ function createInternalAliasRestriction(directoryName, alias) {
 }
 
 // Generate the array of configurations
-export const internalAliasRestrictions = Object.entries(RESTRICTED_DIRS).map(
-    ([directory, alias]) => createInternalAliasRestriction(directory, alias)
+export const internalAliasRestrictions = Object.entries(RESTRICTED_DIRS).map(([directory, alias]) =>
+    createInternalAliasRestriction(directory, alias),
 );
