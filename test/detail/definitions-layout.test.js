@@ -10,7 +10,7 @@ import {fileURLToPath} from "node:url";
 import {renderDefinitions} from "@detail/render-definitions.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const stylesDir = path.join(__dirname, "../../src/styles");
+const stylesDirectory = path.join(__dirname, "../../src/styles");
 
 const definitions = [
     {text: "a first sense"},
@@ -48,7 +48,7 @@ describe("expanded definitions list alignment", () => {
 // Builds the real container markup by running the production renderer under jsdom
 function renderDefinitionsMarkup() {
     document.body.innerHTML = `<div id="definitions-container"></div>`;
-    renderDefinitions(definitions, null, "NOUN", null, "a first sense");
+    renderDefinitions(definitions, undefined, "NOUN", undefined, "a first sense");
 
     const container = document.querySelector("#definitions-container");
     // The toggle's click handler cannot cross into the browser page, so expand here
@@ -59,8 +59,8 @@ function renderDefinitionsMarkup() {
 
 async function loadStyles() {
     const [palette, base] = await Promise.all([
-        fs.readFile(path.join(stylesDir, "palette.css"), "utf8"),
-        fs.readFile(path.join(stylesDir, "base.css"), "utf8"),
+        fs.readFile(path.join(stylesDirectory, "palette.css"), "utf8"),
+        fs.readFile(path.join(stylesDirectory, "base.css"), "utf8"),
     ]);
     return `${palette}\n${base}`;
 }
