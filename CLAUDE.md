@@ -13,7 +13,11 @@ npm run format:check # Prettier (check only)
 npm test             # run all tests (vitest)
 npm test -- --watch  # watch mode
 npx vitest run path/to/file.test.js  # single test file
+npx stylelint --config stylelintrc.cjs "src/**/*.css"  # CSS lint
 ```
+
+Before pushing, run every configured linter over the change — `npm run lint` (ESLint) and stylelint for CSS — plus
+`npm test`, and fix what they report.
 
 Tests default to jsdom environment (set in `vite.config.js`). Override per-file with `/* @vitest-environment jsdom */`.
 

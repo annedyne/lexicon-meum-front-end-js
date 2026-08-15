@@ -274,7 +274,8 @@ label {
 .definitions-list {
     margin: 0.5rem 0;
     list-style-type: decimal;
-    padding-left: .5rem;
+    /* Reserve room for the outside marker so numbers align with the container's left edge */
+    padding-left: 1.5rem;
 }
 
 .definitions-list.definitions-unnumbered {
@@ -304,6 +305,7 @@ label {
 .definition-context {
     font-size: 0.90em;
     font-weight: 200;
+    color: var(--color-brand-secondary-medium);
 }
 
 .coming-soon {
